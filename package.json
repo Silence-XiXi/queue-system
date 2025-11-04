@@ -1,0 +1,23 @@
+{
+  "name": "queue-system",
+  "version": "1.0.0",
+  "description": "排队叫号系统",
+  "main": "index.js",
+  "scripts": {
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+    "build": "node build-scripts/build.js",
+    "deploy": "npm run build && deploy.bat",
+    "start": "cd server && npm start"
+  },
+  "keywords": ["queue", "system"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.0.0"
+  },
+  "devDependencies": {
+    "pkg": "^5.8.0"
+  }
+}
