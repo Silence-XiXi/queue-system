@@ -1,5 +1,5 @@
 const { Server } = require('socket.io');
-const { Queue, Counter } = require('../models');
+const { sequelize, counters: Counter } = require('../models');
 
 function initSocketIO(server) {
   const io = new Server(server, {
@@ -16,8 +16,12 @@ function initSocketIO(server) {
     socket.on('counter:status', async (data) => {
       const { counterId, status } = data;
       try {
-        await Counter.update({ status }, { where: { id: counterId } });
-        io.emit('counter:statusUpdated', { counterId, status });
+        // 使用Counter模型更新窗口状态
+        const counter = await Counter.findByPk(counterId);
+        if (counter) {
+          await counter.update({ status });
+          io.emit('counter:statusUpdated', { counterId, status });
+        }
       } catch (error) {
         console.error('更新窗口状态失败:', error);
       }
@@ -25,23 +29,14 @@ function initSocketIO(server) {
     
     // 叫号事件
     socket.on('ticket:call', async (data) => {
-      const { counterId, ticketId } = data;
+      const { counterId, ticketId, ticketNumber, counterNumber, businessTypeName } = data;
       try {
-        const ticket = await Queue.findByPk(ticketId);
-        if (ticket) {
-          await ticket.update({ 
-            status: 'called',
-            called_at: new Date()
-          });
-          await Counter.update({ current_ticket_id: ticketId }, { where: { id: counterId } });
-          
-          // 广播叫号事件
-          io.emit('ticket:called', { 
-            ticketNumber: ticket.ticket_number,
-            counterNumber: data.counterNumber,
-            businessTypeName: ticket.businessType ? ticket.businessType.name : ''
-          });
-        }
+        // 广播叫号事件
+        io.emit('ticket:called', { 
+          ticketNumber,
+          counterNumber,
+          businessTypeName
+        });
       } catch (error) {
         console.error('叫号失败:', error);
       }

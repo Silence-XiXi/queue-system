@@ -1,5 +1,6 @@
 const { Sequelize } = require('sequelize');
 const path = require('path');
+const fs = require('fs');
 const initModels = require('../generated-models-auto/init-models');
 
 // 创建SQLite连接
@@ -12,25 +13,22 @@ const sequelize = new Sequelize({
 // 初始化所有模型
 const models = initModels(sequelize);
 
-// 解构模型以便单独导出
-const {
-  businessTypes: BusinessType,
-  counters: Counter,
-  tickets: Ticket,
-  ticketSequences: TicketSequence,
-  callLogs: CallLog,
-  settings: Setting
-} = models;
+// 获取数据库中实际存在的表
+async function getActualTables() {
+  try {
+    // 查询SQLite系统表获取所有表名
+    const [results] = await sequelize.query("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';");
+    return results.map(r => r.name);
+  } catch (error) {
+    console.error('获取数据库表失败:', error);
+    return [];
+  }
+}
 
-// 自定义关联已移除 - counters表现在使用current_ticket_number而不是外键
-
-// 导出所有模型和sequelize实例
+// 导出sequelize实例和所有模型
+// 由于models是根据实际数据库通过generate-models-auto.js生成的，
+// 所以我们可以直接导出所有模型，确保只包含数据库中存在的表
 module.exports = {
   sequelize,
-  BusinessType,
-  Counter,
-  Ticket,
-  TicketSequence,
-  CallLog,
-  Setting
+  ...models
 };

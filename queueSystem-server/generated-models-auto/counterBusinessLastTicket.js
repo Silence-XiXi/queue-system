@@ -1,20 +1,19 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('ticketSequences', {
+  return sequelize.define('counterBusinessLastTicket', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       primaryKey: true
     },
-    current_number: {
+    counter_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      defaultValue: 0
-    },
-    date: {
-      type: DataTypes.DATEONLY,
-      allowNull: false
+      references: {
+        model: 'counters',
+        key: 'id'
+      }
     },
     business_type_id: {
       type: DataTypes.INTEGER,
@@ -23,10 +22,14 @@ module.exports = function(sequelize, DataTypes) {
         model: 'business_types',
         key: 'id'
       }
+    },
+    last_ticket_no: {
+      type: DataTypes.STRING(50),
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'ticket_sequences',
+    tableName: 'counter_business_last_ticket',
     timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at'

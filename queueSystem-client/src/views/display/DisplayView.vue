@@ -1,7 +1,7 @@
 <template>
   <div class="display-container">
     <div class="header">
-      <h1>排队叫号系统</h1>
+      <h1>Queue System</h1>
       <div class="time">{{ currentTime }}</div>
     </div>
     
@@ -47,15 +47,9 @@ setInterval(() => {
   currentTime.value = new Date().toLocaleTimeString();
 }, 1000);
 
-// 模拟数据
+// 初始化
 onMounted(async () => {
-  try {
-    // 获取当前等待情况
-    const response = await ticketService.getCurrent();
-    // 处理数据...
-  } catch (error) {
-    console.error('获取数据失败:', error);
-  }
+  // 由于票号功能已移除，不再尝试获取等待情况
   
   // 监听叫号事件
   socket.on('ticket:called', (data) => {

@@ -19,7 +19,7 @@
           :class="{ 'selected': selectedType && selectedType.id === type.id }"
           @click="selectBusinessType(type)"
         >
-          <div class="btn-icon">●</div>
+          <div class="btn-icon">{{ type.code }}</div>
           <div class="btn-text">
             <div class="chinese-text">{{ type.name }}</div>
             <div class="english-text">{{ type.englishName }}</div>
@@ -60,13 +60,17 @@
       </div>
       <div class="dialog-content">
         <div class="dialog-title">
-          <div class="chinese-text">{{ errorType === 'noSelection' ? '提示' : '操作失敗' }}</div>
-          <div class="english-text">{{ errorType === 'noSelection' ? 'Reminder' : 'Operation Failed' }}</div>
+          <div class="chinese-text">{{ errorType === 'noSelection' ? '提示' : '功能不可用' }}</div>
+          <div class="english-text">{{ errorType === 'noSelection' ? 'Reminder' : 'Service Unavailable' }}</div>
         </div>
         <div class="dialog-message">
           <template v-if="errorType === 'noSelection'">
             <div class="chinese-text">請先選擇業務類型</div>
             <div class="english-text">Please select a service type first</div>
+          </template>
+          <template v-else-if="errorType === 'serviceRemoved'">
+            <div class="chinese-text">此功能已不可用</div>
+            <div class="english-text">This feature is no longer available</div>
           </template>
           <template v-else>
             <div class="chinese-text">取票失敗，請重試</div>
@@ -120,35 +124,18 @@ const currentTimeFormatted = computed(() => {
   return `${hours}:${minutes}:${seconds}`;
 });
 
-// 中英文对照表
-const englishTranslations = {
-  '優惠客戶專綫': 'Preferred Customers Exclusive',
-  '訂購專綫': 'General Ordering',
-  '特快訂購專綫': 'Express Ordering',
-  '訪問服務': 'Enquiry Service',
-  '總裁組服務專綫': 'President Team Express Service'
-};
-
-// 为业务类型添加英文翻译
+// 为业务类型准备英文翻译
 const businessTypesWithEnglish = computed(() => {
   return businessTypes.value.map(type => ({
     ...type,
-    englishName: englishTranslations[type.name] || ''
+    englishName: type.english_name || ''
   }));
 });
 
 // 加载等待队列数量
 const loadWaitingCount = async () => {
-  try {
-    const response = await ticketService.getWaitingCounts();
-    const businessTypeWaiting = response.data.find(item => 
-      item.businessTypeId === selectedType.value.id
-    );
-    waitingCount.value = businessTypeWaiting ? businessTypeWaiting.waitingCount : 0;
-  } catch (error) {
-    console.error('获取等待人数失败:', error);
-    waitingCount.value = 0;
-  }
+  // 票号功能已移除，直接返回0
+  waitingCount.value = 0;
 };
 
 onMounted(async () => {
@@ -193,19 +180,10 @@ const getTicket = async () => {
   
   isLoading.value = true;
   try {
-    // 调用API创建票号
-    const response = await ticketService.create(selectedType.value.id);
-    ticketInfo.value = response.data;
-    
-    // 获取等待队列数量
-    await loadWaitingCount();
-    
-    // 清除选择的业务类型，这样下一次用户必须重新选择
-    // selectedType.value = null;
-  } catch (error) {
-    console.error('取票失败:', error);
+    // 票号功能已移除，显示功能不可用的错误消息
+    console.error('票号功能已移除');
     showErrorDialog.value = true;
-    errorType.value = 'apiError';
+    errorType.value = 'serviceRemoved';
   } finally {
     isLoading.value = false;
   }

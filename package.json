@@ -1,7 +1,7 @@
 {
   "name": "queue-system",
   "version": "1.0.0",
-  "description": "排队叫号系统",
+  "description": "Queue System",
   "main": "index.js",
   "scripts": {
     "dev:client": "cd queueSystem-client && npm run dev",

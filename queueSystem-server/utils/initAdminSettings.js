@@ -1,4 +1,4 @@
-const { Setting } = require('../models');
+const { settings: Setting } = require('../models');
 const bcrypt = require('bcryptjs');
 
 // 初始化管理员设置

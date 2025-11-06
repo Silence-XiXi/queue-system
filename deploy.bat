@@ -1,5 +1,5 @@
 @echo off
-echo 正在部署排队叫号系统...
+echo 正在部署Queue System...
 
 REM 创建目录
 if not exist "C:\QueueSystem" mkdir "C:\QueueSystem"

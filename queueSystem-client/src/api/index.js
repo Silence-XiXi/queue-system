@@ -11,18 +11,21 @@ export const businessTypeService = {
   getAll: () => api.get('/business-types')
 };
 
+// 票号服务已移除
 export const ticketService = {
-  create: (businessTypeId) => api.post('/tickets', { businessTypeId }),
-  getCurrent: () => api.get('/tickets/current'),
-  getWaitingCounts: () => api.get('/tickets/waiting-counts'),
-  updateStatus: (id, status) => api.put(`/tickets/${id}/status`, { status })
+  // 提供空方法以便前端组件在迁移期间使用
+  create: () => Promise.reject({ response: { data: { message: '此功能已不可用', code: 'SERVICE_REMOVED' } } }),
+  getCurrent: () => Promise.resolve({ data: [] }),
+  getWaitingCounts: () => Promise.resolve({ data: [] }),
+  updateStatus: () => Promise.reject({ response: { data: { message: '此功能已不可用', code: 'SERVICE_REMOVED' } } })
 };
 
 export const counterService = {
   getAll: () => api.get('/counters'),
   update: (id, data) => api.put(`/counters/${id}`, data),
-  callNext: (id, businessTypeId) => api.post(`/counters/${id}/next`, { businessTypeId }),
-  callManual: (id, ticketNumber) => api.post(`/counters/${id}/call-manual`, { ticketNumber }),
+  // 叫号功能已移除
+  callNext: () => Promise.reject({ response: { data: { message: '此功能已不可用', code: 'SERVICE_REMOVED' } } }),
+  callManual: () => Promise.reject({ response: { data: { message: '此功能已不可用', code: 'SERVICE_REMOVED' } } }),
   endService: (id) => api.post(`/counters/${id}/end-service`)
 };
 

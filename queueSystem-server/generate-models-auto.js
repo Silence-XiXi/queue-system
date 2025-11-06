@@ -13,7 +13,11 @@ const auto = new SequelizeAuto(null, null, null, {
     updatedAt: 'updated_at'
   },
   storage: path.join(__dirname, 'database.sqlite'),
-  closeConnectionAutomatically: true
+  closeConnectionAutomatically: true,
+  // 添加以下配置
+  noWrite: false,       // 确保写入新的模型文件
+  noAlias: false,       // 默认生成关联别名
+  clean: true           // 清理目录，删除旧的模型文件
 });
 
 // 生成模型

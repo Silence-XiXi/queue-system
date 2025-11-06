@@ -99,34 +99,23 @@ const manualTicketNumber = ref('');
 
 // 移除状态文本映射
 
-// 英文名称映射
-const englishNameMap = {
-  '優惠客戶專綫': 'Preferred Customers Exclusive',
-  '訂購專綫': 'General Ordering',
-  '特快訂購專綫': 'Express Ordering',
-  '訪問服務': 'Enquiry Service',
-  '總裁組服務專綫': 'President Team Express Service'
-};
-
 // 获取业务类型的英文名称
 const getEnglishName = (name) => {
-  return englishNameMap[name] || name;
+  // 查找业务类型对象
+  const businessType = businessTypes.value.find(type => type.name === name);
+  return businessType && businessType.english_name ? businessType.english_name : name;
 };
 
 // 获取等待人数
-const getWaitingCount = (businessTypeId) => {
-  const found = waitingCounts.value.find(item => item.businessTypeId === businessTypeId);
-  return found ? found.waitingCount : 0;
+const getWaitingCount = () => {
+  // 票号功能已移除，统一返回0
+  return 0;
 };
 
 // 获取等待人数数据
 const fetchWaitingCounts = async () => {
-  try {
-    const response = await ticketService.getWaitingCounts();
-    waitingCounts.value = response.data;
-  } catch (error) {
-    console.error('获取等待人数失败:', error);
-  }
+  // 票号功能已移除，waitingCounts置为空数组
+  waitingCounts.value = [];
 };
 
 onMounted(async () => {
@@ -163,18 +152,8 @@ const callNext = async () => {
   }
   
   try {
-    const response = await counterService.callNext(
-      1, // 使用固定柜台号
-      currentBusinessType.value.id
-    );
-    
-    if (response.data) {
-      currentTicket.value = response.data;
-      // 刷新等待人数
-      fetchWaitingCounts();
-    } else {
-      alert('當前沒有等待的客戶');
-    }
+    // 票号功能已移除，显示提示
+    alert('此功能已不可用');
   } catch (error) {
     console.error('叫号失败:', error);
   }
@@ -194,19 +173,9 @@ const startManualCall = async () => {
   if (!manualTicketNumber.value) return;
   
   try {
-    const response = await counterService.callManual(
-      1, // 使用固定柜台号
-      manualTicketNumber.value
-    );
-    
-    if (response.data) {
-      currentTicket.value = response.data;
-      manualTicketNumber.value = '';
-      // 刷新等待人数
-      fetchWaitingCounts();
-    } else {
-      alert('未找到此票號或票號已失效');
-    }
+    // 票号功能已移除，显示提示
+    alert('此功能已不可用');
+    manualTicketNumber.value = '';
   } catch (error) {
     console.error('手动叫号失败:', error);
   }

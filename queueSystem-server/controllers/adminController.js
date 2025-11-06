@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const { Setting, Counter, sequelize } = require('../models');
+const { settings: Setting, counters: Counter, sequelize } = require('../models');
 const { Op } = require('sequelize');
 
 // 管理员登录验证
@@ -131,7 +131,7 @@ const getAllCounters = async (req, res) => {
   try {
     // 使用Sequelize模型方法，使用蛇形命名法匹配数据库字段
     const counters = await Counter.findAll({
-      attributes: ['id', 'counter_number', 'name', 'ip_address', 'current_ticket_number', 'created_at', 'updated_at'],
+      attributes: ['id', 'counter_number', 'name', 'ip_address', 'created_at', 'updated_at'],
       order: [['counter_number', 'ASC']]
     });
     
@@ -143,7 +143,6 @@ const getAllCounters = async (req, res) => {
         counterNumber: plainCounter.counter_number,
         name: plainCounter.name,
         ipAddress: plainCounter.ip_address,
-        currentTicketNumber: plainCounter.current_ticket_number,
         createdAt: plainCounter.created_at,
         updatedAt: plainCounter.updated_at
       };
@@ -235,7 +234,6 @@ const updateCounter = async (req, res) => {
       counterNumber: updatedCounter.counter_number,
       name: updatedCounter.name,
       ipAddress: updatedCounter.ip_address,
-      currentTicketNumber: updatedCounter.current_ticket_number,
       createdAt: updatedCounter.created_at,
       updatedAt: updatedCounter.updated_at
     };
@@ -260,37 +258,7 @@ const deleteCounter = async (req, res) => {
       return res.status(404).json({ message: 'Counter not found' });
     }
     
-    // 设备表已移除，不再需要处理设备关联
-    
-    // 查找并处理所有关联的票据
-    const relatedTickets = await sequelize.models.tickets.findAll({
-      where: { counterId: id },
-      transaction
-    });
-    
-    // 更新所有关联票据
-    if (relatedTickets.length > 0) {
-      for (const ticket of relatedTickets) {
-        await ticket.update({ 
-          counterId: null,
-          // 如果票据状态是called但未完成，将其设为waiting
-          status: ticket.status === 'called' ? 'waiting' : ticket.status 
-        }, { transaction });
-      }
-    }
-    
-    // 查找并处理所有关联的呼叫日志
-    const relatedCallLogs = await sequelize.models.callLogs.findAll({
-      where: { counterId: id },
-      transaction
-    });
-    
-    // 我们不会删除呼叫日志，但会解除关联
-    if (relatedCallLogs.length > 0) {
-      for (const log of relatedCallLogs) {
-        await log.update({ counterId: null }, { transaction });
-      }
-    }
+    // 票号和呼叫日志表已移除，不再需要处理相关联数据
     
     // 删除柜台记录
     await counter.destroy({ transaction });

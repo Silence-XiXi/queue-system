@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 构建步骤
-console.log('开始构建排队叫号系统...');
+console.log('开始构建Queue System...');
 
 // 1. 构建前端
 console.log('构建前端应用...');

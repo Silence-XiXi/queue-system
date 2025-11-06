@@ -1,4 +1,4 @@
-const { BusinessType, Counter, Setting } = require('../models');
+const { sequelize, businessTypes: BusinessType, counters: Counter, settings: Setting } = require('../models');
 
 // 填充初始数据
 const seedDatabase = async () => {

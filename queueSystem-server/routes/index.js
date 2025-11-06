@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const ticketController = require('../controllers/ticketController');
 const counterController = require('../controllers/counterController');
 const businessTypeController = require('../controllers/businessTypeController');
 const adminRoutes = require('./admin');
@@ -10,13 +9,11 @@ const adminSystemRoutes = require('./adminRoutes');
 router.get('/', (req, res) => {
   const apiEndpoints = [
     { method: 'GET', path: '/api/business-types', description: '获取所有业务类型' },
-    { method: 'GET', path: '/api/tickets/current', description: '获取当前票号' },
-    { method: 'POST', path: '/api/tickets', description: '创建新票号' },
-    { method: 'PUT', path: '/api/tickets/:id/status', description: '更新票号状态' },
+    { method: 'POST', path: '/api/business-types', description: '创建新业务类型' },
+    { method: 'PUT', path: '/api/business-types/:id', description: '更新业务类型' },
+    // 票号相关API已移除
     { method: 'GET', path: '/api/counters', description: '获取所有窗口信息' },
     { method: 'PUT', path: '/api/counters/:id', description: '更新窗口信息' },
-    { method: 'POST', path: '/api/counters/:id/next', description: '叫号下一位客户' },
-    { method: 'POST', path: '/api/counters/:id/call-manual', description: '手动叫号指定客户' },
     { method: 'POST', path: '/api/counters/:id/end-service', description: '结束当前服务' },
     { method: 'GET', path: '/api/admin/tables', description: '获取数据库所有表' },
     { method: 'GET', path: '/api/admin/tables/:tableName/schema', description: '获取表结构' },
@@ -82,18 +79,14 @@ router.get('/', (req, res) => {
 
 // 业务类型路由
 router.get('/business-types', businessTypeController.getAllBusinessTypes);
+router.post('/business-types', businessTypeController.createBusinessType);
+router.put('/business-types/:id', businessTypeController.updateBusinessType);
 
-// 取号路由
-router.post('/tickets', ticketController.createTicket);
-router.get('/tickets/current', ticketController.getCurrentTickets);
-router.get('/tickets/waiting-counts', ticketController.getWaitingCounts);
-router.put('/tickets/:id/status', ticketController.updateTicketStatus);
+// 票号相关路由已移除
 
 // 窗口路由
 router.get('/counters', counterController.getAllCounters);
 router.put('/counters/:id', counterController.updateCounter);
-router.post('/counters/:id/next', counterController.callNextTicket);
-router.post('/counters/:id/call-manual', counterController.callManualTicket);
 router.post('/counters/:id/end-service', counterController.endService);
 
 // 管理员数据库工具路由
