@@ -26,7 +26,8 @@ export const counterService = {
   // 叫号功能已移除
   callNext: () => Promise.reject({ response: { data: { message: '此功能已不可用', code: 'SERVICE_REMOVED' } } }),
   callManual: () => Promise.reject({ response: { data: { message: '此功能已不可用', code: 'SERVICE_REMOVED' } } }),
-  endService: (id) => api.post(`/counters/${id}/end-service`)
+  endService: (id) => api.post(`/counters/${id}/end-service`),
+  getClientIP: () => api.get('/client-ip')
 };
 
 // 添加管理员API接口

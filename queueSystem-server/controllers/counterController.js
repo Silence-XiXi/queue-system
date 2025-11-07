@@ -68,8 +68,20 @@ const endService = async (req, res) => {
   }
 };
 
+// 获取客户端IP地址
+const getClientIP = (req, res) => {
+  // 获取请求的IP地址
+  const ip = req.headers['x-forwarded-for'] || 
+             req.connection.remoteAddress || 
+             req.socket.remoteAddress ||
+             (req.connection.socket ? req.connection.socket.remoteAddress : null);
+  
+  res.json({ ip });
+};
+
 module.exports = {
   getAllCounters,
   updateCounter,
-  endService
+  endService,
+  getClientIP
 };

@@ -132,7 +132,7 @@ const businessTypes = ref([]);
 const waitingCounts = ref([]);
 const currentBusinessType = ref(null);
 const inputDisplay = ref('');
-const businessTypeCodes = ref(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']);
+const businessTypeCodes = ref([]);
 const lastServiceNumbers = ref({}); // 存储各业务类型的上一个服务号
 
 // 日期和时间格式化后的字符串
@@ -209,14 +209,86 @@ const fetchLastServiceNumbers = async () => {
   }
 };
 
+// 获取客户端IP地址
+const getClientIP = async () => {
+  try {
+    // 使用我们自己的后端API获取IP地址
+    const response = await counterService.getClientIP();
+    if (response && response.data && response.data.ip) {
+      // 处理IPv4地址格式（可能含有IPv6前缀）
+      let ip = response.data.ip;
+      // 如果是IPv6格式的本地地址(::ffff:127.0.0.1)，提取IPv4部分
+      if (ip.includes('::ffff:')) {
+        ip = ip.split('::ffff:')[1];
+      }
+      console.log('获取到的IP地址:', ip);
+      return ip;
+    }
+    return null;
+  } catch (error) {
+    console.error('获取IP地址失败:', error);
+    return null;
+  }
+};
+
 // 获取窗口号
 const fetchCounterNumber = async () => {
   try {
-    // 实际应用中应该从API获取窗口号
-    // 这里为了演示，使用固定值
-    counterNumber.value = 5; // 假设窗口号为5
+    // 获取客户端IP地址
+    const clientIP = await getClientIP();
+    
+    // 获取所有柜台
+    const response = await counterService.getAll();
+    const counters = response.data;
+    
+    // 本地开发环境特殊处理
+    if (clientIP === '127.0.0.1' || clientIP === 'localhost') {
+      console.log('检测到本地开发环境，尝试获取可用柜台列表');
+      
+      // 如果有可用的柜台，使用第一个柜台
+      if (counters && counters.length > 0) {
+        // 1. 尝试找到IP为10.10.8.58的柜台（根据您提供的信息）
+        const targetIpCounter = counters.find(counter => counter.ip_address === '10.10.8.58');
+        
+        if (targetIpCounter) {
+          counterNumber.value = targetIpCounter.counter_number;
+          console.log('已找到指定IP(10.10.8.58)柜台:', targetIpCounter);
+          
+          // 显示提示，指明当前使用的是模拟柜台
+          alert(`当前运行在本地开发环境，自动选择IP为${targetIpCounter.ip_address}的柜台。柜台号：${targetIpCounter.counter_number}`);
+          return;
+        }
+        
+        // 2. 如果没找到指定IP，使用第一个可用的柜台
+        counterNumber.value = counters[0].counter_number;
+        console.log('使用第一个可用的柜台:', counters[0]);
+        
+        // 显示提示
+        alert(`当前运行在本地开发环境，自动选择第一个可用柜台。柜台号：${counters[0].counter_number}`);
+        return;
+      }
+    } else {
+      // 生产环境正常处理
+      // 查找匹配IP地址的柜台
+      const matchedCounter = counters.find(counter => counter.ip_address === clientIP);
+      
+      if (matchedCounter) {
+        counterNumber.value = matchedCounter.counter_number;
+        console.log('已找到匹配的柜台:', matchedCounter);
+        return;
+      }
+    }
+    
+    // 未匹配到柜台时
+    console.warn('未找到匹配的柜台，使用默认值');
+    counterNumber.value = 0; // 默认值
+    
+    // 显示错误提示
+    alert(`未能找到匹配当前IP(${clientIP})的柜台配置，请在管理后台绑定IP地址。`);
   } catch (error) {
     console.error('获取窗口号失败:', error);
+    counterNumber.value = 0; // 出错时使用默认值
+    alert('获取窗口号失败，请检查网络连接或联系管理员');
   }
 };
 
@@ -228,6 +300,9 @@ onMounted(async () => {
     // 获取业务类型
     const response = await businessTypeService.getAll();
     businessTypes.value = response.data;
+    
+    // 从业务类型中提取 code 字段作为字母按钮
+    businessTypeCodes.value = response.data.map(type => type.code);
     
     // 获取等待人数
     await fetchWaitingCounts();

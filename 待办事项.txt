@@ -1,0 +1,20 @@
+## 2025.11.07
+CounterView.vue 页面
+1、字母按键查询business_types表
+2、业务类型区域，当前等待人数根据business_types表的id，关联查询ticket_sequences表中各个类型的当前等待人数，
+计算方式是current_total_number字段值 - current_passed _number字段值；
+
+各个业务的上一个服务号码last-service-number，根据业务id和当前柜台id关联查询counter_business_last_ticket表，显示last_ticket_no字段值
+
+3、根据当前IP地址，查询counters表，获取当前柜台号
+
+4、点击next按钮，ticket_sequences表对应的业务队列current_passed _number字段值自增1，
+并修改counters表的current_ticket_number字段值（业务code+三位的current_passed _number值）
+稍后实现传递信号进行语音播报
+
+5、点击recall，传递信号进行语音播报
+
+6、手动输入服务号之后，点击start按钮，传递信号进行语音播报
+7、点击end之后，才能点击next进行下一个（即点击了start之后，必须要点击一次end才可以点击next）
+
+5、输入显示区域，显示counters表的current_ticket_number字段值

@@ -91,6 +91,7 @@ router.use('/', ticketRoutes);
 router.get('/counters', counterController.getAllCounters);
 router.put('/counters/:id', counterController.updateCounter);
 router.post('/counters/:id/end-service', counterController.endService);
+router.get('/client-ip', counterController.getClientIP);
 
 // 管理员数据库工具路由
 router.use('/admin', adminRoutes);
