@@ -33,6 +33,11 @@ router.get('/settings', adminController.getAllSettings);
 router.put('/settings/:key', adminController.updateSetting);
 router.post('/change-password', adminController.updateAdminPassword);
 
+// 定时任务管理路由（用于调试和测试）
+router.get('/scheduler/status', adminController.getSchedulerStatus);
+router.post('/scheduler/test', adminController.testScheduler);
+router.post('/scheduler/manual-reset', adminController.manualReset);
+
 // 设备相关路由已移除
 
 // 窗口管理路由

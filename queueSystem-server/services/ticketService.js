@@ -55,12 +55,26 @@ const createTicket = async (businessTypeId) => {
     // 计算等待人数（减去1，因为当前用户不算在等待人数中）
     const waitingCount = Math.max(0, ticketSequence.current_total_number - ticketSequence.current_passed_number - 1);
 
-    return {
+    const result = {
       ticket_number: ticketNumber,
       waiting_count: waitingCount,
       business_type_name: businessType.name,
       business_type_english_name: businessType.english_name
     };
+
+    // 通过WebSocket广播取票事件，通知所有客户端刷新数据
+    const io = getIO();
+    if (io) {
+      io.emit('ticket:created', {
+        businessTypeId,
+        ticketNumber,
+        waitingCount,
+        currentTotalNumber: ticketSequence.current_total_number,
+        currentPassedNumber: ticketSequence.current_passed_number
+      });
+    }
+
+    return result;
   });
 };
 

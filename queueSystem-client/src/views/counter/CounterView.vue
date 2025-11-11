@@ -466,8 +466,16 @@ onMounted(async () => {
     console.error('初始化数据失败:', error);
   }
   
-  // 监听票号更新事件，刷新等待人数和上一个服务号
-  socket.on('ticket:created', fetchWaitingCounts);
+  // 监听票号更新事件，刷新所有数据
+  socket.on('ticket:created', async () => {
+    console.log('收到取票事件，刷新所有数据');
+    // 立即刷新所有相关数据
+    await Promise.all([
+      fetchWaitingCounts(),        // 刷新等待人数
+      fetchCurrentTicketNumber(),   // 刷新当前票号
+      fetchLastServiceNumbers()    // 刷新上一个服务号
+    ]);
+  });
   socket.on('ticket:statusUpdated', () => {
     fetchWaitingCounts();
     fetchLastServiceNumbers();
@@ -534,6 +542,13 @@ const callNext = async () => {
     return;
   }
   
+  // 检查等待人数是否为0
+  const waitingCount = getWaitingCount(currentBusinessType.value.id);
+  if (waitingCount === 0) {
+    showMessageDialog('該服務當前無等待人數', 'This service currently has no waiting customers');
+    return;
+  }
+  
   try {
     // 调用后端API处理叫号
     await ticketService.callNext(currentBusinessType.value.id, counterNumber.value);
@@ -561,6 +576,15 @@ const callNext = async () => {
 
 const recallTicket = () => {
   // 注意：服务状态的检查已通过按钮的disabled属性控制，不会触发
+  
+  // 检查等待人数是否为0（recall需要当前有等待的客户）
+  if (currentBusinessType.value) {
+    const waitingCount = getWaitingCount(currentBusinessType.value.id);
+    if (waitingCount === 0) {
+      showMessageDialog('該服務當前無等待人數', 'This service currently has no waiting customers');
+      return;
+    }
+  }
   
   try {
     // 重新叫号功能

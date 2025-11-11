@@ -46,8 +46,12 @@ async function startServer() {
   // 启动每日重置定时任务
   try {
     await dailyResetScheduler.start();
+    // 输出定时任务状态
+    const status = dailyResetScheduler.getStatus();
+    console.log('定时任务状态:', JSON.stringify(status, null, 2));
   } catch (error) {
     console.error('启动定时任务失败:', error);
+    console.error('错误堆栈:', error.stack);
   }
   
   server.listen(PORT, '0.0.0.0', () => {

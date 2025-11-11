@@ -1,0 +1,12 @@
+## 2025.11.11
+BusinessTypeSelector.vue 页面
+
+1、BusinessTypeSelector.vue页面点击取票按钮之后，连接打印机打印取票凭证 🌙
+
+2、BusinessTypeSelector.vue页面点击取票按钮之后，全部CounterView.vue页面都要立刻刷新数据显示
+【修改总结：
+  1. 后端修改 (queueSystem-server/services/ticketService.js)
+    在 createTicket 函数中添加了 socket 事件广播，当取票成功后会发送 ticket:created 事件通知所有客户端
+  2. 前端修改 (queueSystem-client/src/views/counter/CounterView.vue)
+    增强了 ticket:created 事件监听，当收到取票事件时会刷新所有数据（等待人数、当前票号、上一个服务号）
+】

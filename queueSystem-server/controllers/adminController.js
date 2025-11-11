@@ -292,6 +292,46 @@ const deleteCounter = async (req, res) => {
   }
 };
 
+// 获取定时任务状态（用于调试）
+const getSchedulerStatus = async (req, res) => {
+  try {
+    const status = dailyResetScheduler.getStatus();
+    const resetTime = await dailyResetScheduler.getResetTime();
+    
+    res.json({
+      status,
+      resetTime,
+      currentTime: new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }),
+      systemTime: new Date().toLocaleString()
+    });
+  } catch (error) {
+    console.error('获取定时任务状态失败:', error);
+    res.status(500).json({ message: '获取定时任务状态失败', error: error.message });
+  }
+};
+
+// 测试定时任务（手动执行一次重置）
+const testScheduler = async (req, res) => {
+  try {
+    await dailyResetScheduler.testSchedule();
+    res.json({ message: '定时任务测试执行成功' });
+  } catch (error) {
+    console.error('测试定时任务失败:', error);
+    res.status(500).json({ message: '测试定时任务失败', error: error.message });
+  }
+};
+
+// 手动触发重置
+const manualReset = async (req, res) => {
+  try {
+    await dailyResetScheduler.manualReset();
+    res.json({ message: '手动重置执行成功' });
+  } catch (error) {
+    console.error('手动重置失败:', error);
+    res.status(500).json({ message: '手动重置失败', error: error.message });
+  }
+};
+
 module.exports = {
   login,
   getAllSettings,
@@ -300,5 +340,8 @@ module.exports = {
   getAllCounters,
   createCounter,
   updateCounter,
-  deleteCounter
+  deleteCounter,
+  getSchedulerStatus,
+  testScheduler,
+  manualReset
 };
