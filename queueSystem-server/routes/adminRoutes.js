@@ -25,6 +25,10 @@ const verifyAdminToken = (req, res, next) => {
 // 公开路由
 router.post('/login', adminController.login);
 
+// 定时任务管理路由（公开，无需认证）
+router.get('/scheduler/status', adminController.getSchedulerStatus);
+router.post('/scheduler/restart', adminController.restartScheduler);
+
 // 需要验证的路由
 router.use(verifyAdminToken);
 
@@ -33,8 +37,7 @@ router.get('/settings', adminController.getAllSettings);
 router.put('/settings/:key', adminController.updateSetting);
 router.post('/change-password', adminController.updateAdminPassword);
 
-// 定时任务管理路由（用于调试和测试）
-router.get('/scheduler/status', adminController.getSchedulerStatus);
+// 定时任务管理路由（需要认证的操作接口）
 router.post('/scheduler/test', adminController.testScheduler);
 router.post('/scheduler/manual-reset', adminController.manualReset);
 

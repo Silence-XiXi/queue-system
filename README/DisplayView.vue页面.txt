@@ -13,9 +13,9 @@ DisplayView.vue 页面
 “現時籌號 Current Queue No.  櫃台 Counter”这里的文字需要
 
 2、将页面的底色改成绿色，并在content的下方添加一块显示区域，
-读取settings表中key为display_remarks的value值，显示在content下方区域
+⭐读取settings表中key为display_remarks的value值，显示在content下方区域
 
-3、不论页面大小如何改变，始终做到header和remarks-area部分分别占页面总高度的1/13，图片宽度字段伸缩自适应
+⭐3、不论页面大小如何改变，始终做到header和remarks-area部分分别占页面总高度的1/13，图片宽度字段伸缩自适应
   content部分用完剩下的11/13空间，字体大小也要自适应改变
 
-4、实现读取 display_bg.png 的背景色，并将其应用到整个页面背景
+⭐4、实现读取 display_bg.png 的背景色，并将其应用到整个页面背景

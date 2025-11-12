@@ -332,6 +332,21 @@ const manualReset = async (req, res) => {
   }
 };
 
+// 重启定时任务
+const restartScheduler = async (req, res) => {
+  try {
+    await dailyResetScheduler.restart();
+    const status = dailyResetScheduler.getStatus();
+    res.json({ 
+      message: '定时任务重启成功',
+      status: status
+    });
+  } catch (error) {
+    console.error('重启定时任务失败:', error);
+    res.status(500).json({ message: '重启定时任务失败', error: error.message });
+  }
+};
+
 module.exports = {
   login,
   getAllSettings,
@@ -343,5 +358,6 @@ module.exports = {
   deleteCounter,
   getSchedulerStatus,
   testScheduler,
-  manualReset
+  manualReset,
+  restartScheduler
 };

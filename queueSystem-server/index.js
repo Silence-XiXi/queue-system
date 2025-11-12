@@ -4,7 +4,6 @@ const { initSocketIO } = require('./websocket');
 const { sequelize } = require('./models');
 const { seedDatabase } = require('./utils/seeder');
 const { initAdminSettings } = require('./utils/initAdminSettings');
-const createTicketSequencesTable = require('./utils/createTicketSequencesTable');
 const dailyResetScheduler = require('./utils/dailyResetScheduler');
 
 const PORT = process.env.PORT || 3000; // 修改为3001或其他未被占用的端口
@@ -29,9 +28,6 @@ async function initDatabase() {
     
     // 初始化管理员设置
     await initAdminSettings();
-    
-    // 创建ticket_sequences表
-    await createTicketSequencesTable();
     
     console.log('数据库初始化成功');
   } catch (error) {

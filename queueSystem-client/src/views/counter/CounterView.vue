@@ -264,7 +264,7 @@ const fetchWaitingCounts = async () => {
     const response = await ticketService.getAllWaitingCounts();
     // 后端返回格式: { businessTypeId: waitingCount, ... }
     waitingCounts.value = response.data || {};
-    console.log('等待人数已更新:', waitingCounts.value);
+    // console.log('等待人数已更新:', waitingCounts.value);
   } catch (error) {
     console.error('获取等待人数失败:', error);
     // 出错时将所有业务类型的等待人数设为0
@@ -290,7 +290,7 @@ const fetchLastServiceNumbers = async () => {
     const response = await counterService.getLastServiceNumbers(counterNumber.value);
     // 后端返回格式: { businessTypeId: last_ticket_no, ... }
     lastServiceNumbers.value = response.data || {};
-    console.log('上一个服务号已更新:', lastServiceNumbers.value);
+    // console.log('上一个服务号已更新:', lastServiceNumbers.value);
   } catch (error) {
     console.error('获取上一个服务号失败:', error);
     // 出错时清空数据
@@ -341,7 +341,7 @@ const fetchCurrentTicketNumber = async () => {
       if (!isUserInputting.value) {
         inputDisplay.value = ticketNumber || 'Input';
       }
-      console.log('当前票号已更新:', ticketNumber);
+      // console.log('当前票号已更新:', ticketNumber);
     } else {
       console.warn('未找到当前柜台信息');
       if (!isUserInputting.value) {

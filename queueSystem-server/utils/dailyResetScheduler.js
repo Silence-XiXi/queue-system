@@ -10,6 +10,9 @@ class DailyResetScheduler {
     this.cronJob = null; // 定时任务
     this.isRunning = false;
     this.currentCronExpression = null; // 记录当前的 cron 表达式
+    this.healthCheckInterval = null; // 健康检查定时器
+    this.lastExecutionTime = null; // 上次执行时间
+    this.expectedNextExecution = null; // 预期下次执行时间
   }
 
   /**
@@ -199,27 +202,49 @@ class DailyResetScheduler {
       // 注意：node-cron 的时区功能可能在某些环境下不工作
       // 我们使用两种方式：1. 尝试使用时区功能 2. 如果失败，使用本地时间+时差计算
       let cronOptions = {
-        scheduled: true
+        scheduled: true,
+        timezone: 'Asia/Shanghai'  // 明确设置时区
       };
 
-      // 尝试使用时区功能（在某些环境下可能不工作）
+      // 验证时区是否支持
       try {
-        cronOptions.timezone = 'Asia/Shanghai';
+        // 测试时区是否有效
+        const testDate = new Date();
+        const shanghaiTimeStr = testDate.toLocaleString('en-US', { timeZone: 'Asia/Shanghai' });
+        if (!shanghaiTimeStr) {
+          throw new Error('时区转换失败');
+        }
+        console.log(`时区设置: Asia/Shanghai (已启用)`);
       } catch (e) {
         console.warn('时区设置可能不支持，将使用本地时间计算');
+        // 如果时区不支持，移除时区选项，使用系统本地时间
+        delete cronOptions.timezone;
       }
+
+      // 记录定时任务创建信息
+      const currentTime = new Date();
+      const currentShanghaiTime = new Date(currentTime.toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }));
+      console.log(`当前系统时间: ${currentTime.toLocaleString()}`);
+      console.log(`当前上海时间: ${currentShanghaiTime.toLocaleString('zh-CN')}`);
+      console.log(`系统时区偏移: ${-currentTime.getTimezoneOffset() / 60} 小时`);
 
       this.cronJob = cron.schedule(cronExpression, async () => {
         const now = new Date();
         const shanghaiTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }));
+        this.lastExecutionTime = now; // 记录执行时间
+        
         console.log(`========== 定时任务触发 ==========`);
         console.log(`触发时间（上海）: ${shanghaiTime.toLocaleString('zh-CN')}`);
         console.log(`系统时间: ${now.toLocaleString()}`);
         console.log(`UTC时间: ${now.toUTCString()}`);
         console.log(`Cron表达式: ${cronExpression}`);
+        console.log(`时区设置: ${cronOptions.timezone || '系统本地时间'}`);
         try {
           await this.performReset();
           console.log(`========== 定时任务执行完成 ==========`);
+          
+          // 更新预期下次执行时间
+          this.calculateNextExecutionTime(resetTime);
         } catch (error) {
           console.error(`========== 定时任务执行失败 ==========`);
           console.error('错误详情:', error);
@@ -245,19 +270,21 @@ class DailyResetScheduler {
         console.warn('无法获取下一次执行时间:', e.message);
       }
 
-      // 输出当前时间信息用于调试
-      const now = new Date();
-      const shanghaiTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }));
-      console.log(`当前系统时间: ${now.toLocaleString()}`);
-      console.log(`当前上海时间: ${shanghaiTime.toLocaleString('zh-CN')}`);
+      // 输出当前时间信息用于调试（已在上面输出，这里不再重复）
       console.log(`定时任务将在每天 ${resetTime} (上海时间) 执行`);
 
       this.currentCronExpression = cronExpression; // 保存当前的 cron 表达式
       this.isRunning = true;
       console.log('每日重置定时任务已启动');
 
+      // 计算预期下次执行时间
+      this.calculateNextExecutionTime(resetTime);
+
       // 监听 settings 表的变化，如果重置时间改变，重新启动定时任务
       this.setupSettingsWatcher();
+
+      // 启动健康检查机制
+      this.startHealthCheck();
     } catch (error) {
       console.error('启动定时任务失败:', error);
       throw error;
@@ -286,15 +313,104 @@ class DailyResetScheduler {
   }
 
   /**
+   * 计算预期下次执行时间
+   */
+  calculateNextExecutionTime(resetTime) {
+    try {
+      const [hours, minutes] = resetTime.split(':').map(Number);
+      const now = new Date();
+      const shanghaiTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }));
+      
+      // 创建今天的执行时间
+      const todayExecution = new Date(shanghaiTime);
+      todayExecution.setHours(hours, minutes, 0, 0);
+      
+      // 如果今天的时间已过，则设置为明天
+      if (todayExecution <= shanghaiTime) {
+        todayExecution.setDate(todayExecution.getDate() + 1);
+      }
+      
+      this.expectedNextExecution = todayExecution;
+      console.log(`预期下次执行时间: ${todayExecution.toLocaleString('zh-CN')}`);
+    } catch (error) {
+      console.warn('计算下次执行时间失败:', error);
+    }
+  }
+
+  /**
+   * 启动健康检查机制
+   * 定期检查定时任务是否正常运行，如果发现问题则重新启动
+   */
+  startHealthCheck() {
+    // 清除旧的健康检查
+    if (this.healthCheckInterval) {
+      clearInterval(this.healthCheckInterval);
+    }
+
+    // 每30分钟检查一次
+    this.healthCheckInterval = setInterval(async () => {
+      try {
+        // 检查定时任务是否还在运行
+        if (!this.isRunning || !this.cronJob) {
+          console.warn('检测到定时任务未运行，尝试重新启动...');
+          await this.restart();
+          return;
+        }
+
+        // 检查定时任务是否被停止
+        if (this.cronJob && typeof this.cronJob.running === 'function' && !this.cronJob.running()) {
+          console.warn('检测到定时任务已停止，尝试重新启动...');
+          await this.restart();
+          return;
+        }
+
+        // 如果预期执行时间已过，但任务没有执行，记录警告
+        if (this.expectedNextExecution && new Date() > this.expectedNextExecution) {
+          const overdueMinutes = Math.floor((new Date() - this.expectedNextExecution) / 1000 / 60);
+          if (overdueMinutes > 5 && !this.lastExecutionTime) {
+            console.warn(`警告: 定时任务预期执行时间已过 ${overdueMinutes} 分钟，但未检测到执行记录`);
+            console.warn('如果任务确实未执行，请检查服务器日志或手动触发重置');
+          }
+        }
+
+        // 正常状态日志（每小时记录一次）
+        const now = new Date();
+        if (now.getMinutes() === 0) {
+          console.log(`定时任务健康检查: 运行正常 (${now.toLocaleString('zh-CN')})`);
+        }
+      } catch (error) {
+        console.error('健康检查失败:', error);
+      }
+    }, 30 * 60 * 1000); // 每30分钟检查一次
+
+    console.log('定时任务健康检查机制已启动');
+  }
+
+  /**
+   * 停止健康检查
+   */
+  stopHealthCheck() {
+    if (this.healthCheckInterval) {
+      clearInterval(this.healthCheckInterval);
+      this.healthCheckInterval = null;
+    }
+  }
+
+  /**
    * 停止定时任务
    */
   stop() {
+    // 停止健康检查
+    this.stopHealthCheck();
+
     if (this.cronJob) {
       this.cronJob.stop();
       this.cronJob = null;
     }
     this.currentCronExpression = null;
     this.isRunning = false;
+    this.lastExecutionTime = null;
+    this.expectedNextExecution = null;
     console.log('每日重置定时任务已停止');
   }
 
@@ -318,11 +434,32 @@ class DailyResetScheduler {
    * 获取定时任务状态信息（用于调试）
    */
   getStatus() {
+    const now = new Date();
+    const shanghaiTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Shanghai' }));
+    
+    let nextRunTime = null;
+    try {
+      if (this.cronJob && typeof this.cronJob.nextDates === 'function') {
+        const nextDates = this.cronJob.nextDates();
+        if (nextDates && nextDates.length > 0) {
+          nextRunTime = nextDates[0];
+        }
+      }
+    } catch (e) {
+      // 忽略错误
+    }
+
     return {
       isRunning: this.isRunning,
       currentCronExpression: this.currentCronExpression,
       hasCronJob: !!this.cronJob,
-      nextRunTime: this.cronJob && this.cronJob.nextDates ? this.cronJob.nextDates()[0] : null
+      cronJobRunning: this.cronJob && typeof this.cronJob.running === 'function' ? this.cronJob.running() : null,
+      nextRunTime: nextRunTime,
+      expectedNextExecution: this.expectedNextExecution,
+      lastExecutionTime: this.lastExecutionTime,
+      currentSystemTime: now.toISOString(),
+      currentShanghaiTime: shanghaiTime.toISOString(),
+      healthCheckActive: !!this.healthCheckInterval
     };
   }
 
