@@ -1,0 +1,12 @@
+{
+  "portType": "USB",
+  "portName": "USB001",
+  "tcpPort": 9100,
+  "baudrate": 9600,
+  "flowcontrol": 0,
+  "parity": 0,
+  "databits": 8,
+  "stopbits": 0,
+  "enabled": true
+}
+

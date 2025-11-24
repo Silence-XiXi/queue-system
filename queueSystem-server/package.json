@@ -12,6 +12,10 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "engines": {
+    "node": ">=18.20.8 <19.0.0",
+    "npm": ">=9.0.0"
+  },
   "pkg": {
     "assets": [
       "public",
@@ -22,8 +26,15 @@
       "generated-models-auto",
       "models",
       "database.sqlite",
+      "printer_sdk",
+      "printer_sdk/**/*",
+      "printer.config.json",
       "node_modules/sqlite3",
-      "node_modules/sqlite3/build/Release/node_sqlite3.node"
+      "node_modules/sqlite3/build/Release/node_sqlite3.node",
+      "node_modules/ffi-napi",
+      "node_modules/ref-napi",
+      "node_modules/ref-struct-napi",
+      "node_modules/ref-array-napi"
     ],
     "scripts": [
       "controllers/**/*.js",
@@ -41,10 +52,13 @@
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
-    "better-sqlite3": "^12.4.1",
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "ffi-napi": "^4.0.3",
     "node-cron": "^4.2.1",
+    "ref-array-napi": "^1.2.2",
+    "ref-napi": "^3.0.3",
+    "ref-struct-napi": "^1.1.1",
     "sequelize": "^6.37.7",
     "socket.io": "^4.8.1",
     "sqlite3": "^5.1.7"

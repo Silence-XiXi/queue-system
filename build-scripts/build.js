@@ -100,38 +100,257 @@ try {
   process.exit(1);
 }
 
-// 4. 重新构建原生模块（确保 sqlite3 针对当前 Node.js 版本正确编译）
+// 4. 重新构建原生模块（确保 sqlite3 和打印机相关模块针对当前 Node.js 版本正确编译）
 console.log('步骤 4/6: 重新构建原生模块...');
 console.log(`  当前 Node.js 版本: ${currentNodeVersion}`);
 console.log(`  目标打包版本: ${nodeVersion}`);
-console.log('  正在重新构建原生模块（sqlite3）...\n');
+console.log('  正在重新构建原生模块（sqlite3, ffi-napi, ref-napi 等）...\n');
 
+// 需要重新构建的原生模块列表
+const nativeModules = [
+  'sqlite3',
+  'ffi-napi',
+  'ref-napi',
+  'ref-struct-napi',
+  'ref-array-napi'
+];
+
+// 检查构建工具是否可用
+let buildToolsAvailable = true;
 try {
-  // 重新构建 sqlite3（确保二进制文件针对当前 Node.js 版本编译）
-  console.log('  正在重新构建 sqlite3...');
-  execSync('npm rebuild sqlite3', { 
-    stdio: 'inherit',
+  // 尝试运行 node-gyp 检查
+  execSync('node-gyp --version', { 
+    stdio: 'pipe',
     cwd: serverDir
   });
-  console.log('  ✓ sqlite3 构建完成\n');
-  
-  // 验证二进制文件是否存在
-  const sqlite3NodePath = path.join(serverDir, 'node_modules', 'sqlite3', 'build', 'Release', 'node_sqlite3.node');
-  if (fs.existsSync(sqlite3NodePath)) {
-    const stats = fs.statSync(sqlite3NodePath);
-    console.log(`  ✓ 验证: sqlite3 二进制文件存在 (${(stats.size / 1024).toFixed(2)} KB)`);
-    console.log(`    路径: ${sqlite3NodePath}\n`);
-  } else {
-    console.warn('  ⚠ 警告: sqlite3 二进制文件未找到');
-    console.warn(`    预期路径: ${sqlite3NodePath}`);
-    console.warn('    这可能导致打包后无法加载 sqlite3 模块\n');
-  }
 } catch (error) {
-  console.warn('  ⚠ 警告: sqlite3 重新构建失败，继续打包...');
-  console.warn('   如果打包后运行出错，请手动运行: cd queueSystem-server && npm rebuild sqlite3\n');
+  buildToolsAvailable = false;
+  console.warn('  ⚠ 警告: 无法检测构建工具，可能缺少 Visual Studio Build Tools 或 Windows SDK');
+  console.warn('    如果原生模块已正确构建，可以继续打包');
+  console.warn('    如果打包后运行出错，请安装 Visual Studio Build Tools 并包含 Windows SDK\n');
 }
 
-console.log('✓ 原生模块构建完成\n');
+const buildResults = {};
+for (const moduleName of nativeModules) {
+  try {
+    console.log(`  正在处理 ${moduleName}...`);
+    
+    // 检查模块是否已存在且包含二进制文件
+    // node-gyp-build 优先从 prebuilds 目录加载，然后才是 build/Release
+    const modulePath = path.join(serverDir, 'node_modules', moduleName);
+    const buildPath = path.join(modulePath, 'build', 'Release');
+    const prebuildsPath = path.join(modulePath, 'prebuilds');
+    let hasBinary = false;
+    let binaryLocation = null;
+    
+    // 检查 prebuilds 目录（优先）
+    if (fs.existsSync(prebuildsPath)) {
+      // 查找匹配平台的预编译文件
+      const platform = process.platform === 'win32' ? 'win32' : process.platform;
+      const arch = process.arch === 'x64' ? 'x64' : process.arch;
+      const prebuildPlatformPath = path.join(prebuildsPath, `${platform}-${arch}`);
+      
+      if (fs.existsSync(prebuildPlatformPath)) {
+        const prebuildFiles = fs.readdirSync(prebuildPlatformPath);
+        const hasPrebuild = prebuildFiles.some(file => file.endsWith('.node'));
+        if (hasPrebuild) {
+          hasBinary = true;
+          binaryLocation = 'prebuilds';
+        }
+      }
+    }
+    
+    // 检查 build/Release 目录（备用）
+    if (!hasBinary && fs.existsSync(buildPath)) {
+      const buildFiles = fs.readdirSync(buildPath);
+      hasBinary = buildFiles.some(file => file.endsWith('.node'));
+      if (hasBinary) {
+        binaryLocation = 'build/Release';
+      }
+    }
+    
+    if (hasBinary) {
+      console.log(`    ℹ ${moduleName} 已存在二进制文件（位置: ${binaryLocation}），跳过重新构建`);
+      buildResults[moduleName] = { success: true, skipped: true, hasBinary: true, location: binaryLocation };
+      continue;
+    }
+    
+    // 方法1: 尝试使用预编译包（prebuild-install）
+    // 这些包（ffi-napi, ref-napi 等）支持预编译包，优先使用
+    console.log(`    尝试使用预编译包（prebuild-install）...`);
+    try {
+      // 先尝试安装预编译包
+      execSync(`npm install ${moduleName} --prefer-offline --no-audit`, { 
+        stdio: 'pipe',
+        cwd: serverDir,
+        maxBuffer: 10 * 1024 * 1024
+      });
+      
+      // 检查是否成功获取了二进制文件
+      if (fs.existsSync(buildPath)) {
+        const buildFiles = fs.readdirSync(buildPath);
+        const hasNewBinary = buildFiles.some(file => file.endsWith('.node'));
+        if (hasNewBinary) {
+          console.log(`    ✓ ${moduleName} 使用预编译包成功`);
+          buildResults[moduleName] = { success: true, hasBinary: true, method: 'prebuild' };
+          continue;
+        }
+      }
+    } catch (prebuildError) {
+      console.log(`    预编译包不可用，将尝试从源码构建`);
+    }
+    
+    // 方法2: 尝试从源码重新构建（需要构建工具）
+    console.log(`    尝试从源码构建...`);
+    execSync(`npm rebuild ${moduleName}`, { 
+      stdio: 'inherit',
+      cwd: serverDir,
+      maxBuffer: 10 * 1024 * 1024
+    });
+    
+    // 验证构建结果
+    if (fs.existsSync(buildPath)) {
+      const buildFiles = fs.readdirSync(buildPath);
+      const hasNewBinary = buildFiles.some(file => file.endsWith('.node'));
+      if (hasNewBinary) {
+        console.log(`  ✓ ${moduleName} 从源码构建完成\n`);
+        buildResults[moduleName] = { success: true, hasBinary: true, method: 'build' };
+      } else {
+        console.warn(`  ⚠ ${moduleName} 构建完成，但未找到二进制文件\n`);
+        buildResults[moduleName] = { success: false, hasBinary: false, reason: '未找到二进制文件' };
+      }
+    } else {
+      console.warn(`  ⚠ ${moduleName} 构建完成，但 build 目录不存在\n`);
+      buildResults[moduleName] = { success: false, hasBinary: false, reason: 'build 目录不存在' };
+    }
+  } catch (error) {
+    console.warn(`  ⚠ 警告: ${moduleName} 处理失败`);
+    console.warn(`    错误: ${error.message}`);
+    
+    // 检查是否至少存在旧的二进制文件
+    const modulePath = path.join(serverDir, 'node_modules', moduleName);
+    const buildPath = path.join(modulePath, 'build', 'Release');
+    let hasOldBinary = false;
+    
+    if (fs.existsSync(buildPath)) {
+      const buildFiles = fs.readdirSync(buildPath);
+      hasOldBinary = buildFiles.some(file => file.endsWith('.node'));
+      if (hasOldBinary) {
+        console.warn(`    ℹ 发现已存在的二进制文件，将使用现有版本`);
+        buildResults[moduleName] = { success: false, hasBinary: true, reason: '使用已存在的二进制文件' };
+      } else {
+        buildResults[moduleName] = { success: false, hasBinary: false, reason: '处理失败且无二进制文件' };
+      }
+    } else {
+      buildResults[moduleName] = { success: false, hasBinary: false, reason: '处理失败且无 build 目录' };
+    }
+    
+    console.warn(`   如果打包后运行出错，请尝试:`);
+    console.warn(`     1. 使用预编译包（推荐）:`);
+    console.warn(`        cd queueSystem-server`);
+    console.warn(`        npm install ${moduleName} --force`);
+    console.warn(`     2. 或安装 Visual Studio Build Tools（包含 Windows SDK）后重新构建`);
+    console.warn(`     3. 或手动运行: cd queueSystem-server && npm rebuild ${moduleName}\n`);
+  }
+}
+
+// 验证关键模块的二进制文件
+console.log('\n  正在验证原生模块二进制文件...');
+let allModulesValid = true;
+
+// 验证 sqlite3
+const sqlite3NodePath = path.join(serverDir, 'node_modules', 'sqlite3', 'build', 'Release', 'node_sqlite3.node');
+if (fs.existsSync(sqlite3NodePath)) {
+  const stats = fs.statSync(sqlite3NodePath);
+  console.log(`  ✓ sqlite3 二进制文件存在 (${(stats.size / 1024).toFixed(2)} KB)`);
+} else {
+  console.warn('  ⚠ 警告: sqlite3 二进制文件未找到');
+  console.warn(`    预期路径: ${sqlite3NodePath}`);
+  allModulesValid = false;
+}
+
+// 验证打印机相关模块
+// 注意：这些模块使用 node-gyp-build，优先从 prebuilds 目录加载
+const printerModules = ['ffi-napi', 'ref-napi', 'ref-struct-napi', 'ref-array-napi'];
+for (const moduleName of printerModules) {
+  const modulePath = path.join(serverDir, 'node_modules', moduleName);
+  const buildPath = path.join(modulePath, 'build', 'Release');
+  const prebuildsPath = path.join(modulePath, 'prebuilds');
+  let foundBinary = false;
+  let binaryLocation = null;
+  
+  // 检查 prebuilds 目录（优先）
+  if (fs.existsSync(prebuildsPath)) {
+    const platform = process.platform === 'win32' ? 'win32' : process.platform;
+    const arch = process.arch === 'x64' ? 'x64' : process.arch;
+    const prebuildPlatformPath = path.join(prebuildsPath, `${platform}-${arch}`);
+    
+    if (fs.existsSync(prebuildPlatformPath)) {
+      const prebuildFiles = fs.readdirSync(prebuildPlatformPath);
+      const nodeFiles = prebuildFiles.filter(file => file.endsWith('.node'));
+      
+      if (nodeFiles.length > 0) {
+        const nodeFile = nodeFiles[0];
+        const nodeFilePath = path.join(prebuildPlatformPath, nodeFile);
+        const stats = fs.statSync(nodeFilePath);
+        console.log(`  ✓ ${moduleName} 预编译文件存在: prebuilds/${platform}-${arch}/${nodeFile} (${(stats.size / 1024).toFixed(2)} KB)`);
+        foundBinary = true;
+        binaryLocation = 'prebuilds';
+      }
+    }
+  }
+  
+  // 检查 build/Release 目录（备用）
+  if (!foundBinary && fs.existsSync(buildPath)) {
+    const buildFiles = fs.readdirSync(buildPath);
+    const nodeFiles = buildFiles.filter(file => file.endsWith('.node'));
+    
+    if (nodeFiles.length > 0) {
+      const nodeFile = nodeFiles[0];
+      const nodeFilePath = path.join(buildPath, nodeFile);
+      const stats = fs.statSync(nodeFilePath);
+      console.log(`  ✓ ${moduleName} 二进制文件存在: build/Release/${nodeFile} (${(stats.size / 1024).toFixed(2)} KB)`);
+      foundBinary = true;
+      binaryLocation = 'build/Release';
+    }
+  }
+  
+  if (!foundBinary) {
+    console.warn(`  ⚠ 警告: ${moduleName} 未找到二进制文件`);
+    console.warn(`    检查了: prebuilds/${process.platform}-${process.arch}/ 和 build/Release/`);
+    allModulesValid = false;
+  }
+}
+
+// 验证 printer_sdk 目录
+const printerSdkPath = path.join(serverDir, 'printer_sdk');
+if (fs.existsSync(printerSdkPath)) {
+  const sdkFiles = fs.readdirSync(printerSdkPath);
+  console.log(`  ✓ printer_sdk 目录存在 (${sdkFiles.length} 个文件)`);
+  sdkFiles.forEach(file => {
+    const filePath = path.join(printerSdkPath, file);
+    if (fs.statSync(filePath).isFile()) {
+      const stats = fs.statSync(filePath);
+      console.log(`    - ${file} (${(stats.size / 1024).toFixed(2)} KB)`);
+    }
+  });
+} else {
+  console.warn('  ⚠ 警告: printer_sdk 目录不存在');
+  console.warn('    打印机功能可能无法正常工作');
+  allModulesValid = false;
+}
+
+if (!allModulesValid) {
+  console.warn('\n  ⚠ 警告: 部分原生模块的二进制文件缺失');
+  console.warn('    这可能导致打包后程序无法正常运行');
+  console.warn('    建议:');
+  console.warn('      1. 安装 Visual Studio Build Tools（包含 Windows SDK）');
+  console.warn('      2. 重新运行打包命令');
+  console.warn('      3. 或确保开发环境中已正确构建这些模块');
+  console.warn('      4. 如果继续打包，请确保 dist/node_modules 中包含完整的模块文件\n');
+} else {
+  console.log('\n  ✓ 所有原生模块验证通过\n');
+}
 
 // 5. 打包服务器应用
 console.log('步骤 5/6: 打包服务器应用为可执行文件...');
@@ -262,8 +481,15 @@ try {
     '"generated-models-auto"',
     '"models"',
     '"database.sqlite"',
+    '"printer_sdk"',                       // printer_sdk 目录
+    '"printer_sdk/**/*"',                  // printer_sdk 下所有文件
+    '"printer.config.json"',               // 打印机配置文件
     '"node_modules/sqlite3"',
-    `"${sqlite3NodeFileForPkg}"`           // sqlite3 二进制文件
+    `"${sqlite3NodeFileForPkg}"`,          // sqlite3 二进制文件
+    '"node_modules/ffi-napi"',            // 打印机相关原生模块
+    '"node_modules/ref-napi"',
+    '"node_modules/ref-struct-napi"',
+    '"node_modules/ref-array-napi"'
   ];
   
   // 注意：package.json 中的 pkg.assets 配置会被 pkg 自动读取
@@ -280,8 +506,15 @@ try {
   console.log(`    --assets "generated-models-auto"`);
   console.log(`    --assets "models"`);
   console.log(`    --assets "database.sqlite"`);
+  console.log(`    --assets "printer_sdk" (打印机 SDK 目录)`);
+  console.log(`    --assets "printer_sdk/**/*" (打印机 SDK 所有文件)`);
+  console.log(`    --assets "printer.config.json" (打印机配置文件)`);
   console.log(`    --assets "node_modules/sqlite3"`);
   console.log(`    --assets "${sqlite3NodeFileForPkg}" (sqlite3 二进制文件)`);
+  console.log(`    --assets "node_modules/ffi-napi" (打印机原生模块)`);
+  console.log(`    --assets "node_modules/ref-napi"`);
+  console.log(`    --assets "node_modules/ref-struct-napi"`);
+  console.log(`    --assets "node_modules/ref-array-napi"`);
   console.log('');
   console.log(`  工作目录: ${serverDir}`);
   console.log(`  public 目录绝对路径: ${path.join(serverDir, 'public')}`);
@@ -411,9 +644,11 @@ try {
   console.log('  提示: 资源打包说明');
   console.log('    ✓ public 目录 - 打包到可执行文件内部');
   console.log('    ✓ sqlite3 模块 - 打包到可执行文件内部（包含二进制文件）');
+  console.log('    ✓ printer_sdk 目录 - 打包到可执行文件内部');
+  console.log('    ✓ 打印机原生模块 - 打包到可执行文件内部（ffi-napi, ref-napi 等）');
   console.log('    ✓ pic 目录 - 保留在外部（可执行文件同目录下），方便用户自定义图片');
-  console.log('\n  重要提示: 如果运行时 sqlite3 加载失败（pkg 对原生模块支持有限）');
-  console.log('    将自动复制 sqlite3 到外部 node_modules 目录作为备用方案...');
+  console.log('\n  重要提示: 如果运行时原生模块加载失败（pkg 对原生模块支持有限）');
+  console.log('    将自动复制原生模块和 printer_sdk 到外部目录作为备用方案...');
   
   // 自动复制 public 目录到 dist 目录作为备用方案（pkg 对 public 目录支持可能有问题）
   console.log('  正在复制 public 目录到 dist 目录（备用方案）...');
@@ -469,13 +704,187 @@ try {
     console.warn('      如果运行时出错，请手动将 queueSystem-server/node_modules/sqlite3 复制到 dist/node_modules/sqlite3\n');
   }
   
+  // 自动复制打印机相关原生模块到 dist 目录作为备用方案
+  console.log('  正在复制打印机相关原生模块到 dist 目录（备用方案）...');
+  const printerNativeModules = ['ffi-napi', 'ref-napi', 'ref-struct-napi', 'ref-array-napi'];
+  
+  const nodeModulesDir = path.join(distDir, 'node_modules');
+  if (!fs.existsSync(nodeModulesDir)) {
+    fs.mkdirSync(nodeModulesDir, { recursive: true });
+  }
+  
+  // 递归复制模块及其所有依赖
+  const copiedModules = new Set();
+  
+  function copyModuleAndDependencies(moduleName, depth = 0) {
+    if (copiedModules.has(moduleName) || depth > 5) {
+      return; // 避免循环依赖和过深递归
+    }
+    
+    const moduleSource = path.join(serverDir, 'node_modules', moduleName);
+    const moduleDest = path.join(distDir, 'node_modules', moduleName);
+    
+    if (!fs.existsSync(moduleSource)) {
+      return;
+    }
+    
+    // 复制模块本身
+    if (!copiedModules.has(moduleName)) {
+      try {
+        if (fs.existsSync(moduleDest)) {
+          fs.rmSync(moduleDest, { recursive: true, force: true });
+        }
+        fs.cpSync(moduleSource, moduleDest, { recursive: true });
+        copiedModules.add(moduleName);
+        
+        if (depth === 0) {
+          console.log(`    ✓ ${moduleName} 已复制`);
+        } else {
+          console.log(`      ✓ 依赖 ${moduleName} 已复制`);
+        }
+      } catch (error) {
+        console.warn(`      ⚠ 复制 ${moduleName} 失败: ${error.message}`);
+        return;
+      }
+    }
+    
+    // 读取 package.json 获取依赖
+    try {
+      const packageJsonPath = path.join(moduleDest, 'package.json');
+      if (fs.existsSync(packageJsonPath)) {
+        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+        const dependencies = packageJson.dependencies || {};
+        
+        // 只复制运行时依赖（dependencies），不复制开发依赖（devDependencies）
+        for (const depName of Object.keys(dependencies)) {
+          // 跳过 Node.js 内置模块和已经复制的模块
+          if (!copiedModules.has(depName) && !depName.startsWith('@')) {
+            const depSource = path.join(serverDir, 'node_modules', depName);
+            if (fs.existsSync(depSource)) {
+              copyModuleAndDependencies(depName, depth + 1);
+            }
+          }
+        }
+      }
+    } catch (error) {
+      // 忽略读取 package.json 的错误
+    }
+  }
+  
+  // 先复制所有依赖（递归）
+  console.log('    正在复制模块及其依赖（递归）...');
+  for (const moduleName of printerNativeModules) {
+    copyModuleAndDependencies(moduleName);
+  }
+  console.log(`    已复制 ${copiedModules.size} 个模块（包括所有依赖）`);
+  console.log(`    已复制的模块: ${Array.from(copiedModules).join(', ')}\n`);
+  
+  // 验证已复制的模块
+  console.log('    正在验证已复制的模块...');
+  for (const moduleName of printerNativeModules) {
+    const moduleDest = path.join(distDir, 'node_modules', moduleName);
+    
+    if (fs.existsSync(moduleDest)) {
+      // 检查源模块是否有二进制文件
+      const buildDestDir = path.join(moduleDest, 'build');
+      const buildDestReleaseDir = path.join(buildDestDir, 'Release');
+      const prebuildsDestDir = path.join(moduleDest, 'prebuilds');
+      let hasBinary = false;
+      let binaryLocation = null;
+      
+      // 检查 prebuilds 目录（优先）
+      if (fs.existsSync(prebuildsDestDir)) {
+        const platform = process.platform === 'win32' ? 'win32' : process.platform;
+        const arch = process.arch === 'x64' ? 'x64' : process.arch;
+        const prebuildPlatformPath = path.join(prebuildsDestDir, `${platform}-${arch}`);
+        
+        if (fs.existsSync(prebuildPlatformPath)) {
+          const prebuildFiles = fs.readdirSync(prebuildPlatformPath);
+          const nodeFiles = prebuildFiles.filter(file => file.endsWith('.node'));
+          hasBinary = nodeFiles.length > 0;
+          if (hasBinary) {
+            binaryLocation = 'prebuilds';
+          }
+        }
+      }
+      
+      // 检查 build/Release 目录（备用）
+      if (!hasBinary && fs.existsSync(buildDestReleaseDir)) {
+        const buildFiles = fs.readdirSync(buildDestReleaseDir);
+        const nodeFiles = buildFiles.filter(file => file.endsWith('.node'));
+        hasBinary = nodeFiles.length > 0;
+        if (hasBinary) {
+          binaryLocation = 'build/Release';
+        }
+      }
+      
+      // 验证关键文件
+      const packageJsonPath = path.join(moduleDest, 'package.json');
+      const hasPackageJson = fs.existsSync(packageJsonPath);
+      
+      console.log(`    ✓ ${moduleName}: package.json=${hasPackageJson ? '✓' : '✗'}, 二进制文件=${hasBinary ? `✓ (${binaryLocation})` : '✗'}`);
+      
+      if (!hasBinary) {
+        console.warn(`      ⚠ 警告: ${moduleName} 未找到二进制文件`);
+      }
+    } else {
+      console.warn(`    ⚠ ${moduleName} 未复制成功`);
+    }
+  }
+  console.log('      如果打包内的打印机模块无法加载，程序会自动使用外部版本\n');
+  
+  // 自动复制 printer_sdk 目录到 dist 目录作为备用方案
+  console.log('  正在复制 printer_sdk 目录到 dist 目录（备用方案）...');
+  try {
+    const printerSdkSource = path.join(serverDir, 'printer_sdk');
+    const printerSdkDest = path.join(distDir, 'printer_sdk');
+    
+    if (fs.existsSync(printerSdkSource)) {
+      // 如果目标已存在，先删除
+      if (fs.existsSync(printerSdkDest)) {
+        fs.rmSync(printerSdkDest, { recursive: true, force: true });
+      }
+      
+      // 复制 printer_sdk 目录
+      fs.cpSync(printerSdkSource, printerSdkDest, { recursive: true });
+      console.log('    ✓ printer_sdk 已复制到 dist/printer_sdk（备用方案）');
+      console.log('      如果打包内的 printer_sdk 无法加载，程序会自动使用外部版本\n');
+    } else {
+      console.warn('    ⚠ printer_sdk 源目录不存在，跳过复制');
+      console.warn('      打印机功能可能无法正常工作\n');
+    }
+  } catch (error) {
+    console.warn('    ⚠ 复制 printer_sdk 失败（不影响打包）:', error.message);
+    console.warn('      如果运行时出错，请手动将 queueSystem-server/printer_sdk 复制到 dist/printer_sdk\n');
+  }
+  
+  // 自动复制 printer.config.json 到 dist 目录（外部配置文件，用户可以修改）
+  console.log('  正在复制 printer.config.json 到 dist 目录（外部配置文件）...');
+  try {
+    const printerConfigSource = path.join(serverDir, 'printer.config.json');
+    const printerConfigDest = path.join(distDir, 'printer.config.json');
+    
+    if (fs.existsSync(printerConfigSource)) {
+      // 复制配置文件（如果目标已存在，会覆盖）
+      fs.copyFileSync(printerConfigSource, printerConfigDest);
+      console.log('    ✓ printer.config.json 已复制到 dist/printer.config.json');
+      console.log('      用户可以直接编辑此文件来修改打印机配置\n');
+    } else {
+      console.warn('    ⚠ printer.config.json 源文件不存在，跳过复制');
+      console.warn('      程序将使用默认配置或环境变量\n');
+    }
+  } catch (error) {
+    console.warn('    ⚠ 复制 printer.config.json 失败（不影响打包）:', error.message);
+    console.warn('      如果运行时出错，请手动将 queueSystem-server/printer.config.json 复制到 dist/printer.config.json\n');
+  }
+  
 } catch (error) {
   console.error('✗ 打包失败:', error.message);
   console.error('\n提示: 如果遇到原生模块问题，请尝试:');
   console.error('  1. 确保已安装所有依赖: npm install');
   console.error('  2. 重新构建原生模块:');
   console.error('     cd queueSystem-server');
-  console.error('     npm rebuild sqlite3');
+  console.error('     npm rebuild sqlite3 ffi-napi ref-napi ref-struct-napi ref-array-napi');
   console.error(`  3. 当前 Node.js 版本: ${currentNodeVersion}`);
   console.error(`  4. 目标打包版本: ${nodeVersion}`);
   console.error('\n注意: pkg 对 Node.js v22 的支持可能不完整');
@@ -573,10 +982,10 @@ try {
 1. 双击运行 queue-system.exe
 2. 程序会自动启动服务器（默认端口: 3000）
 3. 在浏览器中访问以下地址：
-   - 取票页面: http://localhost:3000/ticket
-   - 显示屏: http://localhost:3000/display
-   - 叫号机: http://localhost:3000/counter
-   - 管理员: http://localhost:3000/admin
+   - 取票页面: http://【IP地址】:3000/ticket
+   - 显示屏: http://【IP地址】:3000/display
+   - 叫号机: http://【IP地址】:3000/counter
+   - 管理员: http://【IP地址】:3000/admin
 
 二、配置说明
 -----------

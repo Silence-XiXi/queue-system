@@ -7,6 +7,7 @@ const { seedDatabase } = require('./utils/seeder');
 const { initAdminSettings } = require('./utils/initAdminSettings');
 const dailyResetScheduler = require('./utils/dailyResetScheduler');
 const { addDatabaseIndexes } = require('./utils/addDatabaseIndexes');
+const printerService = require('./services/printerService');
 
 const PORT = process.env.PORT || 3000; // 修改为3001或其他未被占用的端口
 const server = http.createServer(app);
@@ -64,6 +65,24 @@ async function startServer() {
       // 定时任务失败不影响服务器启动，继续执行
     }
     
+    // 初始化打印机
+    try {
+      if (printerService.isAvailable()) {
+        const initResult = await printerService.initPrinter();
+        if (initResult) {
+          console.log('✅ 打印机初始化成功');
+        } else {
+          console.warn('⚠️  打印机初始化失败，但服务器将继续运行');
+        }
+      } else {
+        console.log('ℹ️  打印机功能未启用（DLL未加载或已禁用）');
+      }
+    } catch (error) {
+      console.error('初始化打印机时发生错误:', error);
+      console.error('错误堆栈:', error.stack);
+      // 打印机初始化失败不影响服务器启动，继续执行
+    }
+    
     server.listen(PORT, '0.0.0.0', () => {
       console.log('\n========================================');
       console.log('服务器启动成功！');
@@ -95,12 +114,18 @@ async function startServer() {
       }
       
       console.log(`\n常用页面:`);
-      console.log(`  取票页面: http://localhost:${PORT}/ticket`);
-      console.log(`  显示屏: http://localhost:${PORT}/display`);
-      console.log(`  叫号机: http://localhost:${PORT}/counter`);
-      console.log(`  管理员: http://localhost:${PORT}/admin`);
+      // 使用第一个可用的 IP 地址，如果没有则使用 localhost
+      const primaryIP = addresses.length > 0 ? addresses[0] : 'localhost';
+      console.log(`  取票页面: http://${primaryIP}:${PORT}/ticket`);
+      console.log(`  显示屏: http://${primaryIP}:${PORT}/display`);
+      console.log(`  叫号机: http://${primaryIP}:${PORT}/counter`);
+      console.log(`  管理员: http://${primaryIP}:${PORT}/admin`);
       console.log(`\n提示: 从其他设备访问时，请使用网络访问地址（包含端口号）`);
-      console.log(`例如: http://${addresses[0] || 'YOUR_IP'}:${PORT}/display`);
+      if (addresses.length > 0) {
+        console.log(`例如: http://${addresses[0]}:${PORT}/display`);
+      } else {
+        console.log(`(未检测到网络接口，请检查网络配置)`);
+      }
       console.log('========================================\n');
       console.log('按 Ctrl+C 停止服务器\n');
     });

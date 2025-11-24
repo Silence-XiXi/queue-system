@@ -18,6 +18,15 @@
 
 ## 开发环境
 
+### 前置要求
+
+- **Node.js**: v18.20.8（必需）
+- **npm**: v9.0.0 或更高版本
+
+> ⚠️ **重要**：本项目需要 Node.js v18.20.8。如果使用其他版本（如 v24），可能导致依赖安装失败或运行时错误。
+>
+> 如果当前 Node.js 版本不正确，请使用 nvm-windows 或 fnm 切换到 v18.20.8。详细说明请参考 `queueSystem-server/printer_example/QUICKSTART.md`。
+
 ### 技术栈
 
 - **前端**：Vue.js + Element Plus + Socket.io Client

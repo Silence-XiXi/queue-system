@@ -1,8 +1,59 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const Database = require('better-sqlite3');
+const sqlite3 = require('sqlite3').verbose();
 const { getDatabasePath } = require('../utils/getDatabasePath');
+
+// 将 sqlite3 的回调式 API 包装为 Promise
+function openDatabase(dbPath, mode = sqlite3.OPEN_READONLY) {
+  return new Promise((resolve, reject) => {
+    const db = new sqlite3.Database(dbPath, mode, (err) => {
+      if (err) reject(err);
+      else resolve(db);
+    });
+  });
+}
+
+function dbAll(db, sql, params = []) {
+  return new Promise((resolve, reject) => {
+    db.all(sql, params, (err, rows) => {
+      if (err) reject(err);
+      else resolve(rows);
+    });
+  });
+}
+
+function dbGet(db, sql, params = []) {
+  return new Promise((resolve, reject) => {
+    db.get(sql, params, (err, row) => {
+      if (err) reject(err);
+      else resolve(row);
+    });
+  });
+}
+
+function dbRun(db, sql, params = []) {
+  return new Promise((resolve, reject) => {
+    db.run(sql, params, function(err) {
+      if (err) reject(err);
+      else resolve({ lastID: this.lastID, changes: this.changes });
+    });
+  });
+}
+
+function closeDatabase(db) {
+  return new Promise((resolve, reject) => {
+    db.close((err) => {
+      if (err) reject(err);
+      else resolve();
+    });
+  });
+}
+
+// 验证表名安全性（只允许字母、数字、下划线）
+function validateTableName(tableName) {
+  return /^[a-zA-Z0-9_]+$/.test(tableName);
+}
 
 // 管理界面根路径
 router.get('/', (req, res) => {
@@ -151,70 +202,112 @@ router.get('/html', (req, res) => {
 });
 
 // 获取所有表名
-router.get('/tables', (req, res) => {
+router.get('/tables', async (req, res) => {
+  let db;
   try {
     const dbPath = getDatabasePath();
-    const db = new Database(dbPath, { readonly: true });
+    db = await openDatabase(dbPath, sqlite3.OPEN_READONLY);
     
-    const tables = db.prepare(`
+    const tables = await dbAll(db, `
       SELECT name FROM sqlite_master 
       WHERE type='table' AND name NOT LIKE 'sqlite_%'
-    `).all();
+    `);
     
-    db.close();
+    await closeDatabase(db);
     res.json(tables);
   } catch (error) {
-    console.error('获取表结构失败:', error);
+    console.error('获取表列表失败:', error);
+    if (db) {
+      try {
+        await closeDatabase(db);
+      } catch (closeErr) {
+        // 忽略关闭错误
+      }
+    }
     res.status(500).json({ error: error.message });
   }
 });
 
 // 获取表结构
-router.get('/tables/:tableName/schema', (req, res) => {
+router.get('/tables/:tableName/schema', async (req, res) => {
+  let db;
   try {
     const { tableName } = req.params;
+    
+    // 验证表名安全性
+    if (!validateTableName(tableName)) {
+      return res.status(400).json({ error: '无效的表名' });
+    }
+    
     const dbPath = getDatabasePath();
-    const db = new Database(dbPath, { readonly: true });
+    db = await openDatabase(dbPath, sqlite3.OPEN_READONLY);
     
-    const tableInfo = db.prepare(`PRAGMA table_info(${tableName})`).all();
+    // sqlite3 不支持对表名使用参数化查询，但我们已经验证了表名
+    const tableInfo = await dbAll(db, `PRAGMA table_info(${tableName})`);
     
-    db.close();
+    await closeDatabase(db);
     res.json(tableInfo);
   } catch (error) {
     console.error('获取表结构失败:', error);
+    if (db) {
+      try {
+        await closeDatabase(db);
+      } catch (closeErr) {
+        // 忽略关闭错误
+      }
+    }
     res.status(500).json({ error: error.message });
   }
 });
 
 // 查询表数据
-router.get('/tables/:tableName/data', (req, res) => {
+router.get('/tables/:tableName/data', async (req, res) => {
+  let db;
   try {
     const { tableName } = req.params;
+    
+    // 验证表名安全性
+    if (!validateTableName(tableName)) {
+      return res.status(400).json({ error: '无效的表名' });
+    }
+    
     const { page = 1, limit = 100 } = req.query;
     const offset = (page - 1) * limit;
+    const limitNum = parseInt(limit);
+    const offsetNum = parseInt(offset);
     
     const dbPath = getDatabasePath();
-    const db = new Database(dbPath, { readonly: true });
+    db = await openDatabase(dbPath, sqlite3.OPEN_READONLY);
     
-    const data = db.prepare(`SELECT * FROM ${tableName} LIMIT ? OFFSET ?`).all(limit, offset);
-    const count = db.prepare(`SELECT COUNT(*) as count FROM ${tableName}`).get();
+    // sqlite3 不支持对表名使用参数化查询，但我们已经验证了表名
+    // 对 limit 和 offset 使用参数化查询
+    const data = await dbAll(db, `SELECT * FROM ${tableName} LIMIT ? OFFSET ?`, [limitNum, offsetNum]);
+    const count = await dbGet(db, `SELECT COUNT(*) as count FROM ${tableName}`);
     
-    db.close();
+    await closeDatabase(db);
     
     res.json({
       data,
       total: count.count,
       page: parseInt(page),
-      limit: parseInt(limit)
+      limit: limitNum
     });
   } catch (error) {
     console.error('获取表数据失败:', error);
+    if (db) {
+      try {
+        await closeDatabase(db);
+      } catch (closeErr) {
+        // 忽略关闭错误
+      }
+    }
     res.status(500).json({ error: error.message });
   }
 });
 
 // 执行自定义SQL查询
-router.post('/query', express.json(), (req, res) => {
+router.post('/query', express.json(), async (req, res) => {
+  let db;
   try {
     const { sql } = req.body;
     
@@ -223,22 +316,29 @@ router.post('/query', express.json(), (req, res) => {
     }
     
     const dbPath = getDatabasePath();
-    const db = new Database(dbPath);
+    db = await openDatabase(dbPath, sqlite3.OPEN_READWRITE);
     
     let result;
     // 检查SQL语句类型
     const sqlType = sql.trim().split(' ')[0].toUpperCase();
     
     if (sqlType === 'SELECT') {
-      result = db.prepare(sql).all();
+      result = await dbAll(db, sql);
     } else {
-      result = db.prepare(sql).run();
+      result = await dbRun(db, sql);
     }
     
-    db.close();
+    await closeDatabase(db);
     res.json(result);
   } catch (error) {
     console.error('执行SQL查询失败:', error);
+    if (db) {
+      try {
+        await closeDatabase(db);
+      } catch (closeErr) {
+        // 忽略关闭错误
+      }
+    }
     res.status(500).json({ error: error.message });
   }
 });
