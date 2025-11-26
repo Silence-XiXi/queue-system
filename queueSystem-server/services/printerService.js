@@ -499,6 +499,37 @@ async function printTicket(ticketData) {
       }
     }
     
+    // 打印前检查打印机状态（包括纸张状态）
+    // 注意：根据 DLL 文档，不应在打印过程中查询，所以只在打印前查询一次
+    try {
+      const statusBefore = await queryPrinterStatus();
+      if (statusBefore.error === -3) {
+        printerLogger.warn('打印前检测到缺纸', { status: statusBefore });
+        return {
+          success: false,
+          message: '打印机缺纸，请添加纸张后重试'
+        };
+      } else if (statusBefore.error === -1) {
+        printerLogger.warn('打印前检测到打印机脱机', { status: statusBefore });
+        return {
+          success: false,
+          message: '打印机脱机，请检查打印机连接'
+        };
+      } else if (statusBefore.error === -2) {
+        printerLogger.warn('打印前检测到上盖打开', { status: statusBefore });
+        return {
+          success: false,
+          message: '打印机上盖打开，请关闭上盖后重试'
+        };
+      } else if (statusBefore.error !== 1) {
+        printerLogger.warn('打印前检测到打印机异常', { status: statusBefore });
+        // 其他错误（如切刀异常、温度过高等）不阻止打印，但记录警告
+      }
+    } catch (statusError) {
+      // 查询状态失败不影响打印，只记录日志
+      printerLogger.debug('打印前状态查询失败，继续打印', { error: statusError.message });
+    }
+    
     // 准备打印内容（参考 BusinessTypeSelector.vue 弹窗格式）
     const date = new Date();
     // 格式化为：2025-11-26 12:54:35
@@ -590,7 +621,7 @@ async function printTicket(ticketData) {
     printerDll.Pos_FeedLine();
     
     // 10. 进纸（切纸前留出空间）
-    printerDll.Pos_Feed_N_Line(3);
+    printerDll.Pos_Feed_N_Line(4);
     
     // 11. 切纸（如果有切刀功能）
     try {
@@ -603,13 +634,46 @@ async function printTicket(ticketData) {
     // 12. 再进纸一行
     printerDll.Pos_FeedLine();
     
-    printerLogger.info('打印成功', {
+    // 打印后检查打印机状态（检测是否在打印过程中出现缺纸等问题）
+    // 注意：根据 DLL 文档，不应在打印过程中查询，所以只在打印完成后查询一次
+    let printStatus = '成功';
+    try {
+      // 等待一小段时间，让打印机完成打印操作
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const statusAfter = await queryPrinterStatus();
+      if (statusAfter.error === -3) {
+        printStatus = '可能缺纸';
+        printerLogger.warn('打印后检测到缺纸，打印可能不完整', { 
+          status: statusAfter,
+          ticket_number 
+        });
+      } else if (statusAfter.error !== 1) {
+        printerLogger.warn('打印后检测到打印机异常', { 
+          status: statusAfter,
+          ticket_number 
+        });
+      }
+    } catch (statusError) {
+      // 查询状态失败不影响返回结果，只记录日志
+      printerLogger.debug('打印后状态查询失败', { error: statusError.message });
+    }
+    
+    printerLogger.info('打印完成', {
       ticket_number,
       business_type_name,
       business_type_english_name: business_type_english_name || '(无英文名称)',
       waiting_count,
-      dateTime: dateTimeStr
+      dateTime: dateTimeStr,
+      status: printStatus
     });
+    
+    if (printStatus === '可能缺纸') {
+      return {
+        success: false,
+        message: '打印可能不完整：检测到缺纸，请检查打印结果'
+      };
+    }
     
     return {
       success: true,
