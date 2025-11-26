@@ -1,3 +1,22 @@
+// 设置控制台编码（解决 Windows 繁体中文系统乱码问题）
+// 控制台输出使用简体中文，设置为 GBK 编码（代码页936）
+if (process.platform === 'win32') {
+  try {
+    const { execSync } = require('child_process');
+    // 设置控制台代码页为 GBK (936) - 适用于简体中文
+    try {
+      execSync('chcp 936 >nul 2>&1', { stdio: 'ignore' });
+    } catch (e) {
+      // 如果设置失败，忽略错误（可能没有管理员权限）
+    }
+    // 设置 stdout/stderr 编码
+    process.stdout.setDefaultEncoding('gbk');
+    process.stderr.setDefaultEncoding('gbk');
+  } catch (error) {
+    // 忽略编码设置错误
+  }
+}
+
 const app = require('./app');
 const http = require('http');
 const os = require('os');

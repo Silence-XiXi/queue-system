@@ -489,7 +489,8 @@ try {
     '"node_modules/ffi-napi"',            // 打印机相关原生模块
     '"node_modules/ref-napi"',
     '"node_modules/ref-struct-napi"',
-    '"node_modules/ref-array-napi"'
+    '"node_modules/ref-array-napi"',
+    '"node_modules/iconv-lite"'           // BIG-5 编码转换库
   ];
   
   // 注意：package.json 中的 pkg.assets 配置会被 pkg 自动读取
@@ -511,10 +512,11 @@ try {
   console.log(`    --assets "printer.config.json" (打印机配置文件)`);
   console.log(`    --assets "node_modules/sqlite3"`);
   console.log(`    --assets "${sqlite3NodeFileForPkg}" (sqlite3 二进制文件)`);
-  console.log(`    --assets "node_modules/ffi-napi" (打印机原生模块)`);
-  console.log(`    --assets "node_modules/ref-napi"`);
-  console.log(`    --assets "node_modules/ref-struct-napi"`);
-  console.log(`    --assets "node_modules/ref-array-napi"`);
+    console.log(`    --assets "node_modules/ffi-napi" (打印机原生模块)`);
+    console.log(`    --assets "node_modules/ref-napi"`);
+    console.log(`    --assets "node_modules/ref-struct-napi"`);
+    console.log(`    --assets "node_modules/ref-array-napi"`);
+    console.log(`    --assets "node_modules/iconv-lite" (BIG-5 编码转换库)`);
   console.log('');
   console.log(`  工作目录: ${serverDir}`);
   console.log(`  public 目录绝对路径: ${path.join(serverDir, 'public')}`);
@@ -706,7 +708,7 @@ try {
   
   // 自动复制打印机相关原生模块到 dist 目录作为备用方案
   console.log('  正在复制打印机相关原生模块到 dist 目录（备用方案）...');
-  const printerNativeModules = ['ffi-napi', 'ref-napi', 'ref-struct-napi', 'ref-array-napi'];
+  const printerNativeModules = ['ffi-napi', 'ref-napi', 'ref-struct-napi', 'ref-array-napi', 'iconv-lite'];
   
   const nodeModulesDir = path.join(distDir, 'node_modules');
   if (!fs.existsSync(nodeModulesDir)) {
