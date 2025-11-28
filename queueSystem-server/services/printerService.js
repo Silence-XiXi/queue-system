@@ -6,6 +6,7 @@
 const path = require('path');
 const fs = require('fs');
 const printerLogger = require('../utils/printerLogger');
+const logger = require('../utils/logger');
 
 // 依赖：npm install iconv-lite
 const iconv = require('iconv-lite');
@@ -16,11 +17,9 @@ try {
   const printerModulesLoader = require('../utils/loadPrinterModules');
   loadPrinterModules = printerModulesLoader.loadPrinterModules;
   getPrinterDllPath = printerModulesLoader.getPrinterDllPath;
-  console.log('✓ loadPrinterModules 工具函数加载成功');
+  logger.info('✓ loadPrinterModules 工具函数加载成功');
 } catch (error) {
-  console.error('❌ 加载 loadPrinterModules 工具函数失败:');
-  console.error('  错误信息:', error.message);
-  console.error('  错误堆栈:', error.stack);
+  logger.error('❌ 加载 loadPrinterModules 工具函数失败:', error);
   // 设置空函数，避免后续调用失败
   loadPrinterModules = () => null;
   getPrinterDllPath = () => '';
@@ -132,12 +131,12 @@ function loadPrinterConfig() {
       if (fs.existsSync(configPath)) {
         const configContent = fs.readFileSync(configPath, 'utf8');
         fileConfig = JSON.parse(configContent);
-        console.log(`✓ 已加载打印机配置文件: ${configPath}`);
+        logger.info(`✓ 已加载打印机配置文件: ${configPath}`);
         break;
       }
     } catch (error) {
       // 如果某个路径读取失败，继续尝试下一个
-      console.warn(`⚠ 读取配置文件失败 ${configPath}:`, error.message);
+      logger.warn(`⚠ 读取配置文件失败 ${configPath}:`, error);
     }
   }
 
@@ -176,11 +175,11 @@ function loadPrinterConfig() {
   const configSource = Object.keys(fileConfig).length > 0 ? '配置文件' : '默认值';
   const hasEnvVars = Object.keys(process.env).some(key => key.startsWith('PRINTER_'));
   if (hasEnvVars) {
-    console.log('ℹ️  打印机配置来源: 环境变量（覆盖配置文件和默认值）');
+    logger.info('ℹ️  打印机配置来源: 环境变量（覆盖配置文件和默认值）');
   } else if (configSource === '配置文件') {
-    console.log('ℹ️  打印机配置来源: 配置文件');
+    logger.info('ℹ️  打印机配置来源: 配置文件');
   } else {
-    console.log('ℹ️  打印机配置来源: 默认值');
+    logger.info('ℹ️  打印机配置来源: 默认值');
   }
 
   return config;
@@ -192,31 +191,29 @@ const PRINTER_CONFIG = loadPrinterConfig();
 // 尝试加载 ffi-napi 和 DLL
 try {
   if (PRINTER_CONFIG.enabled) {
-    console.log('========================================');
-    console.log('开始初始化打印机服务...');
-    console.log('========================================');
+    logger.info('========================================');
+    logger.info('开始初始化打印机服务...');
+    logger.info('========================================');
     
     // 使用工具函数动态加载原生模块（支持 pkg 打包环境）
-    console.log('调用 loadPrinterModules()...');
+    logger.info('调用 loadPrinterModules()...');
     let printerModules;
     try {
       printerModules = loadPrinterModules();
-      console.log('loadPrinterModules() 执行完成');
+      logger.info('loadPrinterModules() 执行完成');
     } catch (loadError) {
-      console.error('❌ loadPrinterModules() 执行时发生异常:');
-      console.error('  错误信息:', loadError.message);
-      console.error('  错误堆栈:', loadError.stack);
+      logger.error('❌ loadPrinterModules() 执行时发生异常:', loadError);
       throw loadError;
     }
     
     if (!printerModules) {
-      console.error('❌ loadPrinterModules() 返回 null');
+      logger.error('❌ loadPrinterModules() 返回 null');
       throw new Error('loadPrinterModules() 返回 null，无法加载打印机原生模块');
     }
     
-    console.log('✓ loadPrinterModules() 返回了模块对象');
+    logger.info('✓ loadPrinterModules() 返回了模块对象');
     
-    console.log('已加载的模块:', Object.keys(printerModules));
+    logger.info('已加载的模块:', Object.keys(printerModules));
     
     if (!printerModules['ffi-napi']) {
       throw new Error('无法加载 ffi-napi 模块');
@@ -228,23 +225,23 @@ try {
     
     ffi = printerModules['ffi-napi'];
     ref = printerModules['ref-napi'];
-    console.log('✓ ffi-napi 和 ref-napi 加载成功');
+    logger.info('✓ ffi-napi 和 ref-napi 加载成功');
     
     // 定义 wchar_t 及 wchar_t* 类型（适配 Windows DLL 的 const wchar_t*）
     // Windows 下 wchar_t = 2字节无符号短整型（ushort）
     wchar_t = ref.types.ushort;
     wchar_t_ptr = ref.refType(wchar_t); // 定义 wchar_t* 指针类型
-    console.log('✓ wchar_t 类型定义完成');
+    logger.info('✓ wchar_t 类型定义完成');
     
     // 使用工具函数获取 DLL 路径（支持 pkg 打包环境）
     const DLL_PATH = getPrinterDllPath();
-    console.log(`DLL 路径: ${DLL_PATH}`);
+    logger.info(`DLL 路径: ${DLL_PATH}`);
     
     // 验证 DLL 文件是否存在
     if (!fs.existsSync(DLL_PATH)) {
       throw new Error(`打印机 DLL 文件不存在: ${DLL_PATH}`);
     }
-    console.log('✓ DLL 文件存在');
+    logger.info('✓ DLL 文件存在');
     
     // 定义 DLL 函数签名（根据 PrinterLibs.h）
     printerDll = ffi.Library(DLL_PATH, {
@@ -274,17 +271,13 @@ try {
       'Pos_QueryPrinterErr': ['int', ['ulong']]
     });
     
-    console.log('✓ 打印机 DLL 函数绑定成功');
+    logger.info('✓ 打印机 DLL 函数绑定成功');
     printerLogger.info('打印机 DLL 加载成功', { dllPath: DLL_PATH, config: PRINTER_CONFIG });
   } else {
     printerLogger.info('打印机功能已禁用（PRINTER_ENABLED=false）');
   }
 } catch (error) {
-  console.error('❌ 打印机 DLL 加载失败:');
-  console.error('  错误信息:', error.message);
-  if (error.stack) {
-    console.error('  错误堆栈:', error.stack);
-  }
+  logger.error('❌ 打印机 DLL 加载失败:', error);
   
   printerLogger.warn('打印机 DLL 加载失败，将使用模拟模式', { 
     error: error.message,
@@ -507,19 +500,19 @@ async function printTicket(ticketData) {
         printerLogger.warn('打印前检测到缺纸', { status: statusBefore });
         return {
           success: false,
-          message: '打印机缺纸，请添加纸张后重试'
+          message: '打印機缺紙，請添加紙張後重試'
         };
       } else if (statusBefore.error === -1) {
         printerLogger.warn('打印前检测到打印机脱机', { status: statusBefore });
         return {
           success: false,
-          message: '打印机脱机，请检查打印机连接'
+          message: '打印機離線，請檢查打印機連接'
         };
       } else if (statusBefore.error === -2) {
         printerLogger.warn('打印前检测到上盖打开', { status: statusBefore });
         return {
           success: false,
-          message: '打印机上盖打开，请关闭上盖后重试'
+          message: '打印機上蓋打開，請關閉上蓋後重試'
         };
       } else if (statusBefore.error !== 1) {
         printerLogger.warn('打印前检测到打印机异常', { status: statusBefore });
@@ -659,7 +652,9 @@ async function printTicket(ticketData) {
       printerLogger.debug('打印后状态查询失败', { error: statusError.message });
     }
     
-    printerLogger.info('打印完成', {
+    // 打印成功日志改为 DEBUG 级别，减少日志文件占用空间
+    // 如果需要调试，可以通过环境变量启用 DEBUG 日志
+    printerLogger.debug('打印完成', {
       ticket_number,
       business_type_name,
       business_type_english_name: business_type_english_name || '(无英文名称)',
@@ -668,10 +663,20 @@ async function printTicket(ticketData) {
       status: printStatus
     });
     
+    // 只在打印状态异常时记录 WARN 级别日志
+    if (printStatus !== '成功') {
+      printerLogger.warn('打印完成但状态异常', {
+        ticket_number,
+        business_type_name,
+        dateTime: dateTimeStr,
+        status: printStatus
+      });
+    }
+    
     if (printStatus === '可能缺纸') {
       return {
         success: false,
-        message: '打印可能不完整：检测到缺纸，请检查打印结果'
+        message: '打印可能不完整：檢測到缺紙，請檢查打印結果'
       };
     }
     

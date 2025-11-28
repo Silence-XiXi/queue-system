@@ -78,5 +78,5 @@ fetchLastServiceNumbers() - 刷新上一个服务号
 ----------------------------------------------------------------------
 
 现在我要实现语音播放
-在@CounterView.vue 页面点击next、recall、start按钮时 ，传递消息，@DisplayView.vue 页面接受消息进行语音播放，通常只有应该display设备，就是settings表中key值为display_server_ip的IP地址。counter页面需要传递input-display和counter-number信息，语音播放内容举例：请A001号到2号柜台办理业务。
+在@CounterView.vue 页面点击next、recall、start按钮时 ，传递消息，@DisplayView.vue 页面接受消息进行语音播放，通常只有应该display设备，就是settings表中key值为voice_broadcast_host_ip的IP地址。counter页面需要传递input-display和counter-number信息，语音播放内容举例：请A001号到2号柜台办理业务。
 还需要注意，会同时有很多台设备访问@CounterView.vue 页面，那么语音播报指令也会同时发出，需要排队一个一个播放（注意性能优化，不要卡机

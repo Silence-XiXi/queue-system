@@ -1,5 +1,6 @@
 const { Server } = require('socket.io');
 const { sequelize, counters: Counter } = require('../models');
+const logger = require('../utils/logger');
 
 let ioInstance = null;
 
@@ -14,7 +15,7 @@ function initSocketIO(server) {
   ioInstance = io; // 保存io实例供外部使用
   
   io.on('connection', (socket) => {
-    console.log('客户端连接:', socket.id);
+    logger.info('客户端连接:', socket.id);
     
     // 窗口状态更新
     socket.on('counter:status', async (data) => {
@@ -27,7 +28,7 @@ function initSocketIO(server) {
           io.emit('counter:statusUpdated', { counterId, status });
         }
       } catch (error) {
-        console.error('更新窗口状态失败:', error);
+        logger.error('更新窗口状态失败:', error);
       }
     });
     
@@ -42,7 +43,7 @@ function initSocketIO(server) {
           businessTypeName
         });
       } catch (error) {
-        console.error('叫号失败:', error);
+        logger.error('叫号失败:', error);
       }
     });
     
@@ -64,7 +65,7 @@ function initSocketIO(server) {
     });
     
     socket.on('disconnect', () => {
-      console.log('客户端断开连接:', socket.id);
+      logger.info('客户端断开连接:', socket.id);
     });
   });
   

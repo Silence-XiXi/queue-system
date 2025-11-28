@@ -1,4 +1,5 @@
 const ticketService = require('../services/ticketService');
+const logger = require('../utils/logger');
 
 // 取票
 const getTicket = async (req, res) => {
@@ -12,7 +13,7 @@ const getTicket = async (req, res) => {
     const ticketInfo = await ticketService.createTicket(businessTypeId);
     res.status(200).json(ticketInfo);
   } catch (error) {
-    console.error('取票失败:', error);
+    logger.error('取票失败:', error);
     res.status(500).json({ message: '取票失败', error: error.message });
   }
 };
@@ -24,7 +25,7 @@ const getWaitingCountForBusinessType = async (req, res) => {
     const waitingCount = await ticketService.getWaitingCount(businessTypeId);
     res.status(200).json({ waiting_count: waitingCount });
   } catch (error) {
-    console.error('获取等待人数失败:', error);
+    logger.error('获取等待人数失败:', error);
     res.status(500).json({ message: '获取等待人数失败', error: error.message });
   }
 };
@@ -35,7 +36,7 @@ const getAllWaitingCounts = async (req, res) => {
     const waitingCounts = await ticketService.getAllWaitingCounts();
     res.status(200).json(waitingCounts);
   } catch (error) {
-    console.error('批量获取等待人数失败:', error);
+    logger.error('批量获取等待人数失败:', error);
     res.status(500).json({ message: '批量获取等待人数失败', error: error.message });
   }
 };
@@ -52,7 +53,7 @@ const callNext = async (req, res) => {
     const result = await ticketService.callNext(businessTypeId, counterNumber);
     res.status(200).json(result);
   } catch (error) {
-    console.error('叫号失败:', error);
+    logger.error('叫号失败:', error);
     res.status(500).json({ message: '叫号失败', error: error.message });
   }
 };

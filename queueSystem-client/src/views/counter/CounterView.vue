@@ -505,6 +505,19 @@ onMounted(async () => {
       fetchLastServiceNumbers()    // 刷新上一个服务号
     ]);
   });
+  
+  // 监听每日重置事件，刷新所有数据
+  socket.on('ticket:dailyReset', async (data) => {
+    console.log('收到每日重置事件，刷新所有数据', data);
+    // 立即刷新所有相关数据
+    await Promise.all([
+      fetchWaitingCounts(),        // 刷新等待人数
+      fetchCurrentTicketNumber(),  // 刷新当前票号
+      fetchLastServiceNumbers()    // 刷新上一个服务号
+    ]);
+    // 显示重置完成提示
+    showToastMessage('每日重置已完成', 'Daily reset completed');
+  });
 });
 
 // 组件卸载时清理定时器和事件监听器
@@ -535,6 +548,7 @@ onUnmounted(() => {
   socket.off('ticket:created');
   socket.off('ticket:statusUpdated');
   socket.off('ticket:nextCalled');
+  socket.off('ticket:dailyReset');
 });
 
 const selectBusinessType = (type) => {
@@ -765,10 +779,10 @@ const deleteLastChar = () => {
 .counter-wrapper::before {
   content: '';
   position: absolute;
-  top: -150px;
+  top: -168.75px;
   left: -10%;
   right: -10%;
-  height: 300px;
+  height: 337.5px;
   background: linear-gradient(135deg, #409EFF 0%, #64B5F6 100%);
   border-radius: 50%;
   opacity: 0.08;
@@ -779,10 +793,10 @@ const deleteLastChar = () => {
 .counter-wrapper::after {
   content: '';
   position: absolute;
-  bottom: -150px;
+  bottom: -168.75px;
   left: -10%;
   right: -10%;
-  height: 300px;
+  height: 337.5px;
   background: linear-gradient(135deg, #67C23A 0%, #95D475 100%);
   border-radius: 50%;
   opacity: 0.08;
@@ -792,29 +806,31 @@ const deleteLastChar = () => {
 
 .counter-container {
   position: relative;
-  padding: 0.25vh 1vw;
-  height: calc(100vh - 0.5vh);
-  max-height: calc(100vh - 0.5vh);
+  padding: 0.28125vh 1.125vw 0.5625vh 1.125vw;
+  min-height: calc(100vh - 0.5625vh);
+  max-height: calc(100vh - 0.5625vh);
   background-color: white;
   font-family: 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
-  gap: 1px;
-  overflow: hidden;
-  border-radius: 25px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-  margin: 0.25vh 0.25vw;
+  gap: 1.125px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 28.125px;
+  box-shadow: 0 5.625px 22.5px rgba(0, 0, 0, 0.05);
+  margin: 0.28125vh 0.28125vw;
   z-index: 1;
   border: 1px solid rgba(234, 237, 242, 0.8);
+  box-sizing: border-box;
 }
 
 .section-title {
-  font-size: 1.5rem;
+  font-size: 1.6875rem;
   font-weight: 600;
-  margin-bottom: 10px;
+  margin-bottom: 11.25px;
   color: #303133;
-  border-left: 4px solid #409EFF;
-  padding-left: 10px;
+  border-left: 4.5px solid #409EFF;
+  padding-left: 11.25px;
 }
 
 /* 顶部信息栏 */
@@ -822,21 +838,21 @@ const deleteLastChar = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 10px;
+  padding: 16.875px 11.25px;
   margin-bottom: 0;
   border-bottom: 1px solid rgba(234, 237, 242, 0.8);
-  border-radius: 15px 15px 0 0;
+  border-radius: 16.875px 16.875px 0 0;
   background-color: rgba(250, 252, 254, 0.8);
 }
 
 .counter-number {
-  font-size: 1.3rem;
+  font-size: 1.4625rem;
   font-weight: bold;
   color: #409EFF;
 }
 
 .date-time {
-  font-size: 1.1rem;
+  font-size: 1.2375rem;
   color: #606266;
   font-weight: 500;
   text-align: right;
@@ -846,26 +862,26 @@ const deleteLastChar = () => {
 .main-section {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 2.25px;
   flex: 1;
   overflow: hidden;
-  height: calc(100% - 50px); /* 减去顶部区域的高度 */
+  height: calc(100% - 56.25px); /* 减去顶部区域的高度 */
 }
 
 /* 底部控制区域 - 三栏布局 */
 .control-area {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr; /* 三等分布局 */
-  gap: 15px; /* 增加列间距 */
+  gap: 16.875px; /* 增加列间距 */
   flex: 1; /* 占用50%的高度 */
   overflow: hidden;
   margin-bottom: 0;
   padding-bottom: 0;
   border-top: 1px solid rgba(234, 237, 242, 0.8);
-  padding-top: 1px;
-  margin-top: 1px;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-top: 1.125px;
+  margin-top: 1.125px;
+  padding-left: 9px;
+  padding-right: 9px;
 }
 
 /* 业务类型区域 */
@@ -882,9 +898,9 @@ const deleteLastChar = () => {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap; /* 保持单行 */
-  gap: 18px;
+  gap: 20.25px;
   justify-content: space-between;
-  padding: 5px;
+  padding: 5.625px;
   flex: 1;
   align-items: center; /* 垂直居中 */
   height: 100%; /* 占满整个高度 */
@@ -901,17 +917,17 @@ const deleteLastChar = () => {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 3px 0;
-  border-radius: 10px;
+  padding: 3.375px 0;
+  border-radius: 11.25px;
   border: 1px solid #EBEEF5;
   background-color: #f9f9f9;
   transition: all 0.3s;
   cursor: pointer;
-  min-width: 110px; /* 最小宽度增加 */
+  min-width: 123.75px; /* 最小宽度增加 */
   flex: 1; /* 平均分配空间 */
-  height: calc(100% - 10px); /* 尽可能高，减去margin */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
-  margin-bottom: 5px;
+  height: calc(100% - 11.25px); /* 尽可能高，减去margin */
+  box-shadow: 0 2.25px 5.625px rgba(0, 0, 0, 0.02);
+  margin-bottom: 5.625px;
 }
 
 .business-card:hover {
@@ -926,12 +942,12 @@ const deleteLastChar = () => {
 
 .business-info {
   text-align: center;
-  margin-bottom: 6px;
-  padding-top: 10px;
+  margin-bottom: 6.75px;
+  padding-top: 11.25px;
 }
 
 .business-type-code {
-  font-size: 3rem;
+  font-size: 4.21875rem;
   font-weight: bold;
   color: #303133;
 }
@@ -943,13 +959,13 @@ const deleteLastChar = () => {
 }
 
 .waiting-label {
-  font-size: 1rem;
+  font-size: 1.125rem;
   color: #909399;
-  margin-bottom: 3px;
+  margin-bottom: 3.375px;
 }
 
 .count-number {
-  font-size: 2rem;
+  font-size: 2.25rem;
   color: #f56c6c;
   font-weight: bold;
 }
@@ -960,11 +976,11 @@ const deleteLastChar = () => {
   align-items: center;
   width: 100%;
   border-top: 1px dashed #EBEEF5;
-  padding-top: 3px;
+  padding-top: 3.375px;
 }
 
 .last-service-number {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: bold;
   color: #409EFF;
 }
@@ -975,35 +991,35 @@ const deleteLastChar = () => {
 
 /* 左侧控制按钮区域 */
 .control-buttons-section {
-  padding: 4px 2px;
+  padding: 4.5px 2.25px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 16.875px;
   justify-content: center;
   align-items: center;
 }
 
 .control-button {
-  padding: 5px;
-  font-size: 1.2rem;
+  padding: 5.625px;
+  font-size: 1.35rem;
   font-weight: 700;
   width: 100%;
-  height: 48px;
-  border-radius: 4px;
+  height: 54px;
+  border-radius: 4.5px;
   border: 1px solid transparent;
   cursor: pointer;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 6.75px;
   transition: all 0.3s;
 }
 
 .control-button .el-icon {
-  font-size: 1.3rem;
+  font-size: 1.4625rem;
   font-weight: bold;
-  stroke-width: 2px; /* 增加SVG图标的线条粗细 */
+  stroke-width: 2.25px; /* 增加SVG图标的线条粗细 */
 }
 
 .next-btn {
@@ -1051,10 +1067,10 @@ const deleteLastChar = () => {
 
 /* 中间输入区域 */
 .input-section {
-  padding: 4px 2px;
+  padding: 4.5px 2.25px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 16.875px;
   justify-content: center; /* 垂直居中 */
   align-items: center; /* 确保子元素水平居中 */
   width: 100%; /* 确保占满整个宽度 */
@@ -1063,10 +1079,10 @@ const deleteLastChar = () => {
 .input-display {
   background-color: #f5f7fa;
   border: 1px solid #dcdfe6;
-  border-radius: 10px;
-  padding: 15px;
-  font-size: 2.6rem;
-  min-height: 90px;
+  border-radius: 11.25px;
+  padding: 16.875px;
+  font-size: 2.925rem;
+  min-height: 101.25px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1085,7 +1101,7 @@ const deleteLastChar = () => {
 .code-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 9px;
   justify-content: center;
   width: 90%; /* 与输入显示区域相同宽度 */
   margin: 0 auto; /* 水平居中 */
@@ -1093,15 +1109,15 @@ const deleteLastChar = () => {
 }
 
 .code-button {
-  width: 36px;
-  height: 36px;
+  width: 40.5px;
+  height: 40.5px;
   background-color: #f0f2f5;
   border: 1px solid #dcdfe6;
-  border-radius: 4px;
+  border-radius: 4.5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 1.575rem;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.2s;
@@ -1115,10 +1131,10 @@ const deleteLastChar = () => {
 }
 
 .number-keypad-section {
-  padding: 4px 5px;
+  padding: 4.5px 5.625px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 13.5px;
   justify-content: center;
   align-items: center;
   width: 100%; /* 确保占满整个宽度 */
@@ -1126,24 +1142,24 @@ const deleteLastChar = () => {
 
 .keypad-row {
   display: flex;
-  gap: 10px;
+  gap: 11.25px;
   width: 100%;
 }
 
 .num-button, .func-button {
-  width: 50px;
-  height: 50px;
-  border-radius: 4px;
+  width: 56.25px;
+  height: 56.25px;
+  border-radius: 4.5px;
   border: 1px solid #dcdfe6;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.2s;
   flex: 1;
-  min-width: 50px; /* 确保最小宽度与高度一致，更接近正方形 */
+  min-width: 56.25px; /* 确保最小宽度与高度一致，更接近正方形 */
   max-width: none; /* 允许按钮填充可用空间 */
 }
 
@@ -1185,25 +1201,25 @@ const deleteLastChar = () => {
 
 .next-button {
   width: 80%;
-  height: 50px;
-  font-size: 1.2rem;
+  height: 56.25px;
+  font-size: 1.35rem;
 }
 
 .manual-section h3 {
-  font-size: 1.1rem;
-  margin-bottom: 10px;
+  font-size: 1.2375rem;
+  margin-bottom: 11.25px;
   text-align: center;
 }
 
 .manual-input-group {
   display: flex;
-  gap: 10px;
+  gap: 11.25px;
 }
 
 /* 圆角按钮美化 */
 .control-button, .input-display, .num-button, .func-button, .code-button {
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 9px;
+  box-shadow: 0 1.125px 3.375px rgba(0, 0, 0, 0.05);
 }
 
 /* 响应式布局 */
@@ -1214,9 +1230,10 @@ const deleteLastChar = () => {
   }
   
   .counter-container {
-    height: auto;
-    min-height: 100vh;
-    padding-bottom: 5px;
+    min-height: calc(100vh - 0.5625vh);
+    max-height: none;
+    margin-bottom: 0.28125vh;
+    overflow-y: auto;
   }
   
   .control-section {
@@ -1224,8 +1241,8 @@ const deleteLastChar = () => {
   }
   
   .business-card {
-    min-width: 90px;
-    height: calc(100% - 10px);
+    min-width: 101.25px;
+    height: calc(100% - 11.25px);
   }
 }
 
@@ -1242,23 +1259,30 @@ const deleteLastChar = () => {
   }
   
   .control-button {
-    padding: 8px 0;
-    font-size: 0.9rem;
-    gap: 4px;
+    padding: 9px 0;
+    font-size: 1.0125rem;
+    gap: 4.5px;
   }
   
   .control-button i {
-    font-size: 1rem;
+    font-size: 1.125rem;
   }
   
   .num-button, .func-button {
-    width: 45px;
-    height: 45px;
+    width: 50.625px;
+    height: 50.625px;
   }
 }
 
 @media (max-width: 992px) {
   /* 三等分保持不变 */
+  .counter-container {
+    min-height: calc(100vh - 0.5625vh);
+    max-height: none;
+    margin-bottom: 0.28125vh;
+    overflow-y: auto;
+  }
+  
   .input-section {
     display: flex;
     flex-direction: column;
@@ -1266,23 +1290,23 @@ const deleteLastChar = () => {
   }
   
   .control-button {
-    height: 55px;
-    font-size: 1.5rem;
-    padding: 10px 0;
-    gap: 5px;
+    height: 61.875px;
+    font-size: 1.6875rem;
+    padding: 11.25px 0;
+    gap: 5.625px;
     font-weight: 700;
   }
   
   .control-button .el-icon {
-    font-size: 1.5rem;
+    font-size: 1.6875rem;
     font-weight: bold;
-    stroke-width: 2px;
+    stroke-width: 2.25px;
   }
   
   .input-display {
-    min-height: 90px;
-    font-size: 2.4rem;
-    padding: 15px;
+    min-height: 101.25px;
+    font-size: 2.7rem;
+    padding: 16.875px;
     box-sizing: border-box; /* 确保内边距和边框都计入宽度 */
   }
   
@@ -1290,7 +1314,7 @@ const deleteLastChar = () => {
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* 每行5个按钮 */
     grid-template-rows: repeat(2, auto); /* 自动分配为2行 */
-    gap: 8px;
+    gap: 9px;
     width: 90%; /* 与输入显示区域相同宽度 */
     justify-content: center;
     justify-items: stretch;
@@ -1299,156 +1323,163 @@ const deleteLastChar = () => {
   
   .code-button {
     width: auto; /* 自动适应宽度 */
-    height: 45px;
+    height: 50.625px;
     min-width: 0; /* 移除最小宽度限制 */
-    font-size: 1.8rem;
+    font-size: 2.025rem;
   }
   
   .business-cards {
-    min-height: 160px;
+    min-height: 180px;
   }
   
   .business-card {
-    min-height: 160px;
+    min-height: 180px;
   }
 
   .business-type-code {
-    font-size: 2.5rem;
+    font-size: 2.8125rem;
   }
 
   .last-service-number {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
   }
   
   .business-info {
-    padding-top: 12px;
-    margin-bottom: 10px;
+    padding-top: 13.5px;
+    margin-bottom: 11.25px;
   }
   
   .waiting-info {
-    margin-bottom: 8px;
+    margin-bottom: 9px;
   }
   
   .control-buttons-section {
-    gap: 18px;
-    padding: 6px 2px;
+    gap: 20.25px;
+    padding: 6.75px 2.25px;
   }
   
   .input-section {
-    gap: 18px;
-    padding: 6px 2px;
+    gap: 20.25px;
+    padding: 6.75px 2.25px;
   }
   
   .number-keypad-section {
-    gap: 15px;
-    padding: 6px 2px;
+    gap: 16.875px;
+    padding: 6.75px 2.25px;
   }
   
   .keypad-row {
-    gap: 12px;
+    gap: 13.5px;
   }
   
   .num-button, .func-button {
-    height: 55px;
-    width: 55px;
-    min-width: 55px;
+    height: 61.875px;
+    width: 61.875px;
+    min-width: 61.875px;
     max-width: none;
-    font-size: 2rem;
+    font-size: 2.25rem;
   }
 }
 
 @media (max-width: 768px) {
+  .counter-container {
+    min-height: calc(100vh - 0.5625vh);
+    max-height: none;
+    margin-bottom: 0.28125vh;
+    overflow-y: auto;
+  }
+  
   .header-bar {
-    padding: 12px 12px;
+    padding: 13.5px 13.5px;
   }
   
   .counter-number {
-    font-size: 1.1rem;
+    font-size: 1.2375rem;
   }
   
   .date-time {
-    font-size: 0.9rem;
+    font-size: 1.0125rem;
   }
   
   .business-cards {
-    gap: 15px;
-    padding: 5px 5px;
+    gap: 16.875px;
+    padding: 5.625px 5.625px;
     justify-content: space-around;
-    min-height: 130px;
+    min-height: 146.25px;
   }
   
   .business-card {
-    min-width: 85px;
-    height: calc(100% - 10px);
-    min-height: 120px;
-    padding: 5px 0;
-    margin: 0 2px;
+    min-width: 95.625px;
+    height: calc(100% - 11.25px);
+    min-height: 135px;
+    padding: 5.625px 0;
+    margin: 0 2.25px;
   }
 
   .last-service-number {
-    font-size: 1.5rem;
+    font-size: 1.6875rem;
   }
   
   .business-type-code {
-    font-size: 2rem;
+    font-size: 2.25rem;
   }
   
   .count-number {
-    font-size: 1.5rem;
+    font-size: 1.6875rem;
   }
   
   .control-area {
     /* 三等分保持不变 */
-    gap: 10px;
-    padding-left: 6px;
-    padding-right: 6px;
+    gap: 11.25px;
+    padding-left: 6.75px;
+    padding-right: 6.75px;
   }
   
   .control-buttons-section {
-    padding: 5px 5px;
-    gap: 12px;
+    padding: 5.625px 5.625px;
+    gap: 13.5px;
   }
   
   .input-section {
-    padding: 5px 5px;
-    gap: 15px;
+    padding: 5.625px 5.625px;
+    gap: 16.875px;
   }
   
   .input-display {
-    min-height: 80px;
-    font-size: 1.6rem;
-    padding: 12px;
+    min-height: 90px;
+    font-size: 1.8rem;
+    padding: 13.5px;
     box-sizing: border-box; /* 确保内边距和边框都计入宽度 */
   }
 
   .number-keypad-section {
-    padding: 5px 5px;
-    gap: 10px;
+    padding: 5.625px 5.625px;
+    gap: 11.25px;
   }
   
   .keypad-row {
-    gap: 8px;
+    gap: 9px;
   }
   
   .control-button {
-    height: 50px;
-    font-size: 1.3rem;
-    padding: 5px 0;
-    gap: 4px;
+    height: 56.25px;
+    font-size: 1.4625rem;
+    padding: 5.625px 0;
+    gap: 4.5px;
     font-weight: 700;
   }
   
   .control-button .el-icon {
-    font-size: 1.2rem;
+    font-size: 1.35rem;
     font-weight: bold;
-    stroke-width: 2px;
+    stroke-width: 2.25px;
   }
   
   .code-buttons {
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* 每行5个按钮 */
     grid-template-rows: repeat(2, auto); /* 自动分配为2行 */
-    gap: 8px;
+    gap: 9px;
     width: 90%; /* 与输入显示区域相同宽度 */
     justify-content: center;
     justify-items: stretch;
@@ -1457,105 +1488,109 @@ const deleteLastChar = () => {
 
   .code-button {
     width: auto; /* 自动适应宽度 */
-    height: 38px;
+    height: 42.75px;
     min-width: 0; /* 移除最小宽度限制 */
-    font-size: 1.5rem;
+    font-size: 1.6875rem;
   }
   
   .num-button, .func-button {
-    height: 45px;
-    width: 45px;
-    min-width: 45px;
+    height: 50.625px;
+    width: 50.625px;
+    min-width: 50.625px;
     max-width: none;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
   }
 }
 
 @media (max-width: 480px) {
   .counter-container {
-    padding: 1vh 1vw;
+    padding: 1.125vh 1.125vw;
+    min-height: calc(100vh - 1.6875vh);
+    max-height: none;
+    margin-bottom: 1.40625vh;
+    overflow-y: auto;
   }
   
   .header-bar {
-    padding: 10px 10px;
+    padding: 11.25px 11.25px;
   }
   
   .counter-number {
-    font-size: 1rem;
+    font-size: 1.125rem;
   }
   
   .date-time {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
   
   .control-area {
     /* 三等分保持不变 */
-    gap: 8px;
-    padding-left: 4px;
-    padding-right: 4px;
+    gap: 9px;
+    padding-left: 4.5px;
+    padding-right: 4.5px;
   }
   
   .business-card {
-    min-width: 70px;
-    height: calc(100% - 10px);
-    min-height: 110px;
-    padding: 3px 0;
-    margin: 0 3px;
+    min-width: 78.75px;
+    height: calc(100% - 11.25px);
+    min-height: 123.75px;
+    padding: 3.375px 0;
+    margin: 0 3.375px;
   }
   
   .last-service-number {
-    font-size: 1.1rem;
+    font-size: 1.2375rem;
   }
   
   .business-type-code {
-    font-size: 1.1rem;
+    font-size: 1.2375rem;
   }
   
   .waiting-label {
-    font-size: 0.9rem;
+    font-size: 1.0125rem;
   }
   
   .count-number {
-    font-size: 1.2rem;
+    font-size: 1.35rem;
   }
   
   .control-buttons-section {
-    padding: 3px 3px;
-    gap: 10px;
+    padding: 3.375px 3.375px;
+    gap: 11.25px;
   }
   
   .input-section {
-    padding: 3px 3px;
-    gap: 12px;
+    padding: 3.375px 3.375px;
+    gap: 13.5px;
   }
   
   .number-keypad-section {
-    padding: 3px 3px;
-    gap: 8px;
+    padding: 3.375px 3.375px;
+    gap: 9px;
   }
   
   .keypad-row {
-    gap: 6px;
+    gap: 6.75px;
   }
   
   .control-button {
-    height: 45px;
-    font-size: 1.1rem;
-    padding: 4px 0;
-    gap: 3px;
+    height: 50.625px;
+    font-size: 1.2375rem;
+    padding: 4.5px 0;
+    gap: 3.375px;
     font-weight: 700;
   }
   
   .control-button .el-icon {
-    font-size: 1.1rem;
+    font-size: 1.2375rem;
     font-weight: bold;
-    stroke-width: 2px;
+    stroke-width: 2.25px;
   }
   
   .input-display {
-    min-height: 80px;
-    font-size: 1rem;
-    padding: 12px;
+    min-height: 90px;
+    font-size: 1.125rem;
+    padding: 13.5px;
     box-sizing: border-box; /* 确保内边距和边框都计入宽度 */
   }
   
@@ -1563,7 +1598,7 @@ const deleteLastChar = () => {
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* 每行5个按钮 */
     grid-template-rows: repeat(2, auto); /* 自动分配为2行 */
-    gap: 5px;
+    gap: 5.625px;
     width: 90%; /* 与输入显示区域相同宽度 */
     justify-content: center;
     justify-items: stretch;
@@ -1572,18 +1607,18 @@ const deleteLastChar = () => {
 
   .code-button {
     width: auto; /* 自动适应宽度 */
-    height: 32px;
+    height: 36px;
     min-width: 0; /* 移除最小宽度限制 */
-    font-size: 1.2rem;
+    font-size: 1.35rem;
     margin: 0;
   }
   
   .num-button, .func-button {
-    height: 38px;
-    width: 38px;
-    min-width: 38px;
+    height: 42.75px;
+    width: 42.75px;
+    min-width: 42.75px;
     max-width: none;
-    font-size: 1.2rem;
+    font-size: 1.35rem;
   }
 }
 
@@ -1603,67 +1638,67 @@ const deleteLastChar = () => {
 
 .custom-dialog {
   background-color: white;
-  border-radius: 10px;
+  border-radius: 11.25px;
   width: 90%;
-  max-width: 400px;
-  padding: 20px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  max-width: 450px;
+  padding: 22.5px;
+  box-shadow: 0 5.625px 16.875px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .dialog-icon {
-  margin-bottom: 15px;
+  margin-bottom: 16.875px;
 }
 
 .error-icon {
-  width: 60px;
-  height: 60px;
+  width: 67.5px;
+  height: 67.5px;
   background-color: #f56c6c;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 36px;
+  font-size: 40.5px;
   font-weight: bold;
 }
 
 .dialog-content {
   width: 100%;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .dialog-title {
-  margin-bottom: 10px;
+  margin-bottom: 12.5px;
 }
 
 .dialog-title .chinese-text {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: #303133;
-  margin-bottom: 5px;
+  margin-bottom: 6.25px;
   font-weight: bold;
 }
 
 .dialog-title .english-text {
-  font-size: 1rem;
+  font-size: 1.25rem;
   color: #606266;
 }
 
 .dialog-message {
-  margin-top: 10px;
+  margin-top: 12.5px;
 }
 
 .dialog-message .chinese-text {
-  font-size: 1.1rem;
+  font-size: 1.375rem;
   color: #303133;
-  margin-bottom: 5px;
+  margin-bottom: 6.25px;
 }
 
 .dialog-message .english-text {
-  font-size: 0.9rem;
+  font-size: 1.125rem;
   color: #606266;
 }
 
@@ -1671,21 +1706,21 @@ const deleteLastChar = () => {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 12.5px;
 }
 
 .dialog-btn {
   background-color: #409EFF;
   color: white;
   border: none;
-  border-radius: 5px;
-  padding: 10px 25px;
+  border-radius: 6.25px;
+  padding: 12.5px 31.25px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: all 0.3s;
-  min-width: 80px;
+  min-width: 100px;
 }
 
 .dialog-btn:hover {
@@ -1693,12 +1728,12 @@ const deleteLastChar = () => {
 }
 
 .dialog-btn .chinese-text {
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-weight: bold;
 }
 
 .dialog-btn .english-text {
-  font-size: 0.85rem;
+  font-size: 0.95625rem;
   opacity: 0.9;
 }
 
@@ -1706,29 +1741,29 @@ const deleteLastChar = () => {
 @media (max-width: 768px) {
   .custom-dialog {
     width: 95%;
-    padding: 15px;
+    padding: 16.875px;
   }
   
   .error-icon {
-    width: 50px;
-    height: 50px;
-    font-size: 30px;
+    width: 56.25px;
+    height: 56.25px;
+    font-size: 33.75px;
   }
   
   .dialog-title .chinese-text {
-    font-size: 1.1rem;
+    font-size: 1.2375rem;
   }
   
   .dialog-title .english-text {
-    font-size: 0.9rem;
+    font-size: 1.0125rem;
   }
   
   .dialog-message .chinese-text {
-    font-size: 1rem;
+    font-size: 1.125rem;
   }
   
   .dialog-message .english-text {
-    font-size: 0.85rem;
+    font-size: 0.95625rem;
   }
 }
 
@@ -1745,18 +1780,18 @@ const deleteLastChar = () => {
 .toast-content {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 13.5px;
   background-color: #67c23a;
   color: white;
-  padding: 16px 24px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  min-width: 200px;
-  max-width: 400px;
+  padding: 18px 27px;
+  border-radius: 9px;
+  box-shadow: 0 4.5px 13.5px rgba(0, 0, 0, 0.15);
+  min-width: 225px;
+  max-width: 450px;
 }
 
 .toast-icon {
-  font-size: 20px;
+  font-size: 22.5px;
   font-weight: bold;
   flex-shrink: 0;
 }
@@ -1764,16 +1799,16 @@ const deleteLastChar = () => {
 .toast-text {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 4.5px;
 }
 
 .toast-text .chinese-text {
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   font-weight: 500;
 }
 
 .toast-text .english-text {
-  font-size: 1rem;
+  font-size: 1.125rem;
   opacity: 0.95;
 }
 
@@ -1809,38 +1844,38 @@ const deleteLastChar = () => {
 
 .message-content {
   text-align: center;
-  padding: 40px;
+  padding: 45px;
   background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
+  border-radius: 11.25px;
+  box-shadow: 0 4.5px 13.5px rgba(0, 0, 0, 0.1);
+  max-width: 562.5px;
   width: 90%;
 }
 
 .message-content .chinese-text {
-  font-size: 2rem;
+  font-size: 2.25rem;
   font-weight: bold;
   color: #303133;
-  margin-bottom: 15px;
+  margin-bottom: 16.875px;
 }
 
 .message-content .english-text {
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   color: #606266;
 }
 
 /* 响应式适配 */
 @media (max-width: 768px) {
   .message-content {
-    padding: 30px 20px;
+    padding: 33.75px 22.5px;
   }
   
   .message-content .chinese-text {
-    font-size: 1.5rem;
+    font-size: 1.6875rem;
   }
   
   .message-content .english-text {
-    font-size: 1rem;
+    font-size: 1.125rem;
   }
 }
 </style>

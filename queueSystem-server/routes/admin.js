@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
 const { getDatabasePath } = require('../utils/getDatabasePath');
+const logger = require('../utils/logger');
 
 // 将 sqlite3 的回调式 API 包装为 Promise
 function openDatabase(dbPath, mode = sqlite3.OPEN_READONLY) {
@@ -58,15 +59,15 @@ function validateTableName(tableName) {
 // 管理界面根路径
 router.get('/', (req, res) => {
   // 记录请求信息以便调试
-  console.log('收到/admin/请求');
+  logger.info('收到/admin/请求');
   
   try {
-    console.log('尝试发送文件:', path.join(__dirname, '../public/adminer/index.html'));
+    logger.info('尝试发送文件:', path.join(__dirname, '../public/adminer/index.html'));
     
     // 检查文件是否存在
     const filePath = path.join(__dirname, '../public/adminer/index.html');
     if (!require('fs').existsSync(filePath)) {
-      console.error('文件不存在:', filePath);
+      logger.error('文件不存在:', filePath);
       return res.send(`
         <!DOCTYPE html>
         <html>
@@ -96,7 +97,7 @@ router.get('/', (req, res) => {
     // 使用express的sendFile函数的回调来捕获错误
     res.sendFile(filePath, err => {
       if (err) {
-        console.error('发送文件时出错:', err);
+        logger.error('发送文件时出错:', err);
         
         if (err.code === 'ENOENT') {
           res.send(`
@@ -146,7 +147,7 @@ router.get('/', (req, res) => {
       }
     });
   } catch (error) {
-    console.error('加载数据库管理界面失败:', error);
+    logger.error('加载数据库管理界面失败:', error);
     res.status(500).send(`
       <!DOCTYPE html>
       <html>
@@ -216,7 +217,7 @@ router.get('/tables', async (req, res) => {
     await closeDatabase(db);
     res.json(tables);
   } catch (error) {
-    console.error('获取表列表失败:', error);
+    logger.error('获取表列表失败:', error);
     if (db) {
       try {
         await closeDatabase(db);
@@ -248,7 +249,7 @@ router.get('/tables/:tableName/schema', async (req, res) => {
     await closeDatabase(db);
     res.json(tableInfo);
   } catch (error) {
-    console.error('获取表结构失败:', error);
+    logger.error('获取表结构失败:', error);
     if (db) {
       try {
         await closeDatabase(db);
@@ -293,7 +294,7 @@ router.get('/tables/:tableName/data', async (req, res) => {
       limit: limitNum
     });
   } catch (error) {
-    console.error('获取表数据失败:', error);
+    logger.error('获取表数据失败:', error);
     if (db) {
       try {
         await closeDatabase(db);
@@ -331,7 +332,7 @@ router.post('/query', express.json(), async (req, res) => {
     await closeDatabase(db);
     res.json(result);
   } catch (error) {
-    console.error('执行SQL查询失败:', error);
+    logger.error('执行SQL查询失败:', error);
     if (db) {
       try {
         await closeDatabase(db);

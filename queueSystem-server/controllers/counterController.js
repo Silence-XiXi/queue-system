@@ -1,5 +1,6 @@
 const { sequelize, counters: Counter, counterBusinessLastTicket: CounterBusinessLastTicket } = require('../models');
 const { Op } = require('sequelize');
+const logger = require('../utils/logger');
 
 // 获取所有窗口
 const getAllCounters = async (req, res) => {
@@ -8,7 +9,7 @@ const getAllCounters = async (req, res) => {
     const counters = await Counter.findAll();
     res.json(counters);
   } catch (error) {
-    console.error('获取窗口列表失败:', error);
+    logger.error('获取窗口列表失败:', error);
     res.status(500).json({ message: '获取窗口列表失败', error: error.message });
   }
 };
@@ -36,7 +37,7 @@ const updateCounter = async (req, res) => {
     
     res.json(updatedCounter);
   } catch (error) {
-    console.error('更新窗口失败:', error);
+    logger.error('更新窗口失败:', error);
     res.status(500).json({ message: '更新窗口失败', error: error.message });
   }
 };
@@ -62,7 +63,7 @@ const endService = async (req, res) => {
     
     res.json({ success: true, message: '服务已结束' });
   } catch (error) {
-    console.error('结束服务失败:', error);
+    logger.error('结束服务失败:', error);
     res.status(500).json({ message: '结束服务失败', error: error.message });
   }
 };
@@ -100,7 +101,7 @@ const getCounterByIP = async (req, res) => {
     
     res.json(counter);
   } catch (error) {
-    console.error('根据IP获取柜台失败:', error);
+    logger.error('根据IP获取柜台失败:', error);
     res.status(500).json({ message: '获取柜台信息失败', error: error.message });
   }
 };
@@ -125,7 +126,7 @@ const getCounterByNumber = async (req, res) => {
     
     res.json(counter);
   } catch (error) {
-    console.error('根据柜台号获取柜台失败:', error);
+    logger.error('根据柜台号获取柜台失败:', error);
     res.status(500).json({ message: '获取柜台信息失败', error: error.message });
   }
 };
@@ -157,7 +158,7 @@ const getCounterByIPOrNumber = async (req, res) => {
     
     res.json(counter);
   } catch (error) {
-    console.error('获取柜台信息失败:', error);
+    logger.error('获取柜台信息失败:', error);
     res.status(500).json({ message: '获取柜台信息失败', error: error.message });
   }
 };
@@ -194,7 +195,7 @@ const getLastServiceNumbersByCounterNumber = async (req, res) => {
     
     res.json(result);
   } catch (error) {
-    console.error('获取上一个服务号失败:', error);
+    logger.error('获取上一个服务号失败:', error);
     res.status(500).json({ message: '获取上一个服务号失败', error: error.message });
   }
 };
@@ -222,7 +223,7 @@ const getLastServiceNumbersByCounter = async (req, res) => {
     
     res.json(result);
   } catch (error) {
-    console.error('获取上一个服务号失败:', error);
+    logger.error('获取上一个服务号失败:', error);
     res.status(500).json({ message: '获取上一个服务号失败', error: error.message });
   }
 };
@@ -251,7 +252,7 @@ const getLastServiceNumber = async (req, res) => {
     
     res.json({ last_ticket_no: lastTicket.last_ticket_no });
   } catch (error) {
-    console.error('获取上一个服务号失败:', error);
+    logger.error('获取上一个服务号失败:', error);
     res.status(500).json({ message: '获取上一个服务号失败', error: error.message });
   }
 };

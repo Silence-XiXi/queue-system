@@ -2,6 +2,7 @@ const { ticketSequences, businessTypes, counters: Counter, counterBusinessLastTi
 const { Op } = require('sequelize');
 const { getIO } = require('../websocket');
 const printerService = require('./printerService');
+const logger = require('../utils/logger');
 
 // 获取当前日期，格式为 YYYY-MM-DD
 const getTodayDate = () => {
@@ -60,7 +61,9 @@ const createTicket = async (businessTypeId) => {
       ticket_number: ticketNumber,
       waiting_count: waitingCount,
       business_type_name: businessType.name,
-      business_type_english_name: businessType.english_name
+      business_type_english_name: businessType.english_name,
+      print_status: null, // 打印状态
+      print_message: null // 打印消息
     };
 
     // 调用打印机打印票号
@@ -72,13 +75,19 @@ const createTicket = async (businessTypeId) => {
         waiting_count: waitingCount
       });
       
+      // 将打印结果包含在返回数据中，供前端显示提示
+      result.print_status = printResult.success ? 'success' : 'error';
+      result.print_message = printResult.message;
+      
       if (!printResult.success) {
-        console.warn('打印失败，但取票成功:', printResult.message);
+        logger.warn('打印失败，但取票成功:', printResult.message);
         // 打印失败不影响取票流程，只记录警告
       }
     } catch (printError) {
-      console.error('打印票号时发生错误:', printError);
-      // 打印错误不影响取票流程
+      logger.error('打印票号时发生错误:', printError);
+      // 打印错误不影响取票流程，但记录错误状态
+      result.print_status = 'error';
+      result.print_message = '打印時發生錯誤，請檢查打印機';
     }
 
     // 通过WebSocket广播取票事件，通知所有客户端刷新数据

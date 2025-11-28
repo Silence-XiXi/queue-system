@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const routes = require('./routes');
 const { getExternalPicPath } = require('./utils/getExternalPicPath');
+const logger = require('./utils/logger');
 
 const app = express();
 
@@ -22,19 +23,19 @@ app.use('/api', routes);
 // 注意：必须在默认静态文件服务之前注册，以确保外部图片优先
 const externalPicPath = getExternalPicPath();
 if (externalPicPath) {
-  console.log(`✓ 使用外部图片目录: ${externalPicPath}`);
-  console.log(`  提示: 您可以在该目录中放置自定义图片文件`);
+  logger.info(`使用外部图片目录: ${externalPicPath}`);
+  logger.info(`提示: 您可以在该目录中放置自定义图片文件`);
   // 为 /pic 路径提供外部图片目录的静态文件服务
   app.use('/pic', express.static(externalPicPath));
 } else {
   // 如果没有外部目录，使用打包内的 public/pic 目录（默认图片）
   const defaultPicPath = path.join(__dirname, 'public', 'pic');
   if (fs.existsSync(defaultPicPath)) {
-    console.log(`✓ 使用打包内的默认图片目录: ${defaultPicPath}`);
-    console.log(`  提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹`);
+    logger.info(`使用打包内的默认图片目录: ${defaultPicPath}`);
+    logger.info(`提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹`);
     app.use('/pic', express.static(defaultPicPath));
   } else {
-    console.warn('⚠ 未找到图片目录（外部和打包内都不存在）');
+    logger.warn('未找到图片目录（外部和打包内都不存在）');
   }
 }
 
@@ -51,13 +52,13 @@ function getPublicPath() {
       // 验证关键文件是否存在
       const indexHtmlPath = path.join(snapshotPublicPath, 'index.html');
       if (fs.existsSync(indexHtmlPath)) {
-        console.log('✓ 使用打包内的 public 目录');
+        logger.info('使用打包内的 public 目录');
         return snapshotPublicPath;
       } else {
-        console.warn('⚠ 打包内的 public 目录存在，但缺少 index.html');
+        logger.warn('打包内的 public 目录存在，但缺少 index.html');
       }
     } else {
-      console.warn('⚠ 打包内的 public 目录不存在，尝试使用外部目录');
+      logger.warn('打包内的 public 目录不存在，尝试使用外部目录');
     }
     
     // 如果打包内的文件不存在，尝试使用外部 public 目录（备用方案）
@@ -66,12 +67,12 @@ function getPublicPath() {
     const externalPublicPath = path.join(execDir, 'public');
     
     if (fs.existsSync(externalPublicPath)) {
-      console.log('⚠ 使用外部 public 目录（备用方案）');
+      logger.warn('使用外部 public 目录（备用方案）');
       return externalPublicPath;
     }
     
     // 如果都不存在，返回快照路径（让程序尝试访问，如果失败会有明确的错误信息）
-    console.error('❌ 无法找到 public 目录');
+    logger.error('无法找到 public 目录');
     return snapshotPublicPath;
   } else {
     // 开发环境：使用项目目录下的 public
@@ -116,12 +117,13 @@ app.use((req, res, next) => {
         const externalIndexHtml = path.join(externalPublicPath, 'index.html');
         
         if (fs.existsSync(externalIndexHtml)) {
-          console.log(`⚠ 使用外部 public/index.html: ${externalIndexHtml}`);
+          logger.warn(`使用外部 public/index.html: ${externalIndexHtml}`);
           return res.sendFile(externalIndexHtml);
         } else {
-          console.error(`❌ 无法找到 index.html`);
-          console.error(`  打包内路径: ${indexHtmlPath}`);
-          console.error(`  外部路径: ${externalIndexHtml}`);
+          logger.error(`无法找到 index.html`, {
+            packedPath: indexHtmlPath,
+            externalPath: externalIndexHtml
+          });
           return res.status(500).send('前端文件未找到，请检查 public 目录是否正确打包或放置在可执行文件同目录下');
         }
       }
@@ -135,7 +137,7 @@ app.use((req, res, next) => {
 
 // 错误处理中间件
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  logger.error('Express 错误处理中间件捕获的错误', err);
   res.status(500).json({
     success: false,
     message: '服务器内部错误',

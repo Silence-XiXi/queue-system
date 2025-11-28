@@ -1,268 +1,199 @@
-[2025-11-21T09:45:50.896Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+[2025-11-27T08:07:11.769Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
 {
-  "error": "could not determine a proper \"type\" from: 'wstring'",
-  "stack": "TypeError: could not determine a proper \"type\" from: 'wstring'\n    at coerceType (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ref-napi\\lib\\ref.js:402:11)\n    at Array.map (<anonymous>)\n    at ForeignFunction (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\foreign_function.js:30:23)\n    at C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:73:18\n    at Array.forEach (<anonymous>)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:52:28)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:42:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)",
-  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi"
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:250:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
 }
-[2025-11-21T09:45:53.614Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+[2025-11-27T08:07:13.279Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
 {
-  "error": "could not determine a proper \"type\" from: 'wstring'",
-  "stack": "TypeError: could not determine a proper \"type\" from: 'wstring'\n    at coerceType (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ref-napi\\lib\\ref.js:402:11)\n    at Array.map (<anonymous>)\n    at ForeignFunction (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\foreign_function.js:30:23)\n    at C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:73:18\n    at Array.forEach (<anonymous>)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:52:28)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:42:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)",
-  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi"
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:250:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
 }
-[2025-11-21T09:45:55.865Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+[2025-11-27T08:07:16.457Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
 {
-  "error": "could not determine a proper \"type\" from: 'wstring'",
-  "stack": "TypeError: could not determine a proper \"type\" from: 'wstring'\n    at coerceType (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ref-napi\\lib\\ref.js:402:11)\n    at Array.map (<anonymous>)\n    at ForeignFunction (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\foreign_function.js:30:23)\n    at C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:73:18\n    at Array.forEach (<anonymous>)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:52:28)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:42:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)",
-  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi"
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:250:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
 }
-[2025-11-21T09:46:00.014Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+[2025-11-28T01:48:36.365Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
 {
-  "error": "could not determine a proper \"type\" from: 'wstring'",
-  "stack": "TypeError: could not determine a proper \"type\" from: 'wstring'\n    at coerceType (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ref-napi\\lib\\ref.js:402:11)\n    at Array.map (<anonymous>)\n    at ForeignFunction (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\foreign_function.js:30:23)\n    at C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:73:18\n    at Array.forEach (<anonymous>)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:52:28)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:42:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)",
-  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi"
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:250:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
 }
-[2025-11-21T09:46:02.243Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+[2025-11-28T01:48:53.478Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
 {
-  "error": "could not determine a proper \"type\" from: 'wstring'",
-  "stack": "TypeError: could not determine a proper \"type\" from: 'wstring'\n    at coerceType (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ref-napi\\lib\\ref.js:402:11)\n    at Array.map (<anonymous>)\n    at ForeignFunction (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\foreign_function.js:30:23)\n    at C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:73:18\n    at Array.forEach (<anonymous>)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:52:28)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:42:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)",
-  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi"
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:250:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
 }
-[2025-11-21T09:46:08.362Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+[2025-11-28T01:52:38.218Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
 {
-  "error": "could not determine a proper \"type\" from: 'wstring'",
-  "stack": "TypeError: could not determine a proper \"type\" from: 'wstring'\n    at coerceType (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ref-napi\\lib\\ref.js:402:11)\n    at Array.map (<anonymous>)\n    at ForeignFunction (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\foreign_function.js:30:23)\n    at C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:73:18\n    at Array.forEach (<anonymous>)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:52:28)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:42:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)",
-  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi"
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:250:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
 }
-[2025-11-21T09:46:10.928Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+[2025-11-28T01:52:47.946Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
 {
-  "error": "could not determine a proper \"type\" from: 'wstring'",
-  "stack": "TypeError: could not determine a proper \"type\" from: 'wstring'\n    at coerceType (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ref-napi\\lib\\ref.js:402:11)\n    at Array.map (<anonymous>)\n    at ForeignFunction (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\foreign_function.js:30:23)\n    at C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:73:18\n    at Array.forEach (<anonymous>)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:52:28)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:42:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)",
-  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi"
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:250:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
 }
-[2025-11-21T09:46:41.170Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+[2025-11-28T01:56:30.286Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
 {
-  "error": "could not determine a proper \"type\" from: 'wstring'",
-  "stack": "TypeError: could not determine a proper \"type\" from: 'wstring'\n    at coerceType (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ref-napi\\lib\\ref.js:402:11)\n    at Array.map (<anonymous>)\n    at ForeignFunction (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\foreign_function.js:30:23)\n    at C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:73:18\n    at Array.forEach (<anonymous>)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:52:28)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:42:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)",
-  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi"
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:250:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
 }
-[2025-11-21T09:50:57.370Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+[2025-11-28T01:56:40.128Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
 {
-  "error": "could not determine a proper \"type\" from: 'wstring'",
-  "stack": "TypeError: could not determine a proper \"type\" from: 'wstring'\n    at coerceType (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ref-napi\\lib\\ref.js:402:11)\n    at Array.map (<anonymous>)\n    at ForeignFunction (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\foreign_function.js:30:23)\n    at C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:73:18\n    at Array.forEach (<anonymous>)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:52:28)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:42:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)",
-  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi"
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:250:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
 }
-[2025-11-21T10:00:11.594Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+[2025-11-28T02:01:18.289Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
 {
-  "error": "could not determine a proper \"type\" from: 'wstring'",
-  "stack": "TypeError: could not determine a proper \"type\" from: 'wstring'\n    at coerceType (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ref-napi\\lib\\ref.js:402:11)\n    at Array.map (<anonymous>)\n    at ForeignFunction (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\foreign_function.js:30:23)\n    at C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:73:18\n    at Array.forEach (<anonymous>)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:52:28)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:42:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)",
-  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi"
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:250:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
 }
-[2025-11-24T01:28:43.369Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+[2025-11-28T02:01:19.587Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
 {
-  "error": "could not determine a proper \"type\" from: 'wstring'",
-  "stack": "TypeError: could not determine a proper \"type\" from: 'wstring'\n    at coerceType (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ref-napi\\lib\\ref.js:402:11)\n    at Array.map (<anonymous>)\n    at ForeignFunction (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\foreign_function.js:30:23)\n    at C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:73:18\n    at Array.forEach (<anonymous>)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:52:28)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:42:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)",
-  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi"
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:250:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
 }
-[2025-11-24T03:34:12.190Z] [DEBUG] 模拟打印（DLL未加载）
+[2025-11-28T03:36:09.783Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T03:37:11.117Z] [DEBUG] 模拟打印（DLL未加载）
 {
   "ticket_number": "A001",
-  "business_type_name": "優惠客戶專綫",
+  "business_type_name": "優惠客戶專線",
   "business_type_english_name": "Preferred Customers Exclusive",
   "waiting_count": 0
 }
-[2025-11-24T03:34:14.661Z] [DEBUG] 模拟打印（DLL未加载）
-{
-  "ticket_number": "A002",
-  "business_type_name": "優惠客戶專綫",
-  "business_type_english_name": "Preferred Customers Exclusive",
-  "waiting_count": 1
-}
-[2025-11-24T03:35:06.450Z] [DEBUG] 模拟打印（DLL未加载）
-{
-  "ticket_number": "A003",
-  "business_type_name": "優惠客戶專綫",
-  "business_type_english_name": "Preferred Customers Exclusive",
-  "waiting_count": 1
-}
-[2025-11-24T03:48:10.436Z] [DEBUG] 模拟打印（DLL未加载）
-{
-  "ticket_number": "A004",
-  "business_type_name": "優惠客戶專綫",
-  "business_type_english_name": "Preferred Customers Exclusive",
-  "waiting_count": 2
-}
-[2025-11-24T03:49:10.267Z] [INFO ] 打印机 DLL 加载成功
-{
-  "dllPath": "C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\printer_sdk\\CsnPrinterLibs.dll",
-  "config": {
-    "portType": "COM",
-    "portName": "COM1",
-    "tcpPort": 9100,
-    "baudrate": 9600,
-    "flowcontrol": 0,
-    "parity": 0,
-    "databits": 8,
-    "stopbits": 0,
-    "enabled": true
-  }
-}
-[2025-11-24T03:49:10.335Z] [ERROR] 打开打印机端口失败
-{
-  "error": "无法打开端口 COM1，请检查打印机连接",
-  "stack": "Error: 无法打开端口 COM1，请检查打印机连接\n    at openPort (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:129:13)\n    at Object.initPrinter (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:190:26)\n    at startServer (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\index.js:71:49)",
-  "portType": "COM",
-  "portName": "COM1"
-}
-[2025-11-24T03:49:32.285Z] [INFO ] 打印机 DLL 加载成功
-{
-  "dllPath": "C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\printer_sdk\\CsnPrinterLibs.dll",
-  "config": {
-    "portType": "COM",
-    "portName": "COM1",
-    "tcpPort": 9100,
-    "baudrate": 9600,
-    "flowcontrol": 0,
-    "parity": 0,
-    "databits": 8,
-    "stopbits": 0,
-    "enabled": true
-  }
-}
-[2025-11-24T03:49:32.342Z] [ERROR] 打开打印机端口失败
-{
-  "error": "无法打开端口 COM1，请检查打印机连接",
-  "stack": "Error: 无法打开端口 COM1，请检查打印机连接\n    at openPort (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:129:13)\n    at Object.initPrinter (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:190:26)\n    at startServer (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\index.js:71:49)",
-  "portType": "COM",
-  "portName": "COM1"
-}
-[2025-11-24T03:51:29.523Z] [INFO ] 打印机 DLL 加载成功
-{
-  "dllPath": "C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\printer_sdk\\CsnPrinterLibs.dll",
-  "config": {
-    "portType": "COM",
-    "portName": "COM1",
-    "tcpPort": 9100,
-    "baudrate": 9600,
-    "flowcontrol": 0,
-    "parity": 0,
-    "databits": 8,
-    "stopbits": 0,
-    "enabled": true
-  }
-}
-[2025-11-24T03:51:29.583Z] [ERROR] 打开打印机端口失败
-{
-  "error": "无法打开端口 COM1，请检查打印机连接",
-  "stack": "Error: 无法打开端口 COM1，请检查打印机连接\n    at openPort (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:129:13)\n    at Object.initPrinter (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:190:26)\n    at startServer (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\index.js:71:49)",
-  "portType": "COM",
-  "portName": "COM1"
-}
-[2025-11-24T03:51:53.511Z] [ERROR] 打开打印机端口失败
-{
-  "error": "无法打开端口 COM1，请检查打印机连接",
-  "stack": "Error: 无法打开端口 COM1，请检查打印机连接\n    at openPort (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:129:13)\n    at Object.printTicket (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:241:28)\n    at C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:68:48\n    at async C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\sequelize\\lib\\sequelize.js:507:18\n    at async getTicket (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\controllers\\ticketController.js:12:24)",
-  "portType": "COM",
-  "portName": "COM1"
-}
-[2025-11-24T03:52:00.477Z] [ERROR] 打开打印机端口失败
-{
-  "error": "无法打开端口 COM1，请检查打印机连接",
-  "stack": "Error: 无法打开端口 COM1，请检查打印机连接\n    at openPort (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:129:13)\n    at Object.printTicket (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:241:28)\n    at C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:68:48\n    at async C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\sequelize\\lib\\sequelize.js:507:18\n    at async getTicket (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\controllers\\ticketController.js:12:24)",
-  "portType": "COM",
-  "portName": "COM1"
-}
-[2025-11-24T03:57:45.984Z] [INFO ] 打印机 DLL 加载成功
-{
-  "dllPath": "C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\printer_sdk\\CsnPrinterLibs.dll",
-  "config": {
-    "portType": "COM",
-    "portName": "COM1",
-    "tcpPort": 9100,
-    "baudrate": 9600,
-    "flowcontrol": 0,
-    "parity": 0,
-    "databits": 8,
-    "stopbits": 0,
-    "enabled": true
-  }
-}
-[2025-11-24T03:57:46.048Z] [ERROR] 打开打印机端口失败
-{
-  "error": "无法打开端口 COM1，请检查打印机连接",
-  "stack": "Error: 无法打开端口 COM1，请检查打印机连接\n    at openPort (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:129:13)\n    at Object.initPrinter (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:190:26)\n    at startServer (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\index.js:71:49)",
-  "portType": "COM",
-  "portName": "COM1"
-}
-[2025-11-24T03:57:49.465Z] [INFO ] 打印机 DLL 加载成功
-{
-  "dllPath": "C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\printer_sdk\\CsnPrinterLibs.dll",
-  "config": {
-    "portType": "COM",
-    "portName": "COM1",
-    "tcpPort": 9100,
-    "baudrate": 9600,
-    "flowcontrol": 0,
-    "parity": 0,
-    "databits": 8,
-    "stopbits": 0,
-    "enabled": true
-  }
-}
-[2025-11-24T03:57:49.526Z] [ERROR] 打开打印机端口失败
-{
-  "error": "无法打开端口 COM1，请检查打印机连接",
-  "stack": "Error: 无法打开端口 COM1，请检查打印机连接\n    at openPort (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:129:13)\n    at Object.initPrinter (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:190:26)\n    at startServer (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\index.js:71:49)",
-  "portType": "COM",
-  "portName": "COM1"
-}
-[2025-11-24T03:59:17.480Z] [INFO ] 打印机 DLL 加载成功
-{
-  "dllPath": "C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\printer_sdk\\CsnPrinterLibs.dll",
-  "config": {
-    "portType": "COM",
-    "portName": "COM1",
-    "tcpPort": 9100,
-    "baudrate": 9600,
-    "flowcontrol": 0,
-    "parity": 0,
-    "databits": 8,
-    "stopbits": 0,
-    "enabled": true
-  }
-}
-[2025-11-24T03:59:17.535Z] [ERROR] 打开打印机端口失败
-{
-  "error": "无法打开端口 COM1，请检查打印机连接",
-  "stack": "Error: 无法打开端口 COM1，请检查打印机连接\n    at openPort (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:129:13)\n    at Object.initPrinter (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:190:26)\n    at startServer (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\index.js:71:49)",
-  "portType": "COM",
-  "portName": "COM1"
-}
-[2025-11-24T04:07:30.001Z] [INFO ] 打印机 DLL 加载成功
-{
-  "dllPath": "C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\printer_sdk\\CsnPrinterLibs.dll",
-  "config": {
-    "portType": "COM",
-    "portName": "COM1",
-    "tcpPort": 9100,
-    "baudrate": 9600,
-    "flowcontrol": 0,
-    "parity": 0,
-    "databits": 8,
-    "stopbits": 0,
-    "enabled": true
-  }
-}
-[2025-11-24T04:07:30.051Z] [ERROR] 打开打印机端口失败
-{
-  "error": "无法打开端口 COM1，请检查打印机连接",
-  "stack": "Error: 无法打开端口 COM1，请检查打印机连接\n    at openPort (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:129:13)\n    at Object.initPrinter (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:190:26)\n    at startServer (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\index.js:71:49)",
-  "portType": "COM",
-  "portName": "COM1"
-}
-[2025-11-24T07:32:52.283Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+[2025-11-28T03:37:35.304Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
 {
   "error": "Cannot read properties of null (reading 'match')",
-  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:171:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:05:41.190Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:09:38.587Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:09:40.743Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:09:42.213Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:09:51.324Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:20:29.260Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:21:17.746Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:21:26.428Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:21:34.133Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:23:42.163Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:23:52.376Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:24:14.520Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:49:16.195Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:50:58.165Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:51:15.954Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T04:51:19.612Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T08:31:30.222Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T08:35:00.205Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
+  "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
+}
+[2025-11-28T08:37:46.434Z] [WARN ] 打印机 DLL 加载失败，将使用模拟模式
+{
+  "error": "Cannot read properties of null (reading 'match')",
+  "stack": "TypeError: Cannot read properties of null (reading 'match')\n    at new DynamicLibrary (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\dynamic_library.js:67:21)\n    at Object.Library (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\node_modules\\ffi-napi\\lib\\library.js:47:10)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\printerService.js:247:22)\n    at Module._compile (node:internal/modules/cjs/loader:1364:14)\n    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)\n    at Module.load (node:internal/modules/cjs/loader:1203:32)\n    at Module._load (node:internal/modules/cjs/loader:1019:12)\n    at Module.require (node:internal/modules/cjs/loader:1231:19)\n    at require (node:internal/modules/helpers:177:18)\n    at Object.<anonymous> (C:\\Users\\momo0\\Documents\\CursorProjects\\queue-system\\queueSystem-server\\services\\ticketService.js:4:24)",
   "hint": "请确保已安装依赖: npm install ffi-napi ref-napi ref-struct-napi ref-array-napi。如果是打包环境，请确保这些模块已复制到可执行文件同目录下的 node_modules 目录中。"
 }

@@ -1,6 +1,7 @@
 /**
- * 打印机日志记录模块
- * 用于将打印机的错误和调试信息保存到日志文件中
+ * 通用日志记录模块
+ * 用于将所有的日志信息保存到日志文件中
+ * 支持保留程序启动时的必要控制台输出
  */
 
 const fs = require('fs');
@@ -12,18 +13,18 @@ const isPacked = typeof process.pkg !== 'undefined';
 // 获取日志文件路径
 function getLogFilePath() {
   // 如果设置了环境变量，优先使用
-  if (process.env.PRINTER_LOG_PATH) {
-    return process.env.PRINTER_LOG_PATH;
+  if (process.env.APP_LOG_PATH) {
+    return process.env.APP_LOG_PATH;
   }
   
   if (isPacked) {
     // 打包环境：日志文件放在可执行文件同目录下
     const execPath = process.execPath;
     const execDir = path.dirname(execPath);
-    return path.join(execDir, 'printer.log');
+    return path.join(execDir, 'app.log');
   } else {
     // 开发环境：日志文件放在项目根目录下
-    return path.join(__dirname, '../../printer.log');
+    return path.join(__dirname, '../../app.log');
   }
 }
 
@@ -38,23 +39,19 @@ const LOG_LEVELS = {
   ERROR: 'ERROR'
 };
 
-// 日志级别优先级（数字越大优先级越高）
-const LOG_LEVEL_PRIORITY = {
-  DEBUG: 0,
-  INFO: 1,
-  WARN: 2,
-  ERROR: 3
-};
-
-// 获取当前日志级别（从环境变量读取，默认为 INFO，即不记录 DEBUG）
-// 可选值：DEBUG, INFO, WARN, ERROR
-const CURRENT_LOG_LEVEL = (process.env.PRINTER_LOG_LEVEL || 'INFO').toUpperCase();
-const CURRENT_LOG_PRIORITY = LOG_LEVEL_PRIORITY[CURRENT_LOG_LEVEL] !== undefined 
-  ? LOG_LEVEL_PRIORITY[CURRENT_LOG_LEVEL] 
-  : LOG_LEVEL_PRIORITY.INFO;
-
 // 最大日志文件大小（10MB）
 const MAX_LOG_SIZE = 10 * 1024 * 1024;
+
+// 是否允许控制台输出（用于启动信息）
+let allowConsoleOutput = true;
+
+/**
+ * 设置是否允许控制台输出
+ * @param {boolean} allow - 是否允许
+ */
+function setAllowConsoleOutput(allow) {
+  allowConsoleOutput = allow;
+}
 
 // 备份日志文件
 function rotateLogFile() {
@@ -93,7 +90,10 @@ function rotateLogFile() {
     }
   } catch (error) {
     // 如果日志轮转失败，不影响日志记录
-    console.error('日志轮转失败:', error.message);
+    // 只在允许控制台输出时显示错误
+    if (allowConsoleOutput) {
+      console.error('日志轮转失败:', error.message);
+    }
   }
 }
 
@@ -106,8 +106,15 @@ function formatLogMessage(level, message, data = null) {
   
   if (data !== null && data !== undefined) {
     try {
-      const dataStr = typeof data === 'object' ? JSON.stringify(data, null, 2) : String(data);
-      logMessage += `\n${dataStr}`;
+      if (data instanceof Error) {
+        logMessage += `\n错误信息: ${data.message}`;
+        if (data.stack) {
+          logMessage += `\n错误堆栈: ${data.stack}`;
+        }
+      } else {
+        const dataStr = typeof data === 'object' ? JSON.stringify(data, null, 2) : String(data);
+        logMessage += `\n${dataStr}`;
+      }
     } catch (error) {
       logMessage += `\n[无法序列化数据: ${error.message}]`;
     }
@@ -117,18 +124,8 @@ function formatLogMessage(level, message, data = null) {
 }
 
 // 写入日志文件
-function writeToLog(level, message, data = null) {
+function writeToLog(level, message, data = null, alsoConsole = false) {
   try {
-    // 检查日志级别：只记录优先级大于等于当前设置的日志级别
-    const levelPriority = LOG_LEVEL_PRIORITY[level] !== undefined 
-      ? LOG_LEVEL_PRIORITY[level] 
-      : LOG_LEVEL_PRIORITY.INFO;
-    
-    // 如果当前日志级别高于要记录的级别，则跳过
-    if (levelPriority < CURRENT_LOG_PRIORITY) {
-      return;
-    }
-    
     // 检查并轮转日志文件
     rotateLogFile();
     
@@ -143,17 +140,30 @@ function writeToLog(level, message, data = null) {
     
     // 追加写入日志文件
     fs.appendFileSync(LOG_FILE_PATH, logMessage, 'utf8');
+    
+    // 如果需要同时输出到控制台（用于启动信息等）
+    if (alsoConsole && allowConsoleOutput) {
+      if (level === LOG_LEVELS.ERROR) {
+        console.error(message, data || '');
+      } else if (level === LOG_LEVELS.WARN) {
+        console.warn(message, data || '');
+      } else {
+        console.log(message, data || '');
+      }
+    }
   } catch (error) {
     // 如果写入日志文件失败，输出到控制台（作为后备）
-    console.error(`[打印机日志写入失败] ${message}:`, error.message);
-    if (data) {
-      console.error('数据:', data);
+    if (allowConsoleOutput) {
+      console.error(`[日志写入失败] ${message}:`, error.message);
+      if (data) {
+        console.error('数据:', data);
+      }
     }
   }
 }
 
 // 日志记录器对象
-const printerLogger = {
+const logger = {
   /**
    * 记录调试信息
    * @param {string} message - 日志消息
@@ -167,27 +177,30 @@ const printerLogger = {
    * 记录一般信息
    * @param {string} message - 日志消息
    * @param {any} data - 可选的数据对象
+   * @param {boolean} alsoConsole - 是否同时输出到控制台
    */
-  info(message, data = null) {
-    writeToLog(LOG_LEVELS.INFO, message, data);
+  info(message, data = null, alsoConsole = false) {
+    writeToLog(LOG_LEVELS.INFO, message, data, alsoConsole);
   },
   
   /**
    * 记录警告信息
    * @param {string} message - 日志消息
    * @param {any} data - 可选的数据对象
+   * @param {boolean} alsoConsole - 是否同时输出到控制台
    */
-  warn(message, data = null) {
-    writeToLog(LOG_LEVELS.WARN, message, data);
+  warn(message, data = null, alsoConsole = false) {
+    writeToLog(LOG_LEVELS.WARN, message, data, alsoConsole);
   },
   
   /**
    * 记录错误信息
    * @param {string} message - 日志消息
    * @param {any} data - 可选的数据对象或错误对象
+   * @param {boolean} alsoConsole - 是否同时输出到控制台
    */
-  error(message, data = null) {
-    writeToLog(LOG_LEVELS.ERROR, message, data);
+  error(message, data = null, alsoConsole = false) {
+    writeToLog(LOG_LEVELS.ERROR, message, data, alsoConsole);
   },
   
   /**
@@ -199,13 +212,13 @@ const printerLogger = {
   },
   
   /**
-   * 获取当前日志级别
-   * @returns {string} 当前日志级别
+   * 设置是否允许控制台输出
+   * @param {boolean} allow - 是否允许
    */
-  getLogLevel() {
-    return CURRENT_LOG_LEVEL;
+  setAllowConsoleOutput(allow) {
+    setAllowConsoleOutput(allow);
   }
 };
 
-module.exports = printerLogger;
+module.exports = logger;
 

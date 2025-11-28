@@ -1,0 +1,1807 @@
+[2025-11-28T03:36:09.059Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T03:36:09.060Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T03:36:09.061Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T03:36:09.061Z] [INFO ] ========================================
+[2025-11-28T03:36:09.061Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T03:36:09.061Z] [INFO ] ========================================
+[2025-11-28T03:36:09.062Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T03:36:09.762Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T03:36:09.763Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T03:36:09.764Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T03:36:09.764Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T03:36:09.765Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T03:36:09.765Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T03:36:09.765Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T03:36:09.782Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T03:36:09.786Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T03:36:09.786Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T03:36:09.815Z] [INFO ] 数据库初始化成功
+[2025-11-28T03:36:09.817Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T03:36:09.832Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T03:36:09.834Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 11:36:09",
+  "shanghaiTime": "2025/11/28 11:36:09",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T03:36:09.841Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T03:36:09.842Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T03:36:09.842Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T03:36:09.843Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T03:36:09.843Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T03:36:09.843Z",
+  "currentShanghaiTime": "2025-11-28T03:36:09.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T03:36:09.843Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T03:36:09.854Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T03:36:10.208Z] [INFO ] 客户端连接:
+AUw_Fd_G_BV6J2UrAAAB
+[2025-11-28T03:36:25.126Z] [INFO ] 客户端断开连接:
+AUw_Fd_G_BV6J2UrAAAB
+[2025-11-28T03:36:25.641Z] [INFO ] 客户端连接:
+H0yEnFOu0ygtIRo6AAAD
+[2025-11-28T03:36:40.563Z] [INFO ] 客户端连接:
+dIIBVqH5zjFDSWpvAAAF
+[2025-11-28T03:37:01.942Z] [INFO ] 客户端连接:
+c34OeMC6QPG-mH4BAAAH
+[2025-11-28T03:37:02.606Z] [INFO ] 客户端断开连接:
+c34OeMC6QPG-mH4BAAAH
+[2025-11-28T03:37:02.644Z] [INFO ] 客户端连接:
+jSkganKhFi9tC-cFAAAJ
+[2025-11-28T03:37:35.168Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T03:37:35.169Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T03:37:35.170Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T03:37:35.171Z] [INFO ] ========================================
+[2025-11-28T03:37:35.171Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T03:37:35.171Z] [INFO ] ========================================
+[2025-11-28T03:37:35.172Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T03:37:35.299Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T03:37:35.300Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T03:37:35.300Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T03:37:35.300Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T03:37:35.300Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T03:37:35.301Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T03:37:35.301Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T03:37:35.303Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T03:37:35.307Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T03:37:35.307Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T03:37:35.336Z] [INFO ] 数据库初始化成功
+[2025-11-28T03:37:35.340Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T03:37:35.353Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T03:37:35.354Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 11:37:35",
+  "shanghaiTime": "2025/11/28 11:37:35",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T03:37:35.359Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T03:37:35.359Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T03:37:35.359Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T03:37:35.360Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T03:37:35.361Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T03:37:35.360Z",
+  "currentShanghaiTime": "2025-11-28T03:37:35.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T03:37:35.361Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T03:37:35.377Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T03:37:35.488Z] [INFO ] 客户端连接:
+ZQjHXOxt-QYfJBgMAAAB
+[2025-11-28T03:37:36.396Z] [INFO ] 客户端连接:
+YZulqSO7Vf1uaEJAAAAD
+[2025-11-28T04:05:41.030Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:05:41.031Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:05:41.031Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:05:41.031Z] [INFO ] ========================================
+[2025-11-28T04:05:41.031Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:05:41.032Z] [INFO ] ========================================
+[2025-11-28T04:05:41.032Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:05:41.172Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:05:41.172Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:05:41.172Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:05:41.172Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:05:41.173Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:05:41.173Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:05:41.173Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:05:41.189Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:05:41.193Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:05:41.193Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:05:41.234Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:05:41.235Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:05:41.252Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:05:41.254Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:05:41",
+  "shanghaiTime": "2025/11/28 12:05:41",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:05:41.260Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:05:41.260Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:05:41.260Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:05:41.261Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:05:41.261Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:05:41.261Z",
+  "currentShanghaiTime": "2025-11-28T04:05:41.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:05:41.262Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:05:41.276Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:05:41.869Z] [INFO ] 客户端连接:
+-o02vTtJz7zqYJcNAAAB
+[2025-11-28T04:06:36.180Z] [INFO ] 客户端连接:
+UouhPDsVY3nsJP-1AAAD
+[2025-11-28T04:07:42.882Z] [INFO ] 客户端断开连接:
+-o02vTtJz7zqYJcNAAAB
+[2025-11-28T04:07:43.143Z] [INFO ] 客户端连接:
+QYs-zus8wprDsPzQAAAF
+[2025-11-28T04:07:46.689Z] [INFO ] 客户端断开连接:
+QYs-zus8wprDsPzQAAAF
+[2025-11-28T04:07:50.080Z] [INFO ] 客户端连接:
+p-FGHId2FQGqM5IvAAAH
+[2025-11-28T04:07:53.202Z] [INFO ] 客户端断开连接:
+UouhPDsVY3nsJP-1AAAD
+[2025-11-28T04:08:02.711Z] [INFO ] 客户端连接:
+L9jn1Zondxv_xq9XAAAJ
+[2025-11-28T04:08:05.620Z] [INFO ] 客户端断开连接:
+L9jn1Zondxv_xq9XAAAJ
+[2025-11-28T04:08:05.680Z] [INFO ] 客户端连接:
+UwrM8nEN_GEMWLzvAAAL
+[2025-11-28T04:09:38.433Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:09:38.434Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:09:38.434Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:09:38.435Z] [INFO ] ========================================
+[2025-11-28T04:09:38.435Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:09:38.436Z] [INFO ] ========================================
+[2025-11-28T04:09:38.436Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:09:38.581Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:09:38.582Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:09:38.582Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:09:38.583Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:09:38.583Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:09:38.583Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:09:38.584Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:09:38.586Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:09:38.591Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:09:38.592Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:09:38.633Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:09:38.635Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:09:38.650Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:09:38.651Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:09:38",
+  "shanghaiTime": "2025/11/28 12:09:38",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:09:38.659Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:09:38.660Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:09:38.661Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:09:38.662Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:09:38.663Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:09:38.663Z",
+  "currentShanghaiTime": "2025-11-28T04:09:38.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:09:38.663Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:09:38.683Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:09:39.442Z] [INFO ] 客户端连接:
+WK2L8MCkI2rGTCqcAAAB
+[2025-11-28T04:09:40.646Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:09:40.647Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:09:40.647Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:09:40.648Z] [INFO ] ========================================
+[2025-11-28T04:09:40.648Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:09:40.648Z] [INFO ] ========================================
+[2025-11-28T04:09:40.648Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:09:40.738Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:09:40.738Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:09:40.739Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:09:40.739Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:09:40.739Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:09:40.740Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:09:40.740Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:09:40.743Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:09:40.746Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:09:40.746Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:09:40.775Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:09:40.777Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:09:40.790Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:09:40.791Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:09:40",
+  "shanghaiTime": "2025/11/28 12:09:40",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:09:40.798Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:09:40.799Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:09:40.800Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:09:40.800Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:09:40.800Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:09:40.800Z",
+  "currentShanghaiTime": "2025-11-28T04:09:40.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:09:40.801Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:09:40.821Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:09:40.963Z] [INFO ] 客户端连接:
+lJ20NLUXY0Z87lzsAAAB
+[2025-11-28T04:09:41.203Z] [INFO ] 客户端连接:
+JyrnBlZbaObKx16yAAAD
+[2025-11-28T04:09:42.082Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:09:42.083Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:09:42.083Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:09:42.083Z] [INFO ] ========================================
+[2025-11-28T04:09:42.084Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:09:42.084Z] [INFO ] ========================================
+[2025-11-28T04:09:42.085Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:09:42.203Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:09:42.203Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:09:42.204Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:09:42.204Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:09:42.204Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:09:42.205Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:09:42.205Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:09:42.211Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:09:42.216Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:09:42.217Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:09:42.253Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:09:42.254Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:09:42.267Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:09:42.268Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:09:42",
+  "shanghaiTime": "2025/11/28 12:09:42",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:09:42.275Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:09:42.276Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:09:42.277Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:09:42.278Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:09:42.279Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:09:42.278Z",
+  "currentShanghaiTime": "2025-11-28T04:09:42.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:09:42.279Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:09:42.296Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:09:42.675Z] [INFO ] 客户端连接:
+in_4n4NPWOVcmcfmAAAB
+[2025-11-28T04:09:42.997Z] [INFO ] 客户端连接:
+ca7c3b6EgFTrh9W9AAAD
+[2025-11-28T04:09:51.216Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:09:51.217Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:09:51.218Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:09:51.218Z] [INFO ] ========================================
+[2025-11-28T04:09:51.218Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:09:51.218Z] [INFO ] ========================================
+[2025-11-28T04:09:51.219Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:09:51.319Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:09:51.319Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:09:51.320Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:09:51.320Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:09:51.320Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:09:51.320Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:09:51.321Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:09:51.323Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:09:51.327Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:09:51.327Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:09:51.353Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:09:51.355Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:09:51.369Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:09:51.370Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:09:51",
+  "shanghaiTime": "2025/11/28 12:09:51",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:09:51.375Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:09:51.375Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:09:51.376Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:09:51.376Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:09:51.377Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:09:51.377Z",
+  "currentShanghaiTime": "2025-11-28T04:09:51.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:09:51.377Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:09:51.389Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:09:52.161Z] [INFO ] 客户端连接:
+vUvPivnKdjzAdr2iAAAB
+[2025-11-28T04:09:54.335Z] [INFO ] 客户端连接:
+PbaeKT_PDSeZ8-RiAAAD
+[2025-11-28T04:20:29.174Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:20:29.175Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:20:29.176Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:20:29.176Z] [INFO ] ========================================
+[2025-11-28T04:20:29.176Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:20:29.176Z] [INFO ] ========================================
+[2025-11-28T04:20:29.177Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:20:29.255Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:20:29.256Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:20:29.256Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:20:29.256Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:20:29.256Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:20:29.257Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:20:29.257Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:20:29.259Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:20:29.263Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:20:29.263Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:20:29.301Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:20:29.303Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:20:29.316Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:20:29.317Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:20:29",
+  "shanghaiTime": "2025/11/28 12:20:29",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:20:29.323Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:20:29.323Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:20:29.324Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:20:29.324Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:20:29.325Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:20:29.325Z",
+  "currentShanghaiTime": "2025-11-28T04:20:29.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:20:29.325Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:20:29.338Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:20:29.485Z] [INFO ] 客户端连接:
+p1oA8mkLctJwrBBQAAAB
+[2025-11-28T04:20:29.968Z] [INFO ] 客户端连接:
+IS6stzFg2yTzIOn2AAAD
+[2025-11-28T04:21:17.633Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:21:17.633Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:21:17.634Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:21:17.634Z] [INFO ] ========================================
+[2025-11-28T04:21:17.635Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:21:17.635Z] [INFO ] ========================================
+[2025-11-28T04:21:17.635Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:21:17.737Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:21:17.737Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:21:17.738Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:21:17.738Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:21:17.738Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:21:17.738Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:21:17.739Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:21:17.744Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:21:17.751Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:21:17.751Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:21:17.787Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:21:17.789Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:21:17.802Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:21:17.803Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:21:17",
+  "shanghaiTime": "2025/11/28 12:21:17",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:21:17.809Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:21:17.809Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:21:17.810Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:21:17.810Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:21:17.811Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:21:17.811Z",
+  "currentShanghaiTime": "2025-11-28T04:21:17.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:21:17.811Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:21:17.826Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:21:17.890Z] [INFO ] 客户端连接:
+1KUx3fAh-JXsq-FxAAAB
+[2025-11-28T04:21:18.402Z] [INFO ] 客户端连接:
+q-tvzv_tb1lJCtaAAAAD
+[2025-11-28T04:21:26.315Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:21:26.317Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:21:26.317Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:21:26.318Z] [INFO ] ========================================
+[2025-11-28T04:21:26.318Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:21:26.319Z] [INFO ] ========================================
+[2025-11-28T04:21:26.319Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:21:26.423Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:21:26.424Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:21:26.424Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:21:26.424Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:21:26.425Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:21:26.425Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:21:26.425Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:21:26.428Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:21:26.433Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:21:26.434Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:21:26.472Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:21:26.474Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:21:26.489Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:21:26.490Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:21:26",
+  "shanghaiTime": "2025/11/28 12:21:26",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:21:26.495Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:21:26.495Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:21:26.495Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:21:26.496Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:21:26.496Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:21:26.496Z",
+  "currentShanghaiTime": "2025-11-28T04:21:26.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:21:26.497Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:21:26.512Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:21:26.840Z] [INFO ] 客户端连接:
+PTDft9IU1mbzznujAAAB
+[2025-11-28T04:21:27.125Z] [INFO ] 客户端连接:
+00WI2STqZY-Ha2FVAAAD
+[2025-11-28T04:21:34.042Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:21:34.042Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:21:34.043Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:21:34.043Z] [INFO ] ========================================
+[2025-11-28T04:21:34.043Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:21:34.044Z] [INFO ] ========================================
+[2025-11-28T04:21:34.044Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:21:34.129Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:21:34.130Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:21:34.130Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:21:34.130Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:21:34.130Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:21:34.131Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:21:34.131Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:21:34.133Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:21:34.136Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:21:34.137Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:21:34.165Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:21:34.166Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:21:34.180Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:21:34.181Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:21:34",
+  "shanghaiTime": "2025/11/28 12:21:34",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:21:34.186Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:21:34.186Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:21:34.187Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:21:34.187Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:21:34.188Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:21:34.188Z",
+  "currentShanghaiTime": "2025-11-28T04:21:34.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:21:34.189Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:21:34.204Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:21:34.288Z] [INFO ] 客户端连接:
+kIpNMEUYZxbTluSwAAAB
+[2025-11-28T04:21:34.402Z] [INFO ] 客户端连接:
+m_6RbpVZLcYlvrAsAAAD
+[2025-11-28T04:22:39.789Z] [INFO ] 客户端断开连接:
+kIpNMEUYZxbTluSwAAAB
+[2025-11-28T04:22:40.019Z] [INFO ] 客户端连接:
+z7o0diPMZ4-CIZ2pAAAF
+[2025-11-28T04:22:51.967Z] [INFO ] 客户端断开连接:
+z7o0diPMZ4-CIZ2pAAAF
+[2025-11-28T04:22:52.046Z] [INFO ] 客户端连接:
+xijaFUj1LwEEKzmuAAAH
+[2025-11-28T04:23:42.031Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:23:42.032Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:23:42.032Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:23:42.032Z] [INFO ] ========================================
+[2025-11-28T04:23:42.033Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:23:42.033Z] [INFO ] ========================================
+[2025-11-28T04:23:42.033Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:23:42.153Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:23:42.153Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:23:42.154Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:23:42.154Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:23:42.154Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:23:42.155Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:23:42.155Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:23:42.161Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:23:42.166Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:23:42.166Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:23:42.203Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:23:42.206Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:23:42.219Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:23:42.221Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:23:42",
+  "shanghaiTime": "2025/11/28 12:23:42",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:23:42.231Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:23:42.231Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:23:42.231Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:23:42.232Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:23:42.232Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:23:42.232Z",
+  "currentShanghaiTime": "2025-11-28T04:23:42.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:23:42.233Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:23:42.250Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:23:42.826Z] [INFO ] 客户端连接:
+Umz4K9kW4mntvmMzAAAB
+[2025-11-28T04:23:42.900Z] [INFO ] 客户端连接:
+38jZrLQhFFUA6hP7AAAD
+[2025-11-28T04:23:52.299Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:23:52.299Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:23:52.300Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:23:52.300Z] [INFO ] ========================================
+[2025-11-28T04:23:52.301Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:23:52.301Z] [INFO ] ========================================
+[2025-11-28T04:23:52.301Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:23:52.371Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:23:52.371Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:23:52.371Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:23:52.372Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:23:52.372Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:23:52.372Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:23:52.373Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:23:52.375Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:23:52.378Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:23:52.378Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:23:52.413Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:23:52.414Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:23:52.426Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:23:52.427Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:23:52",
+  "shanghaiTime": "2025/11/28 12:23:52",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:23:52.431Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:23:52.432Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:23:52.432Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:23:52.433Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:23:52.433Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:23:52.433Z",
+  "currentShanghaiTime": "2025-11-28T04:23:52.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:23:52.433Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:23:52.445Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:23:52.551Z] [INFO ] 客户端连接:
+2fXfZ2eyEQqY881xAAAB
+[2025-11-28T04:23:52.866Z] [INFO ] 客户端连接:
+je-DPmWDePPIWmlMAAAD
+[2025-11-28T04:24:02.607Z] [INFO ] 客户端断开连接:
+je-DPmWDePPIWmlMAAAD
+[2025-11-28T04:24:07.640Z] [INFO ] 客户端连接:
+EUJQzr9K8UVIeuZ0AAAF
+[2025-11-28T04:24:14.430Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:24:14.431Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:24:14.431Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:24:14.432Z] [INFO ] ========================================
+[2025-11-28T04:24:14.432Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:24:14.432Z] [INFO ] ========================================
+[2025-11-28T04:24:14.432Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:24:14.514Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:24:14.514Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:24:14.515Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:24:14.515Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:24:14.516Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:24:14.516Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:24:14.516Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:24:14.520Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:24:14.523Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:24:14.523Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:24:14.554Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:24:14.557Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:24:14.570Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:24:14.572Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:24:14",
+  "shanghaiTime": "2025/11/28 12:24:14",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:24:14.576Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:24:14.577Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:24:14.577Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:24:14.578Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:24:14.578Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:24:14.578Z",
+  "currentShanghaiTime": "2025-11-28T04:24:14.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:24:14.578Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:24:14.590Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:24:15.266Z] [INFO ] 客户端连接:
+_OyWjiPaJtdnhDzmAAAB
+[2025-11-28T04:24:16.460Z] [INFO ] 客户端连接:
+Hc5wjQZBIB3M-bonAAAD
+[2025-11-28T04:30:23.753Z] [INFO ] 客户端断开连接:
+Hc5wjQZBIB3M-bonAAAD
+[2025-11-28T04:30:23.799Z] [INFO ] 客户端连接:
+47fgExMsa5u_ZaifAAAF
+[2025-11-28T04:49:16.098Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:49:16.099Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:49:16.099Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:49:16.100Z] [INFO ] ========================================
+[2025-11-28T04:49:16.100Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:49:16.100Z] [INFO ] ========================================
+[2025-11-28T04:49:16.101Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:49:16.190Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:49:16.190Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:49:16.191Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:49:16.191Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:49:16.191Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:49:16.191Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:49:16.192Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:49:16.194Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:49:16.198Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:49:16.198Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:49:16.227Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:49:16.228Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:49:16.243Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:49:16.245Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:49:16",
+  "shanghaiTime": "2025/11/28 12:49:16",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:49:16.251Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:49:16.251Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:49:16.252Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:49:16.252Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:49:16.253Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:49:16.252Z",
+  "currentShanghaiTime": "2025-11-28T04:49:16.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:49:16.253Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:49:16.269Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:49:16.816Z] [INFO ] 客户端连接:
+dS8lFsqMRTg-_e2mAAAB
+[2025-11-28T04:49:17.128Z] [INFO ] 客户端连接:
+3gHXSyEcxYTIdo_nAAAD
+[2025-11-28T04:49:26.298Z] [INFO ] 客户端断开连接:
+dS8lFsqMRTg-_e2mAAAB
+[2025-11-28T04:49:26.346Z] [INFO ] 客户端连接:
+WSFVNqKi4Rrz3mB_AAAF
+[2025-11-28T04:50:58.082Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:50:58.083Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:50:58.083Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:50:58.083Z] [INFO ] ========================================
+[2025-11-28T04:50:58.084Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:50:58.084Z] [INFO ] ========================================
+[2025-11-28T04:50:58.084Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:50:58.157Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:50:58.158Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:50:58.158Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:50:58.159Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:50:58.159Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:50:58.160Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:50:58.161Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:50:58.165Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:50:58.169Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:50:58.170Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:50:58.205Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:50:58.207Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:50:58.220Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:50:58.221Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:50:58",
+  "shanghaiTime": "2025/11/28 12:50:58",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:50:58.225Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:50:58.226Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:50:58.226Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:50:58.227Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:50:58.228Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:50:58.227Z",
+  "currentShanghaiTime": "2025-11-28T04:50:58.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:50:58.228Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:50:58.242Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:50:58.369Z] [INFO ] 客户端连接:
+G5s9HOnVGyx0yAXkAAAB
+[2025-11-28T04:50:59.111Z] [INFO ] 客户端连接:
+4nOEh7hK_VqFV9OJAAAD
+[2025-11-28T04:51:15.859Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:51:15.859Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:51:15.860Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:51:15.860Z] [INFO ] ========================================
+[2025-11-28T04:51:15.860Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:51:15.861Z] [INFO ] ========================================
+[2025-11-28T04:51:15.861Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:51:15.945Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:51:15.946Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:51:15.946Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:51:15.947Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:51:15.947Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:51:15.948Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:51:15.949Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:51:15.953Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:51:15.959Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:51:15.959Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:51:15.995Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:51:15.997Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:51:16.009Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:51:16.010Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:51:16",
+  "shanghaiTime": "2025/11/28 12:51:16",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:51:16.014Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:51:16.015Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:51:16.016Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:51:16.016Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:51:16.017Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:51:16.016Z",
+  "currentShanghaiTime": "2025-11-28T04:51:16.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:51:16.017Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:51:16.032Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:51:16.182Z] [INFO ] 客户端连接:
+RIcyrPx_dkj5FhVSAAAB
+[2025-11-28T04:51:16.288Z] [INFO ] 客户端连接:
+A8aYp4HC5VHqzgYMAAAD
+[2025-11-28T04:51:19.535Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T04:51:19.535Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T04:51:19.536Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T04:51:19.536Z] [INFO ] ========================================
+[2025-11-28T04:51:19.536Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T04:51:19.537Z] [INFO ] ========================================
+[2025-11-28T04:51:19.537Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T04:51:19.607Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T04:51:19.607Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T04:51:19.608Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T04:51:19.608Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T04:51:19.608Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T04:51:19.609Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T04:51:19.609Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T04:51:19.611Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T04:51:19.614Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T04:51:19.615Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T04:51:19.640Z] [INFO ] 数据库初始化成功
+[2025-11-28T04:51:19.642Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T04:51:19.654Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T04:51:19.655Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 12:51:19",
+  "shanghaiTime": "2025/11/28 12:51:19",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T04:51:19.660Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T04:51:19.661Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T04:51:19.662Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T04:51:19.662Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T04:51:19.663Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T04:51:19.662Z",
+  "currentShanghaiTime": "2025-11-28T04:51:19.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T04:51:19.663Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T04:51:19.674Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T04:51:20.283Z] [INFO ] 客户端连接:
+j4SXXH_3qwM3pAl1AAAB
+[2025-11-28T04:51:20.438Z] [INFO ] 客户端连接:
+PFha3Etf-ub97dIZAAAD
+[2025-11-28T06:17:46.174Z] [INFO ] 客户端断开连接:
+j4SXXH_3qwM3pAl1AAAB
+[2025-11-28T06:17:47.684Z] [INFO ] 客户端连接:
+PI0zeSUtRU94-b6KAAAF
+[2025-11-28T08:31:29.991Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T08:31:29.992Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T08:31:29.992Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T08:31:29.993Z] [INFO ] ========================================
+[2025-11-28T08:31:29.993Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T08:31:29.993Z] [INFO ] ========================================
+[2025-11-28T08:31:29.994Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T08:31:30.216Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T08:31:30.216Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T08:31:30.217Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T08:31:30.217Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T08:31:30.217Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T08:31:30.218Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T08:31:30.218Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T08:31:30.222Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T08:31:30.225Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T08:31:30.226Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T08:31:30.252Z] [INFO ] 数据库初始化成功
+[2025-11-28T08:31:30.254Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T08:31:30.268Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T08:31:30.270Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 16:31:30",
+  "shanghaiTime": "2025/11/28 16:31:30",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T08:31:30.276Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T08:31:30.276Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T08:31:30.277Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T08:31:30.277Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T08:31:30.278Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T08:31:30.277Z",
+  "currentShanghaiTime": "2025-11-28T08:31:30.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T08:31:30.278Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T08:31:30.292Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T08:35:00.115Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T08:35:00.116Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T08:35:00.116Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T08:35:00.117Z] [INFO ] ========================================
+[2025-11-28T08:35:00.117Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T08:35:00.117Z] [INFO ] ========================================
+[2025-11-28T08:35:00.118Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T08:35:00.200Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T08:35:00.200Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T08:35:00.200Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T08:35:00.201Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T08:35:00.201Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T08:35:00.201Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T08:35:00.202Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T08:35:00.204Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T08:35:00.208Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T08:35:00.208Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T08:35:00.235Z] [INFO ] 数据库初始化成功
+[2025-11-28T08:35:00.238Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T08:35:00.251Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T08:35:00.252Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 16:35:00",
+  "shanghaiTime": "2025/11/28 16:35:00",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T08:35:00.259Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T08:35:00.260Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T08:35:00.260Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T08:35:00.261Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T08:35:00.261Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T08:35:00.261Z",
+  "currentShanghaiTime": "2025-11-28T08:35:00.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T08:35:00.262Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T08:35:00.279Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T08:35:04.867Z] [INFO ] 收到 SIGINT 信号，正在关闭服务器
+[2025-11-28T08:37:46.345Z] [INFO ] ✓ loadPrinterModules 工具函数加载成功
+[2025-11-28T08:37:46.346Z] [INFO ] ✓ 已加载打印机配置文件: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer.config.json
+[2025-11-28T08:37:46.346Z] [INFO ] ℹ️  打印机配置来源: 配置文件
+[2025-11-28T08:37:46.347Z] [INFO ] ========================================
+[2025-11-28T08:37:46.347Z] [INFO ] 开始初始化打印机服务...
+[2025-11-28T08:37:46.347Z] [INFO ] ========================================
+[2025-11-28T08:37:46.348Z] [INFO ] 调用 loadPrinterModules()...
+[2025-11-28T08:37:46.429Z] [INFO ] loadPrinterModules() 执行完成
+[2025-11-28T08:37:46.430Z] [INFO ] ✓ loadPrinterModules() 返回了模块对象
+[2025-11-28T08:37:46.430Z] [INFO ] 已加载的模块:
+[
+  "ffi-napi",
+  "ref-napi",
+  "ref-struct-napi",
+  "ref-array-napi"
+]
+[2025-11-28T08:37:46.431Z] [INFO ] ✓ ffi-napi 和 ref-napi 加载成功
+[2025-11-28T08:37:46.431Z] [INFO ] ✓ wchar_t 类型定义完成
+[2025-11-28T08:37:46.431Z] [INFO ] DLL 路径: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\printer_sdk\CsnPrinterLibs.dll
+[2025-11-28T08:37:46.431Z] [INFO ] ✓ DLL 文件存在
+[2025-11-28T08:37:46.434Z] [ERROR] ❌ 打印机 DLL 加载失败:
+错误信息: Cannot read properties of null (reading 'match')
+错误堆栈: TypeError: Cannot read properties of null (reading 'match')
+    at new DynamicLibrary (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\dynamic_library.js:67:21)
+    at Object.Library (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\node_modules\ffi-napi\lib\library.js:47:10)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\printerService.js:247:22)
+    at Module._compile (node:internal/modules/cjs/loader:1364:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+    at Module.load (node:internal/modules/cjs/loader:1203:32)
+    at Module._load (node:internal/modules/cjs/loader:1019:12)
+    at Module.require (node:internal/modules/cjs/loader:1231:19)
+    at require (node:internal/modules/helpers:177:18)
+    at Object.<anonymous> (C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\services\ticketService.js:4:24)
+[2025-11-28T08:37:46.437Z] [INFO ] 使用打包内的默认图片目录: C:\Users\momo0\Documents\CursorProjects\queue-system\queueSystem-server\public\pic
+[2025-11-28T08:37:46.437Z] [INFO ] 提示: 如需自定义图片，请在可执行文件同目录下创建 pic 文件夹
+[2025-11-28T08:37:46.464Z] [INFO ] 数据库初始化成功
+[2025-11-28T08:37:46.466Z] [INFO ] 设置每日重置任务，执行时间: 00:00 (cron: 0 0 * * *)
+[2025-11-28T08:37:46.481Z] [INFO ] 时区设置: Asia/Shanghai (已启用)
+[2025-11-28T08:37:46.482Z] [INFO ] 定时任务创建信息
+{
+  "systemTime": "2025/11/28 16:37:46",
+  "shanghaiTime": "2025/11/28 16:37:46",
+  "timezoneOffset": "8 小时"
+}
+[2025-11-28T08:37:46.487Z] [INFO ] 定时任务将在每天 00:00 (上海时间) 执行
+[2025-11-28T08:37:46.488Z] [INFO ] 每日重置定时任务已启动
+[2025-11-28T08:37:46.488Z] [INFO ] 预期下次执行时间: 2025/11/29 00:00:00
+[2025-11-28T08:37:46.489Z] [INFO ] 定时任务健康检查机制已启动
+[2025-11-28T08:37:46.489Z] [INFO ] 定时任务状态:
+{
+  "isRunning": true,
+  "currentCronExpression": "0 0 * * *",
+  "hasCronJob": true,
+  "cronJobRunning": null,
+  "nextRunTime": null,
+  "expectedNextExecution": "2025-11-28T16:00:00.000Z",
+  "lastExecutionTime": null,
+  "currentSystemTime": "2025-11-28T08:37:46.489Z",
+  "currentShanghaiTime": "2025-11-28T08:37:46.000Z",
+  "healthCheckActive": true
+}
+[2025-11-28T08:37:46.490Z] [INFO ] ℹ️  打印机功能未启用（DLL未加载或已禁用）
+[2025-11-28T08:37:46.504Z] [INFO ] 服务器启动成功
+{
+  "port": 3000,
+  "localAddresses": [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+  ],
+  "networkAddresses": [
+    "http://10.10.8.70:3000"
+  ],
+  "primaryIP": "10.10.8.70",
+  "pages": {
+    "ticket": "http://10.10.8.70:3000/ticket",
+    "display": "http://10.10.8.70:3000/display",
+    "counter": "http://10.10.8.70:3000/counter",
+    "admin": "http://10.10.8.70:3000/admin"
+  }
+}
+[2025-11-28T08:37:56.356Z] [INFO ] 客户端连接:
+8mUOugkPs4h3LbmBAAAB
+[2025-11-28T08:38:00.608Z] [INFO ] 客户端连接:
+seBLBvwPgmYrjEg-AAAD
+[2025-11-28T08:38:08.113Z] [INFO ] 客户端连接:
+B73BsPdTjcDsKu9eAAAF

@@ -23,8 +23,10 @@
       >
         <div class="btn-content">
           <div class="btn-code">{{ type.code }}</div>
-          <div class="btn-chinese-text">{{ type.name }}</div>
-          <div class="btn-english-text">{{ type.englishName }}</div>
+          <div class="btn-text-container">
+            <div class="btn-chinese-text">{{ type.name }}</div>
+            <div class="btn-english-text">{{ type.englishName }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -61,6 +63,14 @@
               <div class="english-text">People Waiting</div>
             </div>
             <div class="waiting-count">{{ waitingCount }}</div>
+          </div>
+          <!-- 打印状态提示 -->
+          <div v-if="ticketInfo.print_status === 'error'" class="print-warning">
+            <div class="warning-icon">⚠</div>
+            <div class="warning-message">
+              <div class="chinese-text">{{ ticketInfo.print_message || '打印機異常，請檢查打印機狀態' }}</div>
+              <div class="english-text">Printer error, please check printer status</div>
+            </div>
           </div>
         </div>
         <div class="ticket-dialog-footer">
@@ -135,6 +145,20 @@ defineExpose({
 });
 </script>
 
+<style>
+/* 基础样式设置，使用相对单位 */
+:root {
+  --base-font-size: 35px;  /* 调整为24寸显示器合适尺寸（原20px * 1.75） */
+}
+
+/* 大屏幕（24寸显示器） */
+@media (min-width: 1400px) {
+  :root {
+    --base-font-size: 42px;  /* 大屏幕上使用更大字体（原24px * 1.75） */
+  }
+}
+</style>
+
 <style scoped>
 /* 业务类型选择页面样式 */
 .business-types-view {
@@ -144,11 +168,11 @@ defineExpose({
   justify-content: flex-start; /* 改为顶部对齐，以便底部按钮可以固定 */
   width: 100%;
   height: 100%;
-  padding: 80px 1.5vw 1vh; /* 调整顶部内边距，适应70px高的header */
+  padding: 210px 2.6vw 1.75vh; /* 增加顶部内边距以适应增加的header高度，确保不被遮挡 */
   box-sizing: border-box;
   overflow-y: auto; /* 将滚动设置在整个页面 */
   position: relative;
-  padding-bottom: 85px; /* 为底部取票按钮留出空间 */
+  padding-bottom: 180px; /* 为底部取票按钮留出空间（原85px * 1.75） */
 }
 
 .header {
@@ -160,27 +184,29 @@ defineExpose({
   right: 0;
   align-items: center;
   justify-content: center;
-  min-height: 70px; /* 调整header高度为70px */
-  padding: 3px 0; /* 添加极小的上下内边距 */
+  min-height: 160px !important; /* 进一步增加header高度 */
+  padding: 20px 0 !important; /* 大幅增加上下内边距 */
   background-color: #fff; /* 添加背景色 */
   z-index: 100; /* 确保在最上层 */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03); /* 进一步减小阴影效果 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* 增加阴影效果 */
 }
 
 .header-content {
   text-align: center;
-  width: calc(100% - 70px); /* 为返回按钮留出空间 */
+  width: calc(100% - 160px); /* 为返回按钮留出空间，适应增加的header高度 */
   margin-left: auto;
   margin-right: auto;
+  padding: 0; /* 移除内容区域的上下内边距，只保留header的padding */
 }
 
 .header h1 {
   font-size: calc(var(--base-font-size) * 1.5); /* 增大标题字体 */
   color: #303133;
-  margin-bottom: 6px; /* 增加底部边距 */
+  margin-bottom: 11px; /* 保持原来的中英文间距 */
   margin-top: 0; /* 移除顶部边距 */
   font-weight: 600;
-  line-height: 1.3; /* 增加行高 */
+  line-height: 1.3; /* 保持原来的行高 */
+  padding: 0; /* 移除文字上下内边距 */
 }
 
 .header h2 {
@@ -189,39 +215,42 @@ defineExpose({
   font-weight: normal;
   margin-bottom: 0; /* 移除底部边距 */
   margin-top: 0; /* 添加顶部边距 */
-  line-height: 1.2; /* 增加行高 */
+  line-height: 1.2; /* 保持原来的行高 */
+  padding: 0; /* 移除文字上下内边距 */
 }
 
 .business-type-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.8vw; /* 进一步减小间距 */
-  width: 98%; /* 增加宽度比例，充分利用空间 */
-  max-width: 800px;
-  margin: 0; /* 移除顶部边距，因为已在视图中设置了顶部内边距 */
-  padding: 5px 0 0 0; /* 添加顶部内边距，防止内容被遮挡 */
+  grid-template-columns: 1fr !important; /* 强制单列显示，每个业务类型占一行 */
+  gap: 1.4vw; /* 增加间距（原0.8vw * 1.75） */
+  width: 95% !important; /* 增加宽度比例，充分利用空间 */
+  max-width: 1400px; /* 增加最大宽度（原800px * 1.75） */
+  margin: 0 auto; /* 居中显示 */
+  padding: 9px 0 0 0; /* 增加顶部内边距（原5px * 1.75） */
   /* 移除max-height和overflow-y，让整个页面滚动 */
   flex: 1; /* 让网格占据主要空间 */
   /* 移除padding-bottom，已在业务类型视图中添加 */
 }
 
 .business-type-btn {
-  display: flex;
-  flex-direction: column; /* 确保垂直布局 */
+  display: flex !important;
+  flex-direction: row !important; /* 强制横向布局，适应单行显示 */
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* 左对齐 */
   background-color: #ffffff;
-  border-radius: 8px; /* 稍微减小圆角 */
-  padding: 0.8vh 1vw; /* 进一步减小内边距 */
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 14px; /* 增加圆角（原8px * 1.75） */
+  padding: 2vh 3vw !important; /* 增加垂直内边距 */
+  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.1); /* 增加阴影 */
   cursor: pointer;
   transition: all 0.3s;
-  border-top: 4px solid #409EFF; /* 从左边框改为上边框 */
-  margin-bottom: 0.8vh; /* 减小底部边距 */
-  height: 18vw; /* 减小高度 */
-  max-height: 110px; /* 减小最大高度 */
-  min-height: 85px; /* 减小最小高度 */
+  border-left: 10px solid #409EFF !important; /* 增加左边框宽度 */
+  border-top: none !important; /* 强制移除顶部边框 */
+  margin-bottom: 1vh; /* 增加底部边距 */
+  width: 100% !important; /* 强制占满整行 */
+  min-height: 180px !important; /* 进一步增加最小高度 */
+  max-height: 240px !important; /* 增加最大高度 */
   overflow: hidden; /* 防止内容溢出 */
+  box-sizing: border-box !important; /* 确保padding和border包含在宽度内 */
 }
 
 .business-type-btn:hover {
@@ -231,19 +260,38 @@ defineExpose({
 
 .btn-content {
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* 改为横向布局 */
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* 左对齐 */
   width: 100%;
   height: 100%;
+  gap: 1.5vw; /* 减少元素间距，避免溢出 */
+  min-width: 0; /* 允许内容收缩 */
+  overflow: hidden; /* 防止内容溢出 */
+}
+
+/* 文本容器，用于垂直排列中英文 */
+.btn-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  flex: 1;
+  min-width: 0; /* 允许文本收缩 */
+  max-width: 100%; /* 限制最大宽度 */
+  overflow: hidden; /* 防止内容溢出 */
 }
 
 .btn-code {
-  font-size: clamp(32px, 4.2vw, 36px); /* 增大代码字体 */
+  font-size: clamp(70px, 8vw, 90px) !important; /* 大幅增大代码字体 */
   color: #409EFF;
   font-weight: bold;
-  margin-bottom: 0.2rem; /* 减少底部边距 */
+  margin: 0; /* 移除边距，使用gap控制间距 */
   line-height: 1;
+  min-width: 100px !important; /* 减少最小宽度，避免占用过多空间 */
+  max-width: 120px !important; /* 限制最大宽度 */
+  text-align: center; /* 代码居中显示 */
+  flex-shrink: 0; /* 代码区域不收缩 */
 }
 
 .chinese-text {
@@ -262,42 +310,42 @@ defineExpose({
 
 /* 按钮内的中文文本 */
 .btn-chinese-text {
-  font-size: clamp(20px, 3.6vw, 22px); /* 增大中文字体 */
+  font-size: clamp(42px, 7vw, 55px) !important; /* 大幅增大中文字体 */
   color: #303133;
   font-weight: bold;
-  margin-bottom: 0.1rem; /* 减小底部边距 */
-  line-height: 1.1; /* 适当增加行高 */
-  text-align: center;
-  max-width: 100%;
+  margin: 0; /* 移除边距 */
+  margin-bottom: 0.5rem; /* 增加中英文之间的间距 */
+  line-height: 1.2; /* 适当增加行高 */
+  text-align: left; /* 改为左对齐 */
+  width: 100%;
+  max-width: 100%; /* 限制最大宽度 */
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1; /* 限制为1行 */
-  line-clamp: 1; /* 标准属性 */
-  -webkit-box-orient: vertical;
+  white-space: nowrap; /* 单行显示，不换行 */
+  box-sizing: border-box; /* 确保宽度计算正确 */
 }
 
 /* 按钮内的英文文本 */
 .btn-english-text {
-  font-size: clamp(18px, 2.8vw, 18px); /* 增大英文字体 */
+  font-size: clamp(38px, 5.5vw, 48px) !important; /* 大幅增大英文字体 */
   color: #606266;
-  line-height: 1.1; /* 适当增加行高 */
-  text-align: center;
-  max-width: 100%;
+  line-height: 1.2; /* 适当增加行高 */
+  text-align: left; /* 改为左对齐 */
+  width: 100%;
+  max-width: 100%; /* 限制最大宽度 */
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1; /* 限制为1行 */
-  line-clamp: 1; /* 标准属性 */
-  -webkit-box-orient: vertical;
+  white-space: nowrap; /* 单行显示，不换行 */
+  box-sizing: border-box; /* 确保宽度计算正确 */
 }
 
 /* 选中状态 */
 .business-type-btn.selected {
   background-color: #e6f1fc;
-  border-top: 4px solid #1989fa; /* 改为顶部边框 */
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-left: 7px solid #1989fa; /* 改为左边框，适应横向布局 */
+  border-top: none; /* 移除顶部边框 */
+  transform: translateY(-5px); /* 增加位移（原-3px * 1.75） */
+  box-shadow: 0 7px 21px rgba(0, 0, 0, 0.1); /* 增加阴影 */
 }
 
 /* 取票按钮区域 */
@@ -311,29 +359,30 @@ defineExpose({
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0.6vh 0; /* 减小上下内边距 */
+  padding: 1.05vh 0; /* 增加上下内边距（原0.6vh * 1.75） */
   background-color: rgba(255, 255, 255, 0.95); /* 半透明背景 */
   z-index: 99;
-  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.08); /* 减小阴影 */
-  height: 70px; /* 调整高度 */
-  border-top: 1px solid rgba(0, 0, 0, 0.03); /* 添加顶部细边框 */
+  box-shadow: 0 -2px 9px rgba(0, 0, 0, 0.14); /* 增加阴影 */
+  height: 150px; /* 增加高度（原70px * 1.75） */
+  border-top: 2px solid rgba(0, 0, 0, 0.05); /* 增加边框宽度 */
 }
 
 .get-ticket-btn {
   background-color: #67c23a; /* 使用绿色表示取票 */
   color: white;
   border: none;
-  border-radius: 10px;
-  padding: 0.8vh 8vw; /* 增加垂直内边距 */
+  border-radius: 18px; /* 增加圆角（原10px * 1.75） */
+  padding: 1.4vh 14vw; /* 增加内边距（原0.8vh 8vw * 1.75） */
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 2px 6px rgba(103, 194, 58, 0.4); /* 减小阴影 */
+  box-shadow: 0 4px 11px rgba(103, 194, 58, 0.4); /* 增加阴影 */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 0; /* 移除上下边距 */
-  height: 56px; /* 增加固定高度 */
+  height: 140px; /* 增加固定高度（原56px * 1.75） */
+  min-width: 200px; /* 增加最小宽度 */
 }
 
 .get-ticket-btn:hover {
@@ -362,13 +411,13 @@ defineExpose({
 
 .get-ticket-btn .chinese-text {
   margin-bottom: 2px; /* 增加底部间距 */
-  font-size: calc(var(--base-font-size) * 1.3) !important; /* 增大字体 */
+  font-size: calc(var(--base-font-size) * 1.5) !important; /* 增大字体 */
   color: white;
   line-height: 1.2;
 }
 
 .get-ticket-btn .english-text {
-  font-size: calc(var(--base-font-size) * 0.8) !important; /* 增大字体 */
+  font-size: calc(var(--base-font-size) * 1) !important; /* 增大字体 */
   color: rgba(255, 255, 255, 0.9);
   line-height: 1;
 }
@@ -376,24 +425,25 @@ defineExpose({
 /* 返回按钮样式 - 左上角小按钮 */
 .back-btn {
   position: absolute;
-  left: 10px;
+  left: 18px; /* 增加左边距（原10px * 1.75） */
   top: 50%;
   transform: translateY(-50%); /* 垂直居中 */
   background-color: rgba(144, 147, 153, 0.7);
   color: white;
   border: none;
-  border-radius: 4px;
-  padding: 1vh 1vw; /* 减小内边距 */
-  max-width: 80px; /* 减小最大宽度 */
+  border-radius: 7px; /* 增加圆角（原4px * 1.75） */
+  padding: 1.75vh 1.75vw; /* 增加内边距（原1vh 1vw * 1.75） */
+  max-width: 140px; /* 增加最大宽度（原80px * 1.75） */
   width: auto;
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15); /* 减小阴影 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26); /* 增加阴影 */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 101; /* 确保按钮在最上层 */
+  min-height: 60px; /* 增加最小高度 */
 }
 
 .back-btn:hover {
@@ -435,11 +485,11 @@ defineExpose({
 
 .ticket-dialog {
   background-color: white;
-  border-radius: 12px;
+  border-radius: 21px; /* 增加圆角（原12px * 1.75） */
   width: 90%;
-  max-width: 500px; /* 增加最大宽度 */
-  padding: 20px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  max-width: 875px; /* 增加最大宽度（原500px * 1.75） */
+  padding: 35px; /* 增加内边距（原20px * 1.75） */
+  box-shadow: 0 9px 35px rgba(0, 0, 0, 0.3); /* 增加阴影 */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -450,19 +500,19 @@ defineExpose({
 .ticket-dialog-content {
   width: 100%;
   background-color: #f0f9eb;
-  border: 1px solid #e1f3d8;
-  border-radius: 10px;
-  padding: 15px; /* 使用固定内边距而不是响应式内边距 */
+  border: 2px solid #e1f3d8; /* 增加边框宽度（原1px * 1.75） */
+  border-radius: 18px; /* 增加圆角（原10px * 1.75） */
+  padding: 26px; /* 增加内边距（原15px * 1.75） */
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 35px; /* 增加间距（原20px * 1.75） */
   box-sizing: border-box; /* 确保padding不会增加宽度 */
   overflow: hidden; /* 防止内容溢出 */
 }
 
 .ticket-header {
-  margin-bottom: 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px dashed #c0e3b2;
+  margin-bottom: 21px; /* 增加间距（原12px * 1.75） */
+  padding-bottom: 18px; /* 增加内边距（原10px * 1.75） */
+  border-bottom: 2px dashed #c0e3b2; /* 增加边框宽度（原1px * 1.75） */
   width: 100%;
 }
 
@@ -484,12 +534,12 @@ defineExpose({
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 26px; /* 增加间距（原15px * 1.75） */
   width: 100%;
 }
 
 .ticket-label {
-  margin-bottom: 8px;
+  margin-bottom: 14px; /* 增加间距（原8px * 1.75） */
 }
 
 .ticket-label .chinese-text {
@@ -504,16 +554,16 @@ defineExpose({
 }
 
 .ticket-number {
-  font-size: clamp(36px, calc(var(--base-font-size) * 3.5), 70px); /* 限制最大字体大小 */
+  font-size: clamp(63px, calc(var(--base-font-size) * 3.5), 123px); /* 增加字体大小（原36px, 70px * 1.75） */
   color: #67c23a;
   font-weight: bold;
-  margin: 8px 0;
+  margin: 14px 0; /* 增加间距（原8px * 1.75） */
 }
 
 .waiting-info {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px dashed #c0e3b2;
+  margin-top: 18px; /* 增加间距（原10px * 1.75） */
+  padding-top: 18px; /* 增加内边距（原10px * 1.75） */
+  border-top: 2px dashed #c0e3b2; /* 增加边框宽度（原1px * 1.75） */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -521,7 +571,7 @@ defineExpose({
 }
 
 .waiting-label {
-  margin-bottom: 8px;
+  margin-bottom: 14px; /* 增加间距（原8px * 1.75） */
 }
 
 .waiting-label .chinese-text {
@@ -536,30 +586,70 @@ defineExpose({
 }
 
 .waiting-count {
-  font-size: clamp(28px, calc(var(--base-font-size) * 2.2), 50px); /* 限制最大字体大小 */
+  font-size: clamp(49px, calc(var(--base-font-size) * 2.2), 88px); /* 增加字体大小（原28px, 50px * 1.75） */
   color: #e6a23c;
   font-weight: bold;
+}
+
+/* 打印警告提示 */
+.print-warning {
+  margin-top: 18px; /* 增加间距（原10px * 1.75） */
+  padding: 14px 18px; /* 增加内边距（原8px 10px * 1.75） */
+  background-color: #fef0f0;
+  border: 2px solid #fbc4c4; /* 增加边框宽度（原1px * 1.75） */
+  border-radius: 11px; /* 增加圆角（原6px * 1.75） */
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.warning-icon {
+  font-size: clamp(28px, calc(var(--base-font-size) * 1.2), 35px);
+  color: #f56c6c;
+  margin-right: 14px; /* 增加右边距（原8px * 1.75） */
+  flex-shrink: 0;
+}
+
+.warning-message {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.warning-message .chinese-text {
+  font-size: clamp(15px, calc(var(--base-font-size) * 0.9), 18px);
+  color: #f56c6c;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.warning-message .english-text {
+  font-size: clamp(13px, calc(var(--base-font-size) * 0.75), 16px);
+  color: #f78989;
+  line-height: 1.3;
 }
 
 .ticket-dialog-footer {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 18px; /* 增加间距（原10px * 1.75） */
 }
 
 .dialog-btn {
   background-color: #67c23a;
   color: white;
   border: none;
-  border-radius: 6px;
-  padding: 10px 30px;
+  border-radius: 11px; /* 增加圆角（原6px * 1.75） */
+  padding: 18px 53px; /* 增加内边距（原10px 30px * 1.75） */
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: all 0.3s;
-  box-shadow: 0 2px 6px rgba(103, 194, 58, 0.4);
+  box-shadow: 0 4px 11px rgba(103, 194, 58, 0.4); /* 增加阴影 */
+  min-height: 80px; /* 增加最小高度 */
 }
 
 .dialog-btn:hover {
@@ -580,18 +670,68 @@ defineExpose({
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* 响应式布局 - 大屏幕 */
+/* 响应式布局 - 大屏幕（24寸显示器） */
 @media (min-width: 1400px) {
   .business-type-grid {
-    max-width: 1000px;
+    grid-template-columns: 1fr !important; /* 强制单列显示 */
+    max-width: 1750px; /* 增加最大宽度（原1000px * 1.75） */
+    width: 95% !important; /* 确保宽度足够 */
   }
   
   .ticket-dialog {
-    max-width: 550px; /* 在大屏幕上增加弹窗最大宽度 */
+    max-width: 963px; /* 在大屏幕上增加弹窗最大宽度（原550px * 1.75） */
   }
   
   .ticket-dialog-content {
-    padding: 20px; /* 在大屏幕上增加内边距 */
+    padding: 35px; /* 在大屏幕上增加内边距（原20px * 1.75） */
+  }
+  
+  .business-type-btn {
+    max-height: 260px !important; /* 在大屏幕上进一步增加按钮高度 */
+    min-height: 200px !important;
+    width: 100% !important; /* 确保占满整行 */
+    padding: 3vh 3vw !important; /* 增加内边距 */
+    font-size: calc(var(--base-font-size) * 1.2) !important; /* 增大字体 */
+  }
+  
+  .header {
+    min-height: 180px !important; /* 在大屏幕上进一步增加header高度 */
+    padding: 25px 0 !important; /* 增加上下内边距 */
+  }
+  
+  .header-content {
+    width: calc(100% - 180px); /* 适应增加的header高度 */
+    padding: 0; /* 移除内容区域的上下内边距 */
+  }
+  
+  .business-types-view {
+    padding-top: 220px; /* 进一步增加顶部内边距，确保不被header遮挡 */
+  }
+  
+  .btn-code {
+    font-size: clamp(70px, 8vw, 80px) !important; /* 增大代码字体 */
+    min-width: 120px !important;
+  }
+  
+  .btn-chinese-text {
+    font-size: clamp(42px, 7vw, 50px) !important; /* 增大中文字体 */
+  }
+  
+  .btn-english-text {
+    font-size: clamp(38px, 5.5vw, 42px) !important; /* 增大英文字体 */
+  }
+  
+  .get-ticket-section {
+    height: 140px; /* 在大屏幕上进一步增加高度 */
+  }
+  
+  .get-ticket-btn {
+    height: 110px; /* 在大屏幕上进一步增加按钮高度 */
+    min-width: 250px;
+  }
+  
+  .header {
+    min-height: 140px; /* 在大屏幕上进一步增加header高度 */
   }
 }
 
@@ -638,10 +778,13 @@ defineExpose({
   }
   
   .business-type-btn {
-    padding: 10px;
+    padding: 10px 15px; /* 增加左右内边距以适应横向布局 */
     height: 80px; /* 固定高度 */
     max-height: none;
     min-height: 80px;
+    flex-direction: row; /* 确保横向布局 */
+    border-left: 5px solid #409EFF; /* 左边框 */
+    border-top: none; /* 移除顶部边框 */
   }
   
   .get-ticket-section {
@@ -688,16 +831,20 @@ defineExpose({
   }
   
   .business-type-btn {
-    padding: 6px 4px; /* 减小内边距 */
+    padding: 6px 10px; /* 增加左右内边距以适应横向布局 */
     height: 65px; /* 减小高度 */
     max-height: 65px;
     min-height: 65px;
     margin-bottom: 0.5vh; /* 减小底部边距 */
+    flex-direction: row; /* 确保横向布局 */
+    border-left: 4px solid #409EFF; /* 左边框 */
+    border-top: none; /* 移除顶部边框 */
   }
   
   .btn-code {
-    margin-bottom: 0.3rem;
+    margin: 0; /* 移除边距 */
     font-size: clamp(16px, 4vw, 22px); /* 调整小屏幕下的代码字体大小 */
+    min-width: 50px; /* 设置最小宽度 */
   }
   
   .btn-chinese-text {

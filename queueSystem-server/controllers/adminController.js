@@ -3,6 +3,7 @@ const { settings: Setting, counters: Counter, sequelize } = require('../models')
 const { Op } = require('sequelize');
 const dailyResetScheduler = require('../utils/dailyResetScheduler');
 const { getIO } = require('../websocket');
+const logger = require('../utils/logger');
 
 // 管理员登录验证
 const login = async (req, res) => {
@@ -86,9 +87,9 @@ const updateSetting = async (req, res) => {
     if (key === 'ticket_reset_time' && value !== undefined) {
       try {
         await dailyResetScheduler.restart();
-        console.log('检测到 ticket_reset_time 设置已更改，定时任务已重新启动');
+        logger.info('检测到 ticket_reset_time 设置已更改，定时任务已重新启动');
       } catch (error) {
-        console.error('重启定时任务失败:', error);
+        logger.error('重启定时任务失败:', error);
         // 不阻止设置更新，只记录错误
       }
     }
@@ -99,10 +100,10 @@ const updateSetting = async (req, res) => {
         const io = getIO();
         if (io) {
           io.emit('voice:settingsUpdated', { key });
-          console.log(`检测到 ${key} 设置已更改，已通知所有客户端刷新`);
+          logger.info(`检测到 ${key} 设置已更改，已通知所有客户端刷新`);
         }
       } catch (error) {
-        console.error('发送语音设置更新通知失败:', error);
+        logger.error('发送语音设置更新通知失败:', error);
         // 不阻止设置更新，只记录错误
       }
     }
@@ -178,7 +179,7 @@ const getAllCounters = async (req, res) => {
     // console.log('查询到的counters数据:', formattedCounters);
     res.json(formattedCounters);
   } catch (error) {
-    console.error('获取柜台列表失败:', error);
+    logger.error('获取柜台列表失败:', error);
     res.status(500).json({ message: 'Failed to get counter list', error: error.message });
   }
 };
@@ -218,7 +219,7 @@ const createCounter = async (req, res) => {
     
     res.status(201).json(formattedCounter);
   } catch (error) {
-    console.error('创建柜台失败:', error);
+    logger.error('创建柜台失败:', error);
     res.status(500).json({ message: 'Failed to create counter', error: error.message });
   }
 };
@@ -267,7 +268,7 @@ const updateCounter = async (req, res) => {
     
     res.json(formattedCounter);
   } catch (error) {
-    console.error('更新柜台信息失败:', error);
+    logger.error('更新柜台信息失败:', error);
     res.status(500).json({ message: 'Failed to update counter', error: error.message });
   }
 };
@@ -297,8 +298,7 @@ const deleteCounter = async (req, res) => {
   } catch (error) {
     // 回滚事务
     await transaction.rollback();
-    console.error('删除柜台失败:', error);
-    console.error('错误堆栈:', error.stack);
+    logger.error('删除柜台失败:', error);
     res.status(500).json({ 
       message: 'Failed to delete counter', 
       error: error.message,
@@ -320,7 +320,7 @@ const getSchedulerStatus = async (req, res) => {
       systemTime: new Date().toLocaleString()
     });
   } catch (error) {
-    console.error('获取定时任务状态失败:', error);
+    logger.error('获取定时任务状态失败:', error);
     res.status(500).json({ message: '获取定时任务状态失败', error: error.message });
   }
 };
@@ -331,7 +331,7 @@ const testScheduler = async (req, res) => {
     await dailyResetScheduler.testSchedule();
     res.json({ message: '定时任务测试执行成功' });
   } catch (error) {
-    console.error('测试定时任务失败:', error);
+    logger.error('测试定时任务失败:', error);
     res.status(500).json({ message: '测试定时任务失败', error: error.message });
   }
 };
@@ -342,7 +342,7 @@ const manualReset = async (req, res) => {
     await dailyResetScheduler.manualReset();
     res.json({ message: '手动重置执行成功' });
   } catch (error) {
-    console.error('手动重置失败:', error);
+    logger.error('手动重置失败:', error);
     res.status(500).json({ message: '手动重置失败', error: error.message });
   }
 };
@@ -357,7 +357,7 @@ const restartScheduler = async (req, res) => {
       status: status
     });
   } catch (error) {
-    console.error('重启定时任务失败:', error);
+    logger.error('重启定时任务失败:', error);
     res.status(500).json({ message: '重启定时任务失败', error: error.message });
   }
 };

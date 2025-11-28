@@ -1,4 +1,5 @@
 const { businessTypes: BusinessType, sequelize, settings: Setting } = require('../models');
+const logger = require('../utils/logger');
 
 // 获取所有业务类型
 const getAllBusinessTypes = async (req, res) => {
@@ -9,7 +10,7 @@ const getAllBusinessTypes = async (req, res) => {
     });
     res.json(businessTypes);
   } catch (error) {
-    console.error('获取业务类型失败:', error);
+    logger.error('获取业务类型失败:', error);
     res.status(500).json({ message: '获取业务类型失败', error: error.message });
   }
 };
@@ -26,7 +27,7 @@ const createBusinessType = async (req, res) => {
     });
     res.status(201).json(businessType);
   } catch (error) {
-    console.error('创建业务类型失败:', error);
+    logger.error('创建业务类型失败:', error);
     res.status(500).json({ message: '创建业务类型失败', error: error.message });
   }
 };
@@ -52,7 +53,7 @@ const updateBusinessType = async (req, res) => {
     
     res.json(businessType);
   } catch (error) {
-    console.error('更新业务类型失败:', error);
+    logger.error('更新业务类型失败:', error);
     res.status(500).json({ message: '更新业务类型失败', error: error.message });
   }
 };
@@ -116,7 +117,7 @@ const getBusinessTypesWithLatestTickets = async (req, res) => {
 
     res.json(finalResults);
   } catch (error) {
-    console.error('获取业务类型及最新服务号失败:', error);
+    logger.error('获取业务类型及最新服务号失败:', error);
     res.status(500).json({ message: '获取业务类型及最新服务号失败', error: error.message });
   }
 };
@@ -134,16 +135,16 @@ const getDisplayRemarks = async (req, res) => {
     
     res.json({ value: setting.value || '' });
   } catch (error) {
-    console.error('获取显示屏备注失败:', error);
+    logger.error('获取显示屏备注失败:', error);
     res.status(500).json({ message: '获取显示屏备注失败', error: error.message });
   }
 };
 
-// 获取显示屏服务器IP
-const getDisplayServerIP = async (req, res) => {
+// 获取语音播报主机IP
+const getVoiceBroadcastHostIP = async (req, res) => {
   try {
     const setting = await Setting.findOne({
-      where: { key: 'display_server_ip' }
+      where: { key: 'voice_broadcast_host_ip' }
     });
     
     if (!setting) {
@@ -152,8 +153,8 @@ const getDisplayServerIP = async (req, res) => {
     
     res.json({ value: setting.value || '' });
   } catch (error) {
-    console.error('获取显示屏服务器IP失败:', error);
-    res.status(500).json({ message: '获取显示屏服务器IP失败', error: error.message });
+    logger.error('获取语音播报主机IP失败:', error);
+    res.status(500).json({ message: '获取语音播报主机IP失败', error: error.message });
   }
 };
 
@@ -175,7 +176,7 @@ const getVoiceVolume = async (req, res) => {
     
     res.json({ value: volume });
   } catch (error) {
-    console.error('获取语音音量失败:', error);
+    logger.error('获取语音音量失败:', error);
     res.status(500).json({ message: '获取语音音量失败', error: error.message });
   }
 };
@@ -198,7 +199,7 @@ const getVoiceRate = async (req, res) => {
     
     res.json({ value: rate });
   } catch (error) {
-    console.error('获取语音语速失败:', error);
+    logger.error('获取语音语速失败:', error);
     res.status(500).json({ message: '获取语音语速失败', error: error.message });
   }
 };
@@ -216,7 +217,7 @@ const getTicketBannerImage = async (req, res) => {
     
     res.json({ value: imagePath });
   } catch (error) {
-    console.error('获取取票页面背景图片路径失败:', error);
+    logger.error('获取取票页面背景图片路径失败:', error);
     res.status(500).json({ message: '获取取票页面背景图片路径失败', error: error.message });
   }
 };
@@ -234,7 +235,7 @@ const getDisplayBannerImage = async (req, res) => {
     
     res.json({ value: imagePath });
   } catch (error) {
-    console.error('获取显示屏背景图片路径失败:', error);
+    logger.error('获取显示屏背景图片路径失败:', error);
     res.status(500).json({ message: '获取显示屏背景图片路径失败', error: error.message });
   }
 };
@@ -245,7 +246,7 @@ module.exports = {
   updateBusinessType,
   getBusinessTypesWithLatestTickets,
   getDisplayRemarks,
-  getDisplayServerIP,
+  getVoiceBroadcastHostIP,
   getVoiceVolume,
   getVoiceRate,
   getTicketBannerImage,

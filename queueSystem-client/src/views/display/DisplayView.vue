@@ -81,6 +81,8 @@ let currentUtterance = null;
 let availableVoices = []; // 存储可用的语音列表
 const voiceVolume = ref(1.0); // 语音音量，默认 1.0
 const voiceRate = ref(1.0); // 语音语速，默认 1.0
+let isFirstPlay = true; // 标记是否是第一次播放
+let isWarmingUp = false; // 标记是否正在预热
 
 // 性能优化相关
 const MAX_QUEUE_LENGTH = 50; // 最大队列长度，防止内存溢出
@@ -147,12 +149,12 @@ const fetchVoiceRate = async () => {
 // 检查当前设备是否是显示设备
 const checkIsDisplayDevice = async () => {
   try {
-    // 获取 display_server_ip 设置
-    const displayIPResponse = await businessTypeService.getDisplayServerIP();
-    const displayServerIP = displayIPResponse.data?.value || '';
+    // 获取 voice_broadcast_host_ip 设置
+    const voiceHostIPResponse = await businessTypeService.getVoiceBroadcastHostIP();
+    const voiceBroadcastHostIP = voiceHostIPResponse.data?.value || '';
     
-    if (!displayServerIP) {
-      // console.log('未配置 display_server_ip，不启用语音播放');
+    if (!voiceBroadcastHostIP) {
+      // console.log('未配置 voice_broadcast_host_ip，不启用语音播放');
       isDisplayDevice.value = false;
       return;
     }
@@ -167,10 +169,10 @@ const checkIsDisplayDevice = async () => {
     }
     
     // 比较IP地址
-    isDisplayDevice.value = clientIP === displayServerIP;
+    isDisplayDevice.value = clientIP === voiceBroadcastHostIP;
     
     if (isDisplayDevice.value) {
-      // console.log('当前设备是显示设备，已启用语音播放功能');
+      // console.log('当前设备是语音播报主机，已启用语音播放功能');
       // 初始化语音合成
       if ('speechSynthesis' in window) {
         speechSynthesis = window.speechSynthesis;
@@ -184,7 +186,7 @@ const checkIsDisplayDevice = async () => {
         console.warn('浏览器不支持语音合成功能');
       }
     } else {
-      // console.log(`当前设备IP(${clientIP})不是显示设备IP(${displayServerIP})，不启用语音播放`);
+      // console.log(`当前设备IP(${clientIP})不是语音播报主机IP(${voiceBroadcastHostIP})，不启用语音播放`);
     }
   } catch (error) {
     console.error('检查显示设备失败:', error);
@@ -407,6 +409,40 @@ const getFemaleVoice = (lang) => {
   return langVoices[0] || null;
 };
 
+// 预热语音引擎（第一次播放前）
+const warmUpSpeechEngine = () => {
+  return new Promise((resolve) => {
+    if (!speechSynthesis || !isFirstPlay || isWarmingUp) {
+      resolve();
+      return;
+    }
+    
+    isWarmingUp = true;
+    
+    // 创建一个非常短的预热语音（空格或静音）
+    const warmUpUtterance = new SpeechSynthesisUtterance(' ');
+    warmUpUtterance.volume = 0.01; // 几乎静音
+    warmUpUtterance.rate = 10; // 最快速度，几乎瞬间完成
+    
+    warmUpUtterance.onend = () => {
+      isWarmingUp = false;
+      isFirstPlay = false;
+      // 等待一小段时间确保引擎完全准备好
+      setTimeout(() => {
+        resolve();
+      }, 100);
+    };
+    
+    warmUpUtterance.onerror = () => {
+      isWarmingUp = false;
+      isFirstPlay = false;
+      resolve(); // 即使预热失败也继续
+    };
+    
+    speechSynthesis.speak(warmUpUtterance);
+  });
+};
+
 // 播放单个语音
 const playSingleVoice = (text, lang) => {
   return new Promise((resolve, reject) => {
@@ -505,6 +541,11 @@ const playSingleVoice = (text, lang) => {
 
 // 播放多语言语音（依次播放粤语、英文）
 const playVoice = async (texts) => {
+  // 如果是第一次播放，先预热语音引擎（在整个语音播放前预热一次）
+  if (isFirstPlay) {
+    await warmUpSpeechEngine();
+  }
+  
   for (let i = 0; i < texts.length; i++) {
     const { text, lang } = texts[i];
     try {
