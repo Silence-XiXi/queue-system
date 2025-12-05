@@ -35,7 +35,8 @@ const LOG_LEVELS = {
   DEBUG: 'DEBUG',
   INFO: 'INFO',
   WARN: 'WARN',
-  ERROR: 'ERROR'
+  ERROR: 'ERROR',
+  OFF: 'OFF' // 关闭日志输出
 };
 
 // 日志级别优先级（数字越大优先级越高）
@@ -43,12 +44,50 @@ const LOG_LEVEL_PRIORITY = {
   DEBUG: 0,
   INFO: 1,
   WARN: 2,
-  ERROR: 3
+  ERROR: 3,
+  OFF: 999 // OFF 最大，表示任何级别都不会写入
 };
 
-// 获取当前日志级别（从环境变量读取，默认为 INFO，即不记录 DEBUG）
-// 可选值：DEBUG, INFO, WARN, ERROR
-const CURRENT_LOG_LEVEL = (process.env.PRINTER_LOG_LEVEL || 'INFO').toUpperCase();
+/**
+ * 从环境变量或 printer.config.json 读取日志级别
+ * 优先级：环境变量 PRINTER_LOG_LEVEL > 配置文件 logLevel > 默认 INFO
+ */
+function loadCurrentLogLevel() {
+  // 1. 环境变量优先
+  if (process.env.PRINTER_LOG_LEVEL) {
+    return process.env.PRINTER_LOG_LEVEL.toUpperCase();
+  }
+
+  // 2. 尝试从 printer.config.json 读取 logLevel
+  try {
+    const configPaths = [
+      // 打包环境：当前工作目录
+      path.join(process.cwd(), 'printer.config.json'),
+      // 开发环境：项目根目录及上级目录做兜底
+      path.join(__dirname, '../printer.config.json'),
+      path.join(__dirname, '../../printer.config.json')
+    ];
+
+    for (const configPath of configPaths) {
+      if (fs.existsSync(configPath)) {
+        const content = fs.readFileSync(configPath, 'utf8');
+        const config = JSON.parse(content);
+        if (config && typeof config.logLevel === 'string') {
+          return config.logLevel.toUpperCase();
+        }
+      }
+    }
+  } catch (e) {
+    // 配置读取失败不影响主流程，直接回退到默认级别
+  }
+
+  // 3. 默认 INFO
+  return 'INFO';
+}
+
+// 获取当前日志级别（可通过环境变量或 printer.config.json 控制）
+// 可选值：DEBUG, INFO, WARN, ERROR, OFF
+const CURRENT_LOG_LEVEL = loadCurrentLogLevel();
 const CURRENT_LOG_PRIORITY = LOG_LEVEL_PRIORITY[CURRENT_LOG_LEVEL] !== undefined 
   ? LOG_LEVEL_PRIORITY[CURRENT_LOG_LEVEL] 
   : LOG_LEVEL_PRIORITY.INFO;

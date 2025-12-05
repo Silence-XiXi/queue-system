@@ -112,7 +112,8 @@ function loadPrinterConfig() {
     databits: 8,
     stopbits: 0,
     enabled: true,
-    textEncoding: 1 // 文本编码：0=GBK(UTF-16LE), 1=UTF-8(UTF-16LE), 3=BIG-5(ANSI Buffer，直接传递)
+    textEncoding: 1, // 文本编码：0=GBK(UTF-16LE), 1=UTF-8(UTF-16LE), 3=BIG-5(ANSI Buffer，直接传递)
+    checkStatus: false // 是否在打印前/后查询打印机状态（默认关闭，现场柜台通常不需要）
   };
 
   // 尝试从配置文件读取
@@ -168,7 +169,10 @@ function loadPrinterConfig() {
       : (fileConfig.enabled !== undefined ? fileConfig.enabled : defaultConfig.enabled),
     textEncoding: process.env.PRINTER_TEXT_ENCODING 
       ? parseInt(process.env.PRINTER_TEXT_ENCODING) 
-      : (fileConfig.textEncoding !== undefined ? fileConfig.textEncoding : defaultConfig.textEncoding)
+      : (fileConfig.textEncoding !== undefined ? fileConfig.textEncoding : defaultConfig.textEncoding),
+    checkStatus: process.env.PRINTER_CHECK_STATUS !== undefined
+      ? process.env.PRINTER_CHECK_STATUS !== 'false'
+      : (fileConfig.checkStatus !== undefined ? fileConfig.checkStatus : defaultConfig.checkStatus)
   };
 
   // 显示配置来源信息
@@ -320,25 +324,25 @@ async function openPort() {
         break;
         
       case 'USB':
-        // 直接使用 Port_OpenPRNIO 打开打印机驱动端口
-        // 优先使用配置的打印机名称，如果没有则使用 portName
-        const printerName = PRINTER_CONFIG.printerName || PRINTER_CONFIG.portName;
-        
-        if (!printerName) {
-          throw new Error('USB端口类型需要配置 printerName 或 portName（打印机名称，如 POS80）');
+        // 使用 Port_OpenUSBIO 打开底层 USB 端口
+        // 这里的 portName 应配置为 USB 端口名，例如：USB001 / USB002 / USBPRINT\...\USB002
+        if (!PRINTER_CONFIG.portName) {
+          throw new Error('USB 端口类型需要配置 portName（例如：USB001 / USB002 或 USBPRINT\\\\...\\\\USB002）');
         }
-        
-        printerLogger.info(`使用 Port_OpenPRNIO 打开打印机: ${printerName}`);
-        handle = printerDll.Port_OpenPRNIO(printerName);
-        
+
+        printerLogger.info(`使用 Port_OpenUSBIO 打开 USB 端口: ${PRINTER_CONFIG.portName}`);
+        handle = printerDll.Port_OpenUSBIO(PRINTER_CONFIG.portName);
+
         if (handle.isNull()) {
-          throw new Error(`无法使用 Port_OpenPRNIO 打开打印机 "${printerName}"。请检查：\n` +
-            `1. 打印机名称是否正确（在Windows设置中查看打印机名称）\n` +
-            `2. 打印机是否已安装驱动并正常工作\n` +
-            `3. 尝试在Windows设置中打印测试页，确认打印机正常`);
+          throw new Error(
+            `无法使用 Port_OpenUSBIO 打开 USB 端口 "${PRINTER_CONFIG.portName}"。请检查：\n` +
+            `1. 端口名称是否正确（可通过 wmic 或 EnumUSB 查询，如 USB002）\n` +
+            `2. 设备管理器中是否显示 "USB Printing Support" / "USB 打印支持"\n` +
+            `3. 打印机是否已连接、已开机且驱动安装正常`
+          );
         }
-        
-        actualPortName = printerName;
+
+        actualPortName = PRINTER_CONFIG.portName;
         break;
         
       case 'LPT':
@@ -487,40 +491,43 @@ async function printTicket(ticketData) {
       if (!opened) {
         return {
           success: false,
-          message: '无法打开打印机端口，请检查打印机连接'
+          message: '無法打開打印機，請檢查打印機連接'
         };
       }
     }
     
     // 打印前检查打印机状态（包括纸张状态）
     // 注意：根据 DLL 文档，不应在打印过程中查询，所以只在打印前查询一次
-    try {
-      const statusBefore = await queryPrinterStatus();
-      if (statusBefore.error === -3) {
-        printerLogger.warn('打印前检测到缺纸', { status: statusBefore });
-        return {
-          success: false,
-          message: '打印機缺紙，請添加紙張後重試'
-        };
-      } else if (statusBefore.error === -1) {
-        printerLogger.warn('打印前检测到打印机脱机', { status: statusBefore });
-        return {
-          success: false,
-          message: '打印機離線，請檢查打印機連接'
-        };
-      } else if (statusBefore.error === -2) {
-        printerLogger.warn('打印前检测到上盖打开', { status: statusBefore });
-        return {
-          success: false,
-          message: '打印機上蓋打開，請關閉上蓋後重試'
-        };
-      } else if (statusBefore.error !== 1) {
-        printerLogger.warn('打印前检测到打印机异常', { status: statusBefore });
-        // 其他错误（如切刀异常、温度过高等）不阻止打印，但记录警告
+    // 现场柜台通常不需要强依赖状态查询，因此提供可配置开关 PRINTER_CONFIG.checkStatus
+    if (PRINTER_CONFIG.checkStatus) {
+      try {
+        const statusBefore = await queryPrinterStatus();
+        if (statusBefore.error === -3) {
+          printerLogger.warn('打印前检测到缺纸', { status: statusBefore });
+          return {
+            success: false,
+            message: '打印機缺紙，請添加紙張後重試'
+          };
+        } else if (statusBefore.error === -1) {
+          printerLogger.warn('打印前检测到打印机脱机', { status: statusBefore });
+          return {
+            success: false,
+            message: '打印機離線，請檢查打印機連接'
+          };
+        } else if (statusBefore.error === -2) {
+          printerLogger.warn('打印前检测到上盖打开', { status: statusBefore });
+          return {
+            success: false,
+            message: '打印機上蓋打開，請關閉上蓋後重試'
+          };
+        } else if (statusBefore.error !== 1) {
+          printerLogger.warn('打印前检测到打印机异常', { status: statusBefore });
+          // 其他错误（如切刀异常、温度过高等）不阻止打印，但记录警告
+        }
+      } catch (statusError) {
+        // 查询状态失败不影响打印，只记录日志
+        printerLogger.debug('打印前状态查询失败，继续打印', { error: statusError.message });
       }
-    } catch (statusError) {
-      // 查询状态失败不影响打印，只记录日志
-      printerLogger.debug('打印前状态查询失败，继续打印', { error: statusError.message });
     }
     
     // 准备打印内容（参考 BusinessTypeSelector.vue 弹窗格式）
@@ -630,26 +637,28 @@ async function printTicket(ticketData) {
     // 打印后检查打印机状态（检测是否在打印过程中出现缺纸等问题）
     // 注意：根据 DLL 文档，不应在打印过程中查询，所以只在打印完成后查询一次
     let printStatus = '成功';
-    try {
-      // 等待一小段时间，让打印机完成打印操作
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      const statusAfter = await queryPrinterStatus();
-      if (statusAfter.error === -3) {
-        printStatus = '可能缺纸';
-        printerLogger.warn('打印后检测到缺纸，打印可能不完整', { 
-          status: statusAfter,
-          ticket_number 
-        });
-      } else if (statusAfter.error !== 1) {
-        printerLogger.warn('打印后检测到打印机异常', { 
-          status: statusAfter,
-          ticket_number 
-        });
+    if (PRINTER_CONFIG.checkStatus) {
+      try {
+        // 等待一小段时间，让打印机完成打印操作
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        const statusAfter = await queryPrinterStatus();
+        if (statusAfter.error === -3) {
+          printStatus = '可能缺纸';
+          printerLogger.warn('打印后检测到缺纸，打印可能不完整', { 
+            status: statusAfter,
+            ticket_number 
+          });
+        } else if (statusAfter.error !== 1) {
+          printerLogger.warn('打印后检测到打印机异常', { 
+            status: statusAfter,
+            ticket_number 
+          });
+        }
+      } catch (statusError) {
+        // 查询状态失败不影响返回结果，只记录日志
+        printerLogger.debug('打印后状态查询失败', { error: statusError.message });
       }
-    } catch (statusError) {
-      // 查询状态失败不影响返回结果，只记录日志
-      printerLogger.debug('打印后状态查询失败', { error: statusError.message });
     }
     
     // 打印成功日志改为 DEBUG 级别，减少日志文件占用空间
@@ -695,7 +704,7 @@ async function printTicket(ticketData) {
     });
     return {
       success: false,
-      message: `打印失败: ${error.message}`
+      message: `打印失敗: ${error.message}`
     };
   }
 }

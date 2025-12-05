@@ -9,6 +9,7 @@
   "databits": 8,
   "stopbits": 0,
   "enabled": true,
-  "textEncoding": 1
+  "textEncoding": 1,
+  "logLevel": "DEBUG"
 }
 
